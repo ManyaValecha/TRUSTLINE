@@ -1,0 +1,6 @@
+{
+  "name": "TRUSTLINE - AI Voice Scam Protection",
+  "description": "Your personal AI guardian against voice scams. Analyses authorized call recordings for manipulation tactics with Gnani, Cohere, and Sarvam.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
