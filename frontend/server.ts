@@ -106,30 +106,74 @@ const FALLBACK_HEADLINES: GroundedHeadline[] = [
   },
 ];
 
-// Endpoint: Fetch Grounded Voice Scam Headlines using Google Search Grounding
+
+// Headline cache and Gemini quota cooldown
+const HEADLINE_CACHE_TTL_MS = 15 * 60 * 1000;
+const HEADLINE_QUOTA_COOLDOWN_MS = 10 * 60 * 1000;
+const HEADLINE_ERROR_COOLDOWN_MS = 60 * 1000;
+
+const headlineCache = new Map<
+  string,
+  { expiresAt: number; payload: Record<string, unknown> }
+>();
+
+let geminiCooldownUntil = 0;
+
+// Endpoint: Fetch Google-grounded Voice Scam Headlines
 app.get('/api/scam-headlines', async (req, res) => {
+  const query = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+  const cacheKey = query.toLowerCase() || '__default__';
+
+  const fallbackResponse = (reason: string) => ({
+    success: true,
+    groundedWithGoogleSearch: false,
+    liveSearchAvailable: false,
+    dataMode: 'curated_fallback',
+    cached: false,
+    timestamp: Date.now(),
+    searchSourcesCount: 0,
+    groundingSources: [],
+    error: reason,
+    headlines: FALLBACK_HEADLINES,
+  });
+
   try {
-    const query = req.query.q as string | undefined;
+    // Reuse recent successful live results
+    const cached = headlineCache.get(cacheKey);
+    if (cached && cached.expiresAt > Date.now()) {
+      return res.json({
+        ...cached.payload,
+        dataMode: 'live_search_cached',
+        cached: true,
+        timestamp: Date.now(),
+      });
+    }
+
+    // Avoid repeatedly calling Gemini while quota is exhausted
+    if (Date.now() < geminiCooldownUntil) {
+      return res.json(
+        fallbackResponse('Live search is temporarily paused. Showing curated safety advisories.')
+      );
+    }
+
     const searchQuery = query
       ? `Search for current voice scam news, phone fraud reports, and cyber warning headlines regarding: ${query}`
-      : 'Search for recent voice scam headlines, phone fraud incidents, cyber crime police warnings, and digital arrest scam trends in India and globally. Focus on: bank KYC fraud, digital arrest extortion, courier parcel fraud, and fake emergency calls.';
+      : 'Search for recent voice scam headlines, phone fraud incidents, cyber crime police warnings, and digital arrest scam trends in India and globally. Focus on bank KYC fraud, digital arrest extortion, courier parcel fraud, and fake emergency calls.';
 
     const systemInstruction = `You are a cybersecurity news summarizer for TRUSTLINE.
-Query Google Search to find recent authentic voice scam incidents, phone fraud alerts, and advisory trends.
-Return a structured JSON array with 6 recent, distinct headlines. Each object MUST have:
-- "id": string (unique)
-- "title": string (concise headline)
-- "source": string (news source or agency name, e.g., "The Hindu", "Times of India", "I4C", "RBI", "BBC")
-- "date": string (approximate date or "Recent")
+Use Google Search to find recent authentic voice scam incidents, phone fraud alerts, and advisory trends.
+Return a JSON array of up to 6 recent, distinct headlines. Each object must contain:
+- "id": unique string
+- "title": concise headline
+- "source": publisher or agency
+- "date": publication date or "Recent"
 - "category": one of ["Digital Arrest", "Bank KYC", "Courier Impersonation", "Emergency Fraud", "General Alert"]
 - "severity": one of ["HIGH", "MEDIUM", "CRITICAL"]
-- "summary": string (2-3 concise sentences detailing the fraud modus operandi)
-- "preventionTip": string (1 clear, actionable safety instruction)
-- "url": string (source URL if available from search)
+- "summary": 2-3 concise sentences
+- "preventionTip": one actionable safety instruction
+- "url": specific source URL when available
+Return only a valid JSON array. Do not invent incidents, dates, publishers, or URLs.`;
 
-Output ONLY valid JSON array with no markdown backticks if possible, or parseable JSON.`;
-
-    // Call Gemini 3.8 Flash with Google Search Grounding tool
     const response = await ai.models.generateContent({
       model: 'gemini-3.8-flash',
       contents: searchQuery,
@@ -139,57 +183,97 @@ Output ONLY valid JSON array with no markdown backticks if possible, or parseabl
       },
     });
 
-    const text = response.text || '';
-    
-    // Extract web citations from grounding metadata if present
-    const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
-    const searchUrls = groundingChunks
-      .map((c: any) => c.web?.uri)
-      .filter((uri: string | undefined): uri is string => Boolean(uri));
+    const responseText = response.text || '';
+    const groundingChunks =
+      response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+
+    const searchUrls = Array.from(new Set(
+      groundingChunks
+        .map((chunk: any) => chunk.web?.uri)
+        .filter((uri: string | undefined): uri is string => Boolean(uri))
+    ));
 
     let parsedHeadlines: GroundedHeadline[] = [];
 
-    // Parse model text (strip possible ```json blocks)
     try {
-      const cleanJson = text
+      const cleanJson = responseText
         .replace(/```json\s*/gi, '')
         .replace(/```\s*/gi, '')
         .trim();
+
       const jsonStart = cleanJson.indexOf('[');
       const jsonEnd = cleanJson.lastIndexOf(']');
-      if (jsonStart !== -1 && jsonEnd !== -1) {
-        parsedHeadlines = JSON.parse(cleanJson.substring(jsonStart, jsonEnd + 1));
+
+      if (jsonStart !== -1 && jsonEnd > jsonStart) {
+        const parsed: unknown = JSON.parse(
+          cleanJson.substring(jsonStart, jsonEnd + 1)
+        );
+
+        if (Array.isArray(parsed)) {
+          parsedHeadlines = parsed.filter((item: any) =>
+            item &&
+            typeof item.id === 'string' &&
+            typeof item.title === 'string' &&
+            typeof item.source === 'string' &&
+            typeof item.summary === 'string' &&
+            typeof item.preventionTip === 'string' &&
+            typeof item.url === 'string'
+          ) as GroundedHeadline[];
+        }
       }
-    } catch (parseErr) {
-      console.warn('Failed to parse Gemini Google Search output as JSON, using fallback with grounding', parseErr);
+    } catch (parseError) {
+      console.warn('[TRUSTLINE] Could not parse Gemini headline response:', parseError);
     }
 
-    if (!Array.isArray(parsedHeadlines) || parsedHeadlines.length === 0) {
-      // If parsing didn't produce full array, use high-quality fallback with attached grounding URLs
-      parsedHeadlines = FALLBACK_HEADLINES.map((h, i) => ({
-        ...h,
-        url: searchUrls[i] || h.url,
-      }));
+    // Only call results live and grounded when both structured headlines
+    // and actual Google Search grounding sources are present.
+    if (parsedHeadlines.length === 0 || searchUrls.length === 0) {
+      return res.json(
+        fallbackResponse('Live search did not return verifiable grounded headlines. Showing curated safety advisories.')
+      );
     }
 
-    res.json({
+    const payload = {
       success: true,
       groundedWithGoogleSearch: true,
+      liveSearchAvailable: true,
+      dataMode: 'live_search',
+      cached: false,
       timestamp: Date.now(),
       searchSourcesCount: searchUrls.length,
       groundingSources: searchUrls.slice(0, 5),
-      headlines: parsedHeadlines,
+      headlines: parsedHeadlines.slice(0, 6),
+    };
+
+    headlineCache.set(cacheKey, {
+      expiresAt: Date.now() + HEADLINE_CACHE_TTL_MS,
+      payload,
     });
+
+    return res.json(payload);
+
   } catch (err: unknown) {
-    console.error('Error in /api/scam-headlines with Google Search grounding:', err);
-    // Graceful fallback to verified advisories so the UI remains pristine
-    res.json({
-      success: true,
-      groundedWithGoogleSearch: false,
-      timestamp: Date.now(),
-      error: 'Google Search live grounding temporarily unavailable; displaying verified national advisories.',
-      headlines: FALLBACK_HEADLINES,
-    });
+    const errorStatus = Number((err as { status?: number })?.status ?? 0);
+    const errorMessage = err instanceof Error ? err.message : String(err);
+
+    geminiCooldownUntil =
+      Date.now() +
+      (errorStatus === 429
+        ? HEADLINE_QUOTA_COOLDOWN_MS
+        : HEADLINE_ERROR_COOLDOWN_MS);
+
+    console.error(
+      `[TRUSTLINE] Headline search unavailable (HTTP ${errorStatus || 'unknown'}):`,
+      errorMessage
+    );
+
+    return res.json(
+      fallbackResponse(
+        errorStatus === 429
+          ? 'Gemini quota reached. Live search is paused temporarily; showing curated safety advisories.'
+          : 'Live search is temporarily unavailable; showing curated safety advisories.'
+      )
+    );
   }
 });
 
