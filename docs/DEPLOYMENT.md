@@ -13,7 +13,7 @@ The frontend build uses `VITE_API_BASE_URL=https://trustline-api-eight.vercel.ap
 
 The Vercel deployment explicitly excludes `.env` files, local virtual environments, tests, and generated audio. Keep provider credentials in Vercel's backend project environment only; never put them in `VITE_` variables or frontend files.
 
-Vercel Functions limit request bodies to 4.5 MB. The production frontend therefore limits audio uploads to 4 MiB, leaving room for multipart overhead. Local development retains the 20 MiB limit.
+Vercel Functions limit request bodies to 4.5 MB. The production frontend therefore limits source uploads to 4 MiB, leaving room for multipart overhead. Before upload, the browser normalizes audio to mono 16 kHz WAV for Gnani STT and rejects clips longer than 60 seconds. Local development retains the 20 MiB source upload limit.
 
 ## Deploying updates
 

@@ -35,7 +35,7 @@ def test_non_audio_and_empty_uploads_are_rejected() -> None:
         "/api/analyze",
         files={"audio": ("memo.txt", b"hello", "text/plain")},
     )
-    assert wrong_type.status_code == 400
+    assert wrong_type.status_code == 415
 
     empty = client.post(
         "/api/analyze",
@@ -51,6 +51,29 @@ def test_audio_mime_type_must_match_supported_container_signature() -> None:
     )
     assert response.status_code == 400
     assert "does not match" in response.json()["detail"]
+
+
+def test_browser_webm_upload_is_rejected_before_reaching_gnani() -> None:
+    response = client.post(
+        "/api/analyze",
+        files={"audio": ("recording.webm", b"\x1aE\xdf\xa3" + b"0" * 12, "audio/webm")},
+    )
+    assert response.status_code == 415
+    assert "WAV, MP3, FLAC, OGG, or M4A" in response.json()["detail"]
+
+
+def test_gnani_audio_rejection_returns_format_guidance_without_provider_body(monkeypatch) -> None:
+    async def fail(**_kwargs):
+        raise main.GnaniSTTError("Gnani returned HTTP 400: private provider response")
+
+    monkeypatch.setattr(main, "analyze_audio", fail)
+    response = client.post(
+        "/api/analyze",
+        files={"audio": ("recording.wav", wav_bytes(), "audio/wav")},
+    )
+    assert response.status_code == 422
+    assert "no longer than 60 seconds" in response.json()["detail"]
+    assert "private provider response" not in response.text
 
 
 def test_oversized_upload_is_rejected() -> None:

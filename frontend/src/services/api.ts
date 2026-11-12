@@ -42,6 +42,69 @@ export class ApiError extends Error {
   }
 }
 
+const STT_SAMPLE_RATE = 16000;
+const MAX_STT_DURATION_SECONDS = 60;
+
+function encodePcmWav(samples: Float32Array, sampleRate: number): Blob {
+  const dataBytes = samples.length * 2;
+  const buffer = new ArrayBuffer(44 + dataBytes);
+  const view = new DataView(buffer);
+  const writeText = (offset: number, value: string) => {
+    for (let index = 0; index < value.length; index += 1) {
+      view.setUint8(offset + index, value.charCodeAt(index));
+    }
+  };
+
+  writeText(0, 'RIFF');
+  view.setUint32(4, 36 + dataBytes, true);
+  writeText(8, 'WAVE');
+  writeText(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  writeText(36, 'data');
+  view.setUint32(40, dataBytes, true);
+
+  for (let index = 0; index < samples.length; index += 1) {
+    const sample = Math.max(-1, Math.min(1, samples[index]));
+    view.setInt16(44 + index * 2, sample < 0 ? sample * 0x8000 : sample * 0x7fff, true);
+  }
+
+  return new Blob([buffer], { type: 'audio/wav' });
+}
+
+async function normalizeAudioForTranscription(audio: Blob): Promise<Blob> {
+  let decoded: AudioBuffer;
+  const decoder = new AudioContext();
+  try {
+    decoded = await decoder.decodeAudioData(await audio.arrayBuffer());
+  } catch {
+    throw new ApiError('This browser could not decode the selected audio. Try a WAV, MP3, M4A, OGG, or WebM file.');
+  } finally {
+    await decoder.close();
+  }
+
+  if (!Number.isFinite(decoded.duration) || decoded.duration <= 0) {
+    throw new ApiError('The selected audio has no readable duration. Choose a valid recording and try again.');
+  }
+  if (decoded.duration > MAX_STT_DURATION_SECONDS) {
+    throw new ApiError('Gnani accepts recordings up to 60 seconds. Trim the audio and try again.');
+  }
+
+  const frameCount = Math.ceil(decoded.duration * STT_SAMPLE_RATE);
+  const encoder = new OfflineAudioContext(1, frameCount, STT_SAMPLE_RATE);
+  const source = encoder.createBufferSource();
+  source.buffer = decoded;
+  source.connect(encoder.destination);
+  source.start();
+  const monoAudio = await encoder.startRendering();
+  return encodePcmWav(monoAudio.getChannelData(0), STT_SAMPLE_RATE);
+}
+
 /**
  * Health check endpoint: GET /health
  */
@@ -87,20 +150,19 @@ export async function analyzeAudio(
   timeoutMs = 90000 // Voice processing with STT & LLM can take up to 90s
 ): Promise<AnalyzeAudioResponse> {
   const baseUrl = getApiBaseUrl();
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
-  const formData = new FormData();
-  // Name the file properly if it is a raw blob
-  const filename = audioFile instanceof File ? audioFile.name : 'recorded_call.webm';
-  formData.append('audio', audioFile, filename);
-
   const queryParams = new URLSearchParams({
     speech_language: speechLanguage,
     target_language: targetLanguage,
   });
 
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
   try {
+    const normalizedAudio = await normalizeAudioForTranscription(audioFile);
+    const controller = new AbortController();
+    timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    const formData = new FormData();
+    formData.append('audio', normalizedAudio, 'recording.wav');
+
     const response = await fetch(`${baseUrl}/api/analyze?${queryParams.toString()}`, {
       method: 'POST',
       body: formData,
@@ -139,7 +201,7 @@ export async function analyzeAudio(
 
     return data;
   } catch (err: unknown) {
-    clearTimeout(timeoutId);
+    if (timeoutId) clearTimeout(timeoutId);
     if (err instanceof ApiError) throw err;
     if (err instanceof DOMException && err.name === 'AbortError') {
       throw new ApiError('The analysis request timed out after 90 seconds. Audio transcription or AI evaluation took too long.', undefined, false, true);

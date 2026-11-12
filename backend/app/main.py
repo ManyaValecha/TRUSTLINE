@@ -5,12 +5,13 @@ from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.services.pipeline import analyze_audio, WARNING_AUDIO
+from app.services.gnani_stt import GnaniSTTError
 from app.schemas import AnalyzeAudioResponse
 
 MAX_AUDIO_BYTES = 20 * 1024 * 1024
 SUPPORTED_AUDIO_TYPES = {
     "audio/wav", "audio/x-wav", "audio/mpeg", "audio/mp3", "audio/ogg",
-    "audio/webm", "audio/mp4", "audio/x-m4a", "audio/aac", "audio/flac",
+    "audio/mp4", "audio/x-m4a", "audio/flac",
 }
 
 
@@ -152,8 +153,8 @@ async def analyze_call(
 ):
     if (audio.content_type or "").lower().split(";")[0] not in SUPPORTED_AUDIO_TYPES:
         raise HTTPException(
-            status_code=400,
-            detail="Please upload a valid audio file.",
+            status_code=415,
+            detail="Transcription accepts WAV, MP3, FLAC, OGG, or M4A audio.",
         )
 
     if not os.getenv("GNANI_API_KEY_ID"):
@@ -200,7 +201,22 @@ async def analyze_call(
             filename=audio.filename or "recording.wav",
             speech_language=speech_language,
             target_language=target_language,
+            audio_content_type=(audio.content_type or "audio/wav").lower().split(";")[0],
         )
+
+    except GnaniSTTError as error:
+        if "HTTP 400" in str(error) or "did not return a successful transcript" in str(error):
+            raise HTTPException(
+                status_code=422,
+                detail=(
+                    "The speech provider rejected this recording. Use WAV, MP3, FLAC, "
+                    "OGG, or M4A audio no longer than 60 seconds."
+                ),
+            ) from error
+        raise HTTPException(
+            status_code=502,
+            detail="The speech transcription service could not process this request. Try again later.",
+        ) from error
 
     except Exception as error:
         raise HTTPException(

@@ -36,7 +36,10 @@ def test_combined_analysis_keeps_high_risk_when_models_disagree_and_reports_unce
 
 
 def test_pipeline_keeps_rule_result_when_optional_providers_fail(monkeypatch) -> None:
+    observed_transcription_options = {}
+
     async def transcribe(**_kwargs):
+        observed_transcription_options.update(_kwargs)
         return {
             "success": True,
             "provider": "Gnani",
@@ -58,8 +61,9 @@ def test_pipeline_keeps_rule_result_when_optional_providers_fail(monkeypatch) ->
     monkeypatch.setattr(pipeline, "translate_text", translation_fails)
     monkeypatch.setattr(pipeline, "generate_speech", speech_fails)
 
-    result = asyncio.run(pipeline.analyze_audio(b"test audio"))
+    result = asyncio.run(pipeline.analyze_audio(b"test audio", audio_content_type="audio/mpeg"))
 
+    assert observed_transcription_options["content_type"] == "audio/mpeg"
     assert result["success"] is True
     assert result["scam_analysis"]["risk_level"] == "HIGH"
     assert "OTP Request" in result["scam_analysis"]["detected_tactics"]

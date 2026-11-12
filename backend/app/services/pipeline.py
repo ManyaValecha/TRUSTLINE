@@ -106,6 +106,7 @@ async def analyze_audio(
     filename: str = "recording.wav",
     speech_language: str = "en-IN",
     target_language: str = "hi-IN",
+    audio_content_type: str = "audio/wav",
 ) -> dict:
 
     # 1. Speech-to-text
@@ -113,6 +114,7 @@ async def analyze_audio(
         audio_bytes=audio_bytes,
         filename=filename,
         language_code=speech_language,
+        content_type=audio_content_type,
     )
 
     transcript = transcription["transcript"]

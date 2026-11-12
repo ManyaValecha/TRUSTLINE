@@ -15,6 +15,7 @@ async def transcribe_audio(
     audio_bytes: bytes,
     filename: str = "recording.wav",
     language_code: str = "hi-IN",
+    content_type: str = "audio/wav",
 ) -> dict:
 
     api_key = os.getenv("GNANI_API_KEY_ID")
@@ -36,7 +37,7 @@ async def transcribe_audio(
         "audio_file": (
             filename,
             audio_bytes,
-            "audio/wav",
+            content_type,
         )
     }
 
