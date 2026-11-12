@@ -52,3 +52,5 @@ backend/storage/audio/
 !.env.example
 !**/.env.example
 .vercel
+!frontend/public/samples/
+!frontend/public/samples/*.wav

@@ -104,6 +104,7 @@ export const AudioUploader: React.FC<AudioUploaderProps> = ({
       />
 
       {!selectedFile ? (
+        <>
         <label
           htmlFor="audio-file-input"
           onDrop={handleDrop}
@@ -128,6 +129,19 @@ export const AudioUploader: React.FC<AudioUploaderProps> = ({
             <span>Explicit user consent required before analysis</span>
           </div>
         </label>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 rounded-xl border border-cyan-900/40 bg-cyan-950/20 px-4 py-3">
+          <p className="text-xs text-slate-300">
+            Need a test file? This fictional, synthetic sample contains urgency and an OTP request.
+          </p>
+          <a
+            href="/samples/trustline-synthetic-scam-call.wav"
+            download="trustline-synthetic-scam-call.wav"
+            className="shrink-0 text-xs font-bold text-cyan-300 hover:text-cyan-200 underline underline-offset-4"
+          >
+            Download sample recording (18 sec)
+          </a>
+        </div>
+        </>
       ) : (
         <div className="p-4 rounded-2xl bg-[#0E132A] border border-violet-500/40 shadow-lg space-y-3">
           <div className="flex items-center justify-between">
