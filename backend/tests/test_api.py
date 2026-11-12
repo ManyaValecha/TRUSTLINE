@@ -19,6 +19,17 @@ def test_health_reports_configuration_without_claiming_provider_connectivity() -
     assert "connectivity is not checked" in response.json()["note"]
 
 
+def test_scam_headlines_endpoint_returns_clearly_labeled_examples() -> None:
+    response = client.get("/api/scam-headlines")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["liveSearchAvailable"] is False
+    assert payload["groundedWithGoogleSearch"] is False
+    assert payload["dataMode"] == "curated_fallback"
+    assert payload["headlines"]
+    assert all("not a news report" in item["source"] for item in payload["headlines"])
+
+
 def test_non_audio_and_empty_uploads_are_rejected() -> None:
     wrong_type = client.post(
         "/api/analyze",
@@ -48,6 +59,17 @@ def test_oversized_upload_is_rejected() -> None:
         files={"audio": ("large.wav", b"0" * (main.MAX_AUDIO_BYTES + 1), "audio/wav")},
     )
     assert response.status_code == 413
+
+
+def test_analysis_reports_missing_speech_provider_without_forwarding_audio(monkeypatch) -> None:
+    monkeypatch.delenv("GNANI_API_KEY_ID", raising=False)
+    response = client.post(
+        "/api/analyze",
+        files={"audio": ("sample.wav", wav_bytes(), "audio/wav")},
+    )
+    assert response.status_code == 503
+    assert "speech transcription is not configured" in response.json()["detail"]
+    assert "not sent to an external speech provider" in response.json()["detail"]
 
 
 def test_provider_exception_does_not_leak_details(monkeypatch) -> None:

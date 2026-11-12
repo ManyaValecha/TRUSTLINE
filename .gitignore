@@ -51,3 +51,4 @@ backend/storage/audio/
 # Allow safe example configuration files
 !.env.example
 !**/.env.example
+.vercel

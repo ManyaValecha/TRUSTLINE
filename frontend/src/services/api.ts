@@ -20,6 +20,11 @@ export function getApiBaseUrl(): string {
   if (envUrl && envUrl.length > 0) {
     return envUrl.replace(/\/+$/, '');
   }
+  // Vercel serves the frontend and API on one origin. Keep local development
+  // pointed at the standalone FastAPI server.
+  if (import.meta.env.PROD) {
+    return '';
+  }
   return DEFAULT_API_BASE_URL;
 }
 

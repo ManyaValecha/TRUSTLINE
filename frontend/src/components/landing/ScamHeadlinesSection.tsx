@@ -14,6 +14,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { GroundedHeadline } from '../../../server';
+import { getApiBaseUrl } from '../../services/api';
 
 export const ScamHeadlinesSection: React.FC = () => {
   const [headlines, setHeadlines] = useState<GroundedHeadline[]>([]);
@@ -28,9 +29,10 @@ export const ScamHeadlinesSection: React.FC = () => {
   const fetchHeadlines = async (query?: string) => {
     try {
       setError(null);
+      const baseUrl = getApiBaseUrl();
       const url = query && query.trim()
-        ? `/api/scam-headlines?q=${encodeURIComponent(query.trim())}`
-        : '/api/scam-headlines';
+        ? `${baseUrl}/api/scam-headlines?q=${encodeURIComponent(query.trim())}`
+        : `${baseUrl}/api/scam-headlines`;
 
       const res = await fetch(url);
       if (!res.ok) {

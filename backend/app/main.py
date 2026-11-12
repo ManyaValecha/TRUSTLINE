@@ -86,6 +86,63 @@ async def get_warning_audio():
     )
 
 
+@app.get("/api/scam-headlines")
+async def scam_headlines():
+    """Return explicitly illustrative safety patterns when live search is absent."""
+    return {
+        "success": True,
+        "groundedWithGoogleSearch": False,
+        "liveSearchAvailable": False,
+        "dataMode": "curated_fallback",
+        "cached": False,
+        "timestamp": None,
+        "searchSourcesCount": 0,
+        "groundingSources": [],
+        "headlines": [
+            {
+                "id": "example-digital-arrest",
+                "title": "Example pattern: fake authority and digital-arrest threats",
+                "source": "TRUSTLINE educational example (not a news report)",
+                "date": "Illustrative example",
+                "category": "Digital Arrest",
+                "severity": "HIGH",
+                "summary": "A caller may impersonate an official, use threats, and demand urgent payment. This is a generic example, not a recent incident.",
+                "preventionTip": "Pause, end the call, and independently verify through an official number you already trust.",
+            },
+            {
+                "id": "example-bank-kyc",
+                "title": "Example pattern: bank KYC urgency and credential requests",
+                "source": "TRUSTLINE educational example (not a news report)",
+                "date": "Illustrative example",
+                "category": "Bank KYC",
+                "severity": "HIGH",
+                "summary": "A caller may claim an account will be frozen and ask for an OTP, PIN, or password. This is a generic example, not a current bulletin.",
+                "preventionTip": "Never disclose an OTP or PIN on a call. Contact the bank using a number from its official materials.",
+            },
+            {
+                "id": "example-courier",
+                "title": "Example pattern: courier or customs payment demand",
+                "source": "TRUSTLINE educational example (not a news report)",
+                "date": "Illustrative example",
+                "category": "Courier Impersonation",
+                "severity": "MEDIUM",
+                "summary": "A caller may claim a parcel is seized and request a fee to avoid consequences. This is an illustrative example, not a verified case.",
+                "preventionTip": "Do not transfer money under pressure. Contact the courier using its published official channel.",
+            },
+            {
+                "id": "example-family-emergency",
+                "title": "Example pattern: family emergency and isolation pressure",
+                "source": "TRUSTLINE educational example (not a news report)",
+                "date": "Illustrative example",
+                "category": "Emergency Fraud",
+                "severity": "HIGH",
+                "summary": "A caller may claim a loved one is in danger, demand immediate payment, and discourage verification. This is a generic example, not a real incident report.",
+                "preventionTip": "Call your relative directly using a number you already trust before sending money.",
+            },
+        ],
+    }
+
+
 @app.post("/api/analyze", response_model=AnalyzeAudioResponse)
 async def analyze_call(
     request: Request,
@@ -97,6 +154,17 @@ async def analyze_call(
         raise HTTPException(
             status_code=400,
             detail="Please upload a valid audio file.",
+        )
+
+    if not os.getenv("GNANI_API_KEY_ID"):
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "Audio analysis is unavailable because speech transcription is not "
+                "configured for this deployment. The recording was not sent to an "
+                "external speech provider. Use Diagnostic Simulator in Settings "
+                "or contact the deployment operator."
+            ),
         )
 
     content_length = request.headers.get("content-length")

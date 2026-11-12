@@ -651,17 +651,19 @@ flowchart TD
 |---|---|
 | Source code | GitHub |
 | Frontend | Vercel |
-| Backend | Render |
+| Backend | Vercel |
 | Credentials | Backend hosting environment variables |
+
+The current frontend and FastAPI deployment URLs, verified routes, deployment limits, and remaining production checks are recorded in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). Provider credentials are not configured in the current Vercel API project, so production audio analysis is not yet verified.
 
 ### Production deployment checklist
 
-- [ ] Deploy the FastAPI backend.
+- [x] Deploy the FastAPI backend.
 - [ ] Configure backend environment variables.
-- [ ] Configure production CORS origins.
-- [ ] Deploy the React frontend.
-- [ ] Set the production API base URL.
-- [ ] Verify the backend health endpoint.
+- [x] Configure production CORS origins.
+- [x] Deploy the React frontend.
+- [x] Set the production API base URL.
+- [x] Verify the backend health endpoint.
 - [ ] Test audio upload and analysis.
 - [ ] Test translation and generated warnings.
 - [ ] Review recording retention and storage.
@@ -671,7 +673,6 @@ flowchart TD
 **Repository hosting is not the same as application hosting.** GitHub stores the project source code; the frontend and backend require separate runtime hosting.
 
 ---
-
 
 
 # ◈ Contributing

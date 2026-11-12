@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from gnani.tts import GnaniTTSClient, AudioConfig
 
 load_dotenv()
 
@@ -27,6 +26,13 @@ def generate_speech(
         raise GnaniTTSError("Warning text is empty.")
 
     try:
+        # The provider SDK is optional for read-only API routes and deployments
+        # without TTS enabled. Import it only when speech generation is requested.
+        try:
+            from gnani.tts import GnaniTTSClient, AudioConfig
+        except ImportError as exc:
+            raise GnaniTTSError("Gnani TTS SDK is not installed.") from exc
+
         client = GnaniTTSClient(api_key=api_key)
 
         audio = client.synthesize(
