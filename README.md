@@ -3,88 +3,76 @@
 
 **Hear the call. Understand the risk. Protect the decision.**
 
-[![Built with React](https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![Backend](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![AI](https://img.shields.io/badge/AI-Cohere-39594D)](https://cohere.com/)
+[![React](https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Cohere](https://img.shields.io/badge/AI-Cohere-39594D)](https://cohere.com/)
 [![PWA](https://img.shields.io/badge/Platform-Progressive%20Web%20App-purple)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 [![Status](https://img.shields.io/badge/Status-Experimental%20MVP-orange)]()
 
-**TRUSTLINE is an AI-powered, multilingual voice-safety companion that transforms suspicious conversations into understandable risk signals, evidence-based explanations, and actionable safety guidance.**
+**TRUSTLINE is an AI-powered, multilingual voice-safety companion designed to help people understand suspicious conversations, recognise potential scam indicators, and make safer decisions before acting.**
 
-Scammers don't always sound suspicious. Sometimes they sound like your bank, a government official, a delivery executive, or someone you trust.
+A scammer doesn't always sound like a scammer.
 
-They exploit urgency. They manufacture fear. They manipulate decisions.
+Sometimes, they sound like your bank. A government official. A delivery executive. Or someone you trust.
 
-TRUSTLINE is built to give people something scammers don't want them to have: **a moment to think.**
+They create urgency. They manufacture fear. They exploit trust.
 
----
+TRUSTLINE brings together speech recognition, contextual AI, deterministic detection, multilingual translation, and spoken guidance to help people understand what may be happening during a suspicious conversation.
 
-## The Problem: Scams Exploit Human Trust
-
-A suspicious call can involve an urgent account suspension warning, a fake delivery charge, an OTP request, a threatening legal notice, or pressure to transfer money immediately.
-
-The problem isn't simply that people don't know scams exist. It's that recognising manipulation while experiencing it can be difficult.
-
-People need more than another list of scam warnings. They need help understanding what is happening in a conversation, why it is concerning, and what they should do next.
-
-## The Solution: Understand Before You Act
-
-TRUSTLINE analyses user-provided audio through a layered intelligence pipeline combining speech recognition, contextual AI, deterministic detection, multilingual translation, and spoken safety guidance.
-
-Rather than returning an unexplained suspicious/not-suspicious label, TRUSTLINE aims to make the analysis understandable.
-
-It helps users explore:
-
-- **What was said:** A transcript of the submitted conversation.
-- **What looks suspicious:** Potential scam indicators and manipulation patterns.
-- **Why it matters:** Contextual explanations of suspicious requests.
-- **What to do next:** Practical guidance to reduce the risk of financial or personal harm.
-- **How to understand it:** Multilingual and spoken safety guidance where supported.
-
-The guiding philosophy:
-
-> Don't just detect the warning sign. Explain it before someone makes a risky decision.
+**Because recognising a scam is important. Knowing what to do next matters even more.**
 
 ---
 
-## Why TRUSTLINE?
+## The Problem: A Convincing Voice Can Manipulate a Decision
 
-TRUSTLINE takes a different approach from conventional scam-awareness experiences.
+Imagine receiving a call:
 
-| Dimension | Scam-awareness and practice tools | TRUSTLINE |
-|---|---|---|
-| Primary focus | Learning to recognise scam scenarios | Understanding suspicious conversations |
-| Interaction | Practice and awareness experiences | User-selected audio analysis |
-| Intelligence | Scenario-based learning | Contextual AI and deterministic detection |
-| Output | Training and awareness feedback | Risk interpretation and safety guidance |
-| Accessibility | Depends on the learning experience | Multilingual translation and spoken guidance |
-| Decision support | Builds awareness | Encourages pausing and independent verification |
+*"Your bank account will be blocked in ten minutes. To prevent this, share the OTP we just sent you."*
 
-TRUSTLINE is complementary to scam-awareness training tools. Its focus is the analysis and interpretation of suspicious conversations.
+The caller sounds confident. The situation sounds urgent. The person receiving the call has little time to think.
 
-### What TRUSTLINE does not claim
+This is how social engineering works: it exploits human behaviour, not just technical vulnerabilities.
 
-TRUSTLINE is not a voice-cloning detector, deepfake authentication system, or caller identity verification service. It cannot guarantee that a conversation is fraudulent or that a low-risk result is safe. It identifies suspicious conversational indicators to support more informed decisions.
+People need more than another list of scam warnings. They need help understanding suspicious conversations, identifying concerning requests, and deciding how to respond.
+
+## The TRUSTLINE Approach
+
+TRUSTLINE turns user-submitted audio into an understandable safety report through a layered analysis pipeline.
+
+The experience brings together:
+
+| Capability | Purpose |
+|---|---|
+| Speech recognition | Convert submitted audio into text |
+| Contextual AI | Interpret suspicious conversational behaviour |
+| Deterministic detection | Identify predefined scam indicators |
+| Risk assessment | Combine analysis findings into a structured result |
+| Multilingual translation | Make safety guidance more accessible |
+| Spoken guidance | Communicate warnings through generated speech where available |
+
+Instead of relying on an unexplained suspicious/not-suspicious label, TRUSTLINE is designed to help users understand the conversation and the warning signs within it.
+
+> **Don't just detect the warning sign. Explain it before someone makes a risky decision.**
 
 ---
 
-## The TRUSTLINE Experience
+## How TRUSTLINE Works
 
 ### 01 — Capture
 
-Users submit an audio recording through the web application using the available upload or recording interface.
+Users submit a suspicious audio recording through the available recording or upload interface.
 
 ### 02 — Transcribe
 
-Gnani Prisma STT converts submitted speech into text, creating the transcript for analysis.
+Gnani Prisma STT converts submitted speech into text for downstream analysis.
 
 ### 03 — Understand
 
-Cohere examines the transcript for contextual warning signs, suspicious requests, impersonation, pressure tactics, and manipulation.
+Cohere analyses the transcript for contextual warning signs, suspicious requests, impersonation, pressure tactics, and manipulation.
 
 ### 04 — Cross-check
 
-A Python-based deterministic rules engine independently examines transcript content for identifiable scam indicators.
+A Python-based deterministic rules engine independently examines transcript content for predefined scam indicators.
 
 ### 05 — Assess
 
@@ -92,9 +80,9 @@ The contextual findings and deterministic indicators are combined into a structu
 
 ### 06 — Communicate
 
-Sarvam supports multilingual translation, while Gnani Timbre provides text-to-speech functionality for spoken safety guidance.
+Sarvam supports multilingual translation, while Gnani Timbre provides text-to-speech functionality for spoken safety guidance where the services are available.
 
-The result is an understandable safety report rather than an unexplained prediction.
+The result is an analysis experience designed to make suspicious conversational behaviour easier to understand.
 
 ---
 
@@ -109,24 +97,25 @@ flowchart TD
     D --> F["Python deterministic rules"]
     E --> G["Combined risk assessment"]
     F --> G
-    G --> H["Risk interpretation and safety guidance"]
-    H --> I["Sarvam translation"]
-    I --> J["Gnani Timbre TTS"]
-    H --> K["React analysis dashboard"]
-    J --> K
+    G --> H["Risk interpretation"]
+    H --> I["Safety guidance"]
+    I --> J["Sarvam translation"]
+    J --> K["Gnani Timbre TTS"]
+    H --> L["React analysis dashboard"]
+    K --> L
 ```
 
-### A layered approach to scam detection
+### Two complementary intelligence layers
 
-**Contextual Intelligence — Cohere**
+**Contextual AI — Cohere**
 
-Cohere analyses the meaning and context of the conversation to identify potentially suspicious behaviour.
+Cohere interprets the meaning and context of the transcript to identify potentially suspicious behaviour.
 
-Its structured responses are validated using Pydantic schemas. Unsupported transcript quotations are rejected instead of being presented as evidence.
+Its structured responses are validated using Pydantic schemas. Unsupported transcript quotations are rejected rather than presented as evidence.
 
-**Deterministic Intelligence — Python**
+**Deterministic detection — Python**
 
-The independent rules engine identifies predefined indicators from the transcript, including:
+The independent rules engine identifies predefined indicators in transcript content.
 
 | Indicator | What it identifies |
 |---|---|
@@ -134,47 +123,35 @@ The independent rules engine identifies predefined indicators from the transcrip
 | Financial credential requests | Attempts to obtain banking or UPI credentials |
 | Payment pressure | Urgent or suspicious payment demands |
 | Impersonation | Claims of representing trusted organisations |
-| Remote access | Requests to install or grant access to remote-control applications |
+| Remote access | Requests to install or grant remote-control access |
 | Threats and intimidation | Fear-based pressure and consequences |
-| Secrecy | Instructions to hide the interaction from others |
+| Secrecy | Instructions to hide an interaction from others |
 
-**Speech Recognition — Gnani Prisma**
+### Why a layered approach?
 
-Converts submitted audio into a transcript for downstream analysis.
+Contextual AI and deterministic rules address different aspects of the problem.
 
-**Multilingual Intelligence — Sarvam**
+Contextual AI interprets conversational meaning. Deterministic rules identify specific predefined patterns.
 
-Supports translation of safety guidance to improve accessibility.
-
-**Spoken Guidance — Gnani Timbre**
-
-Converts generated safety messages into speech where the service is available.
-
-### Why use two analysis layers?
-
-Contextual AI and deterministic rules solve different problems.
-
-Contextual AI can interpret the meaning of a conversation. Deterministic rules can identify specific, predefined patterns.
-
-Combining their findings creates a more transparent analysis architecture than relying entirely on one model response.
+Combining their findings provides a more transparent analysis architecture than relying entirely on a single model response.
 
 Rule weights are ordinal indicators, not calibrated probabilities.
 
-When contextual analysis fails, TRUSTLINE can return a clearly identified deterministic-only result. Translation and speech generation also have text-based fallbacks.
+When contextual analysis fails, TRUSTLINE can provide a clearly identified deterministic-only result. Translation and speech generation also have text-based fallbacks.
 
 ---
 
-## PAUSE & VERIFY — The Decision Shield
+## The TRUSTLINE Philosophy: PAUSE & VERIFY
 
 **The most important moment in a scam is the moment before someone acts.**
 
-A caller may demand an OTP, request a UPI PIN, insist on an immediate transfer, or pressure someone into installing an application.
+A suspicious caller may demand an OTP, request a UPI PIN, insist on an immediate transfer, or pressure someone into installing an application.
 
-TRUSTLINE's product direction centres on a simple principle:
+TRUSTLINE is built around a simple safety principle:
 
-**PAUSE. UNDERSTAND. VERIFY.**
+### PAUSE. UNDERSTAND. VERIFY.
 
-| Situation | Safer response |
+| Suspicious situation | Safer response |
 |---|---|
 | Someone requests an OTP | Never share your OTP |
 | Someone asks for a UPI PIN | Never disclose your PIN |
@@ -182,9 +159,28 @@ TRUSTLINE's product direction centres on a simple principle:
 | Someone requests remote access | Do not install or grant access |
 | Someone threatens immediate consequences | Contact the organisation through an independently verified channel |
 
-The broader PAUSE & VERIFY direction includes evidence-linked transcript findings, explanations of manipulation tactics, and practical next steps.
+PAUSE & VERIFY represents the product's decision-support direction. The recommendations above describe general safety guidance, not proof that a particular caller is fraudulent or legitimate.
 
-These are product-development goals; the complete decision-shield workflow should not be considered implemented unless it is available in the deployed application.
+---
+
+## What Makes TRUSTLINE Distinctive?
+
+TRUSTLINE focuses on the interpretation of suspicious voice conversations rather than only scam-awareness education.
+
+| Dimension | TRUSTLINE's focus |
+|---|---|
+| Input | User-selected audio |
+| Understanding | Speech recognition and contextual AI |
+| Detection | Contextual analysis and deterministic rules |
+| Interpretation | Structured risk assessment |
+| Accessibility | Translation and spoken guidance |
+| Safety | Practical recommendations and independent verification |
+
+TRUSTLINE is complementary to scam-awareness and practice-based tools. Its distinctive direction is helping users understand suspicious conversations and make more informed decisions.
+
+### Important distinction
+
+TRUSTLINE is not a voice-cloning detector, deepfake authentication system, or caller identity verification service. It does not guarantee that a conversation is fraudulent or that a low-risk result is safe.
 
 ---
 
@@ -194,27 +190,25 @@ These are product-development goals; the complete decision-shield workflow shoul
 |---|---|
 | Frontend | React, TypeScript, Vite |
 | Backend | Python, FastAPI |
-| AI analysis | Cohere |
+| Contextual AI | Cohere |
 | Speech recognition | Gnani Prisma STT |
-| Scam detection | Python deterministic rules |
+| Detection engine | Python deterministic rules |
 | Translation | Sarvam |
 | Text-to-speech | Gnani Timbre |
 | Validation | Pydantic |
-| PWA | Service Workers |
+| Progressive Web App | Service Workers |
 | Browser storage | localStorage |
 | Deployment | Vercel and backend hosting |
-
----
 
 ## Application Architecture
 
 ### Frontend
 
-The frontend is built with React, TypeScript, and Vite, with a Progressive Web App architecture.
+The frontend uses React, TypeScript, and Vite with a Progressive Web App architecture.
 
-Its main components include:
+Key components include:
 
-| Component | Purpose |
+| Component | Responsibility |
 |---|---|
 | `AudioRecorder` | Audio recording interface |
 | `AudioUploader` | Audio file submission |
@@ -229,7 +223,7 @@ The application includes Landing, Onboarding, Dashboard, Analysis, How It Works,
 
 ### Backend
 
-The FastAPI backend coordinates speech recognition, AI analysis, deterministic detection, risk assessment, translation, and speech generation.
+The FastAPI backend coordinates transcription, AI analysis, deterministic detection, risk assessment, translation, and speech generation.
 
 | Module | Responsibility |
 |---|---|
@@ -290,7 +284,7 @@ TRUSTLINE/
 - Node.js and npm
 - Python 3.10+
 - Git
-- Required API credentials for external services
+- Required credentials for external services
 
 ### Clone the repository
 
@@ -344,9 +338,9 @@ uvicorn main:app --reload
 
 ### Environment configuration
 
-Configure the required provider credentials in the backend environment using the exact variable names expected by the current implementation.
+Configure the external service credentials using the exact environment variable names expected by the implementation.
 
-Example configuration:
+Example:
 
 ```env
 COHERE_API_KEY=
@@ -362,11 +356,11 @@ Refer to the deployment documentation for the exact provider configuration.
 
 ## Evaluation: Measuring Detection Behaviour
 
-Trustworthy safety software requires transparent evaluation, not just impressive-looking metrics.
+A safety-focused application needs transparent evaluation.
 
-TRUSTLINE includes a synthetic, text-only benchmark for examining the behaviour of its deterministic detection rules.
+TRUSTLINE includes a synthetic, text-only benchmark to examine the behaviour of its deterministic detection rules.
 
-### Current evaluation snapshot
+### Evaluation snapshot
 
 | Metric | Result |
 |---|---:|
@@ -377,17 +371,17 @@ TRUSTLINE includes a synthetic, text-only benchmark for examining the behaviour 
 | False-positive rate | 0.0% |
 | Grouped 44-record repartition recall | 87.5% |
 
-### Interpreting the results
+### Understanding the results
 
-The reported results are from authored examples and must not be interpreted as real-world scam detection performance.
+These results describe performance on authored examples. They are not estimates of real-world scam detection performance.
 
-The 100% development-split result suggests strong fit to the development examples, not demonstrated generalisation.
+The 100% development-split result indicates strong fit to development examples, not proven generalisation.
 
 A grouped 44-record repartition produced 87.5% recall and exposed missed courier and customs scam scenarios.
 
-This evaluation is not independent, blind, or representative real-world validation. Complete audio-pipeline performance, AI-only performance, and provider-backed hybrid performance have not been established.
+The evaluation is not independent, blind, or representative real-world validation. Complete audio-pipeline performance, AI-only performance, and provider-backed hybrid performance have not been established.
 
-### Reproducing the benchmark
+### Reproduce the evaluation
 
 From the backend directory:
 
@@ -396,34 +390,34 @@ PYTHONPATH=.. python -m evaluation.generate_dataset
 PYTHONPATH=.. python -m evaluation.run_benchmark
 ```
 
-### Running automated tests
+### Run automated tests
 
 ```bash
 cd backend
 PYTHONPATH=. python -m pytest -q -p no:cacheprovider
 ```
 
-The evaluation documentation provides further details about methodology, assumptions, limitations, and detection errors.
+Detailed methodology and error analysis are documented in the `docs/` directory.
 
 ---
 
 ## Privacy, Security & Limitations
 
-Voice recordings and transcripts can contain highly sensitive personal information.
+Voice recordings and transcripts can contain sensitive personal information.
 
-TRUSTLINE's current implementation has important data-handling considerations:
+The current implementation has the following data-handling considerations:
 
 - Submitted audio is sent to the backend and external providers for processing.
 - Transcripts and reports are stored in browser localStorage.
 - Generated warning audio may remain on the backend filesystem.
-- Trusted-contact details are stored locally in the current implementation.
+- Trusted-contact details are stored locally.
 - The browser MVP does not monitor cellular calls in the background.
 - Audio uploads are limited to 20 MiB.
 - Trusted contacts do not currently receive automatic notifications.
 
 Users should submit only recordings they have permission to share.
 
-Production deployment requires clearly defined data-retention policies, secure storage, access controls, and a review of third-party provider data-handling practices.
+Production deployment requires clearly defined data-retention policies, secure storage, access controls, and review of third-party provider data-handling practices.
 
 A low-risk result means that no major indicators were found. It does not guarantee that a conversation is safe.
 
@@ -431,11 +425,11 @@ A low-risk result means that no major indicators were found. It does not guarant
 
 ## Product Roadmap
 
-TRUSTLINE's development direction focuses on making scam analysis more explainable, accessible, and useful.
+TRUSTLINE's development direction focuses on making suspicious-conversation analysis more explainable and accessible.
 
-| Area | Direction |
+| Area | Development direction |
 |---|---|
-| Evidence Mode | Connect suspicious findings to exact transcript excerpts and timestamps |
+| Evidence Mode | Link suspicious findings to exact transcript excerpts and timestamps |
 | Scam Tactic Breakdown | Explain urgency, impersonation, threats, secrecy, and manipulation |
 | PAUSE & VERIFY | Translate findings into actionable safety guidance |
 | Multilingual Accessibility | Expand language support and spoken explanations |
@@ -443,7 +437,7 @@ TRUSTLINE's development direction focuses on making scam analysis more explainab
 | Detection Evaluation | Expand scenario diversity and independent validation |
 | Privacy Engineering | Strengthen retention policies and user controls |
 
-These represent product-development directions, not claims that every capability is already implemented.
+These are development directions, not claims that every capability is already implemented.
 
 ---
 
@@ -461,7 +455,7 @@ See `docs/DEPLOYMENT.md` for deployment details.
 
 **Explainability over unexplained scores**
 
-Every warning should help users understand why a particular behaviour may be suspicious.
+Warnings should help users understand why a particular behaviour may be suspicious.
 
 **Evidence over assumptions**
 
@@ -473,7 +467,7 @@ Contextual AI and deterministic rules contribute different forms of analysis.
 
 **Honest uncertainty**
 
-TRUSTLINE communicates the limitations of its detection approach rather than presenting ordinal rule weights as fraud probabilities.
+Ordinal rule weights are not presented as calibrated fraud probabilities.
 
 **Graceful degradation**
 
@@ -481,13 +475,13 @@ The application provides clearly identified fallbacks when external AI, translat
 
 **Privacy-aware design**
 
-The project documents its current data-handling limitations and avoids claiming background call monitoring or automatic family notifications that the current MVP does not provide.
+The project documents its current data-handling limitations and avoids claiming capabilities that the current MVP does not provide.
 
 ---
 
 ## Documentation
 
-| File | Description |
+| Document | Description |
 |---|---|
 | `ARCHITECTURE.md` | System architecture |
 | `DETECTION_METHODOLOGY.md` | Detection methodology |
@@ -512,9 +506,9 @@ Sometimes, one convincing conversation is enough.
 
 One OTP shared. One transfer made. One moment of panic.
 
-TRUSTLINE is built to help people recognise suspicious behaviour, understand the evidence, and make more informed decisions before acting.
+TRUSTLINE is built to help people recognise suspicious behaviour, understand the warning signs, and make more informed decisions before acting.
 
-By bringing together AI, speech technology, deterministic detection, and multilingual safety guidance, TRUSTLINE aims to make digital interactions easier to question and safer to navigate.
+By combining AI, speech technology, deterministic detection, and multilingual safety guidance, TRUSTLINE aims to make digital interactions easier to question and safer to navigate.
 
 > **A scammer creates urgency. TRUSTLINE creates a moment to think.**
 
@@ -527,6 +521,8 @@ By bringing together AI, speech technology, deterministic detection, and multili
 **Project:** TRUSTLINE — The Human Firewall for Voice Scams
 
 **GitHub:** [ManyaValecha/TRUSTLINE](https://github.com/ManyaValecha/TRUSTLINE)
+
+**Live Demo:** [trustline-teal.vercel.app](https://trustline-teal.vercel.app/)
 
 **LinkedIn:** [Manya Valecha](https://www.linkedin.com/in/manyavalecha/)
 
