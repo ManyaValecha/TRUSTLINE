@@ -1,5 +1,5 @@
 # TRUSTLINE 🛡️
-### The Human Firewall for Voice Scams
+### The Human Firewall for Voice Scams 
 
 **Hear the call. Understand the risk. Protect the decision.**
 
