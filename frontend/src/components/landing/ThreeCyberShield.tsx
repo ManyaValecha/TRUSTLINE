@@ -428,6 +428,7 @@ export const ThreeCyberShield: React.FC = () => {
 
           {/* Solid/RGBA Control Surface (No backdrop-filter over WebGL) */}
           <div className="w-full p-3 rounded-2xl bg-[#0c1024] border border-violet-900/50 shadow-2xl space-y-2.5">
+            <p className="text-[10px] font-semibold text-amber-200">Illustrative animation only — no call is scanned or intercepted.</p>
             <div className="flex flex-wrap items-center justify-between gap-2">
               {/* Defense Mode Pills */}
               <div className="flex items-center gap-1">
@@ -462,7 +463,7 @@ export const ThreeCyberShield: React.FC = () => {
                       : 'bg-[#151936] text-slate-400 hover:text-white'
                   }`}
                 >
-                  Intercept
+                  Alert animation
                 </button>
               </div>
 

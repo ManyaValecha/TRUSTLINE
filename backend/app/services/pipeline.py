@@ -1,18 +1,28 @@
 from pathlib import Path
+import asyncio
+import re
 
 from app.services.gnani_stt import transcribe_audio
-from app.services.cohere_analyzer import analyze_transcript
+from app.services.cohere_analyzer import analyze_transcript, CohereAnalysisError
 from app.services.sarvam_translator import translate_text
+from app.services.sarvam_translator import SarvamTranslationError
 from app.services.gnani_tts import generate_speech, GnaniTTSError
 from app.scam_engine.rules import detect_rule_based_risks
+from app.schemas import DetectionSignal
 
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 WARNING_AUDIO = BASE_DIR / "storage" / "audio" / "trustline_warning.wav"
 
 
-def combine_analysis(ai_result: dict, rule_result: dict) -> dict:
-    priority = {"LOW": 1, "MEDIUM": 2, "HIGH": 3}
+def combine_analysis(
+    ai_result: dict,
+    rule_result: dict,
+    *,
+    transcript: str = "",
+    complete: bool = True,
+) -> dict:
+    priority = {"LOW": 1, "MEDIUM": 2, "HIGH": 3, "CRITICAL": 4}
 
     ai_risk = ai_result["risk_level"].upper()
     rule_risk = rule_result["risk_level"].upper()
@@ -32,7 +42,25 @@ def combine_analysis(ai_result: dict, rule_result: dict) -> dict:
         rule_result["evidence"]
     ))
 
-    if final_risk == "HIGH":
+    signals = list(rule_result.get("signals", []))
+    for excerpt in ai_result.get("evidence", []):
+        match = re.search(re.escape(excerpt), transcript, flags=re.IGNORECASE)
+        if not match:
+            # Evidence is validated at the Cohere boundary. Keep this second
+            # guard so ungrounded evidence can never reach the report.
+            continue
+        signals.append(DetectionSignal(
+            category="Contextual AI indicator",
+            severity=ai_risk,
+            evidence=excerpt,
+            start=match.start(),
+            end=match.end(),
+            explanation="Contextual analysis flagged this exact transcript excerpt.",
+            source="cohere",
+            recommended_action="Pause and independently verify before sharing information or sending money.",
+        ).model_dump())
+
+    if final_risk in {"HIGH", "CRITICAL"}:
         action = (
             "Stop the conversation immediately. Do not share OTPs, "
             "UPI PINs, passwords or money. Contact your bank using "
@@ -46,15 +74,30 @@ def combine_analysis(ai_result: dict, rule_result: dict) -> dict:
     else:
         action = ai_result["recommended_action"]
 
+    uncertainties: list[str] = []
+    if rule_result.get("uncertainty"):
+        uncertainties.append(rule_result["uncertainty"])
+    if abs(priority[ai_risk] - priority[rule_risk]) >= 2:
+        uncertainties.append(
+            "Contextual AI and deterministic rules disagree substantially. The higher indicated risk is retained; verify the request independently."
+        )
+    if not complete:
+        uncertainties.append(
+            "Contextual AI analysis did not complete. This result uses deterministic rules only."
+        )
+
     return {
         "risk_level": final_risk,
         "is_scam_likely": (
-            ai_result["is_scam_likely"] or final_risk == "HIGH"
+            ai_result["is_scam_likely"] or final_risk in {"HIGH", "CRITICAL"}
         ),
         "detected_tactics": tactics,
         "evidence": evidence,
         "recommended_action": action,
         "explanation": ai_result["explanation"],
+        "signals": signals,
+        "analysis_complete": complete,
+        "uncertainty": " ".join(dict.fromkeys(uncertainties)) or None,
     }
 
 
@@ -74,26 +117,60 @@ async def analyze_audio(
 
     transcript = transcription["transcript"]
 
-    # 2. Cohere AI analysis
-    ai_analysis = analyze_transcript(transcript)
+    provider_status = {
+        "transcription": "complete",
+        "contextual_analysis": "complete",
+        "translation": "complete",
+        "spoken_guidance": "not_requested",
+    }
+
+    # Provider SDKs below are synchronous, so move them off the ASGI event loop.
+    try:
+        ai_analysis = await asyncio.to_thread(analyze_transcript, transcript)
+    except CohereAnalysisError:
+        provider_status["contextual_analysis"] = "unavailable"
+        ai_analysis = {
+            "success": False,
+            "provider": "Cohere",
+            "risk_level": "LOW",
+            "is_scam_likely": False,
+            "detected_tactics": [],
+            "evidence": [],
+            "recommended_action": (
+                "Contextual analysis is unavailable. Pause and independently "
+                "verify any request for money, credentials, or urgent action."
+            ),
+            "explanation": "This result uses deterministic rules only because contextual analysis did not complete.",
+        }
 
     # 3. Independent rules analysis
     rule_analysis = detect_rule_based_risks(transcript)
 
     # 4. Combine risk assessments
-    final_analysis = combine_analysis(ai_analysis, rule_analysis)
+    final_analysis = combine_analysis(
+        ai_analysis,
+        rule_analysis,
+        transcript=transcript,
+        complete=provider_status["contextual_analysis"] == "complete",
+    )
 
     # 5. Translate warning
-    translated_warning = translate_text(
-        text=final_analysis["recommended_action"],
-        source_language_code="en-IN",
-        target_language_code=target_language,
-    )
+    try:
+        translated_warning = await asyncio.to_thread(
+            translate_text,
+            text=final_analysis["recommended_action"],
+            source_language_code="en-IN",
+            target_language_code=target_language,
+        )
+        translated_text = translated_warning["translated_text"]
+    except SarvamTranslationError:
+        provider_status["translation"] = "unavailable"
+        translated_text = final_analysis["recommended_action"]
 
     # 6. Generate spoken warning
     spoken_warning = {
         "success": False,
-        "message": "Speech generation was not completed.",
+        "message": "Spoken guidance is unavailable; read the safety guidance shown on screen.",
     }
 
     try:
@@ -102,8 +179,9 @@ async def analyze_audio(
                 "The current configured Timbre voice is for Hindi warnings."
             )
 
-        tts_result = generate_speech(
-            text=translated_warning["translated_text"],
+        tts_result = await asyncio.to_thread(
+            generate_speech,
+            text=translated_text,
             language_code=target_language,
             voice="Nalini",
             output_path=str(WARNING_AUDIO),
@@ -117,9 +195,10 @@ async def analyze_audio(
             "audio_url": "/api/warnings/audio",
             "audio_size": tts_result["audio_size"],
         }
+        provider_status["spoken_guidance"] = "complete"
 
-    except GnaniTTSError as error:
-        spoken_warning["message"] = str(error)
+    except GnaniTTSError:
+        provider_status["spoken_guidance"] = "unavailable"
 
     return {
         "success": True,
@@ -127,7 +206,11 @@ async def analyze_audio(
         "ai_analysis": ai_analysis,
         "rule_analysis": rule_analysis,
         "scam_analysis": final_analysis,
-        "translated_warning": translated_warning["translated_text"],
+        "translated_warning": translated_text,
         "spoken_warning": spoken_warning,
         "target_language": target_language,
+        "translated_warning_language": (
+            target_language if provider_status["translation"] == "complete" else "en-IN"
+        ),
+        "provider_status": provider_status,
     }

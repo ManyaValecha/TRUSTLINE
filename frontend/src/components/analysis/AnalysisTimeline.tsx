@@ -3,6 +3,7 @@ import { UploadCloud, MessageSquare, BrainCircuit, ShieldCheck, Languages, FileC
 
 interface AnalysisTimelineProps {
   isAnalyzing: boolean;
+  isSimulation?: boolean;
   error: string | null;
   onRetry?: () => void;
   onCancel?: () => void;
@@ -19,16 +20,17 @@ interface PipelineStage {
 
 export const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
   isAnalyzing,
+  isSimulation = false,
   error,
   onRetry,
   onCancel,
 }) => {
-  const stages: PipelineStage[] = [
+  const providerStages: PipelineStage[] = [
     {
       id: 1,
-      title: 'Packaging & Transmitting Audio',
+      title: 'Preparing Authorized Audio Upload',
       provider: 'FastAPI Stream',
-      description: 'Transferring multipart/form-data audio securely to the processing pipeline.',
+      description: 'Preparing the selected recording for upload to the configured backend.',
       icon: UploadCloud,
       accentColor: 'text-violet-400 border-violet-500/50 bg-violet-950/40',
     },
@@ -36,7 +38,7 @@ export const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
       id: 2,
       title: 'Transcribing Multilingual Speech',
       provider: 'Gnani Speech STT',
-      description: 'Converting voice frequencies and Indian conversational accents to accurate text.',
+      description: 'The configured speech provider attempts to convert the submitted recording into text.',
       icon: MessageSquare,
       accentColor: 'text-purple-400 border-purple-500/50 bg-purple-950/40',
     },
@@ -74,6 +76,26 @@ export const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
     },
   ];
 
+  const simulationStages: PipelineStage[] = [
+    {
+      id: 1,
+      title: 'Loading prewritten sample',
+      provider: 'Local simulation',
+      description: 'This example contains authored text only. No audio is sent and no external provider is called.',
+      icon: FileCheck2,
+      accentColor: 'text-violet-400 border-violet-500/50 bg-violet-950/40',
+    },
+    {
+      id: 2,
+      title: 'Preparing example assessment',
+      provider: 'Local simulation',
+      description: 'The prewritten demonstration result is being displayed; it is not a live model or detector run.',
+      icon: ShieldCheck,
+      accentColor: 'text-cyan-400 border-cyan-500/50 bg-cyan-950/40',
+    },
+  ];
+  const stages = isSimulation ? simulationStages : providerStages;
+
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
 
   // Advance progressive stages naturally while waiting for server response
@@ -84,31 +106,30 @@ export const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
     }
 
     // Step through the visual stages progressively
-    const timers = [
-      setTimeout(() => setCurrentStageIndex(1), 700),
-      setTimeout(() => setCurrentStageIndex(2), 2200),
-      setTimeout(() => setCurrentStageIndex(3), 4200),
-      setTimeout(() => setCurrentStageIndex(4), 6200),
-      setTimeout(() => setCurrentStageIndex(5), 8200),
-    ];
+    const milestones = isSimulation ? [500] : [700, 2200, 4200, 6200, 8200];
+    const timers = milestones.map((delay, index) =>
+      setTimeout(() => setCurrentStageIndex(index + 1), delay),
+    );
 
     return () => {
       timers.forEach(clearTimeout);
     };
-  }, [isAnalyzing]);
+  }, [isAnalyzing, isSimulation]);
 
   return (
     <div className="w-full max-w-2xl mx-auto p-6 sm:p-8 rounded-3xl bg-[#0E132A] border border-violet-900/40 shadow-2xl space-y-6">
       <div className="text-center space-y-2">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-950/70 border border-violet-500/30 text-xs font-bold text-violet-300">
           <Loader2 className="w-3.5 h-3.5 animate-spin text-violet-400" />
-          <span>Multi-Provider Behavioral Audit Active</span>
+          <span>{isSimulation ? 'Simulation · local only' : 'Multi-Provider Behavioral Audit Active'}</span>
         </div>
         <h2 className="text-xl sm:text-2xl font-extrabold text-white">
-          Analysing Conversational Safety
+          {isSimulation ? 'Preparing Demonstration' : 'Analysing Conversational Safety'}
         </h2>
         <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
-          TRUSTLINE is examining speech transcripts, threat phrasing, and coercion indicators across Gnani, Cohere, and Sarvam.
+          {isSimulation
+            ? 'This prewritten sample uses no audio and contacts no AI or speech provider.'
+            : 'The submitted recording is being processed through the configured transcription, analysis, and optional translation providers.'}
         </p>
       </div>
 

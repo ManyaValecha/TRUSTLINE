@@ -12,7 +12,6 @@ import {
   Eye,
   Volume2,
   ExternalLink,
-  ShieldCheck,
   Cpu
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -179,20 +178,9 @@ export const SettingsPage: React.FC = () => {
             </button>
           </div>
 
-          {/* Cloud Audio Retention */}
-          <div className="flex items-center justify-between pt-4">
-            <div className="space-y-0.5 max-w-lg">
-              <div className="text-sm font-bold text-white flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>Cloud Audio Retention (Always Disabled by Default)</span>
-              </div>
-              <p className="text-xs text-slate-400">
-                TRUSTLINE destroys temporary audio buffers immediately upon report generation.
-              </p>
-            </div>
-            <span className="px-2.5 py-1 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-900/40 text-xs font-bold font-mono">
-              ZERO-RETENTION
-            </span>
+          <div className="rounded-xl border border-amber-500/30 bg-amber-950/20 p-4 text-xs text-amber-100 space-y-1.5">
+            <div className="font-bold">Audio and report data</div>
+            <p>Submitted audio is forwarded to the backend and transcription provider; transcript text is sent to the configured analysis provider. Reports, including transcripts, are stored in this browser's localStorage. Provider and hosting retention is not controlled here. Use Clear History below to remove local report records.</p>
           </div>
 
           {/* Offline / Diagnostic Simulator Mode */}
@@ -200,10 +188,10 @@ export const SettingsPage: React.FC = () => {
             <div className="space-y-0.5 max-w-lg">
               <div className="text-sm font-bold text-white flex items-center gap-2">
                 <Cpu className="w-4 h-4 text-cyan-400" />
-                <span>Diagnostic Benchmark Simulator</span>
+                <span>Demo Sample Mode</span>
               </div>
               <p className="text-xs text-slate-400">
-                Enables testing of full Gnani+Cohere+Sarvam workflow when local FastAPI server is not currently running.
+                Shows prewritten examples when the backend is unavailable. No recording is analyzed and no provider is contacted in simulation mode.
               </p>
             </div>
             <button

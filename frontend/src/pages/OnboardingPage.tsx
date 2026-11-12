@@ -59,8 +59,8 @@ export const OnboardingPage: React.FC = () => {
               Welcome to TRUSTLINE, {name}!
             </h2>
             <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-              Your voice safety guardian is set up. Scam analyses and warning advisories will be generated in{' '}
-              <strong className="text-violet-300">{selectedLangObj?.name} ({selectedLangObj?.nativeName})</strong>.
+              Your preferred safety language is set to{' '}
+              <strong className="text-violet-300">{selectedLangObj?.name} ({selectedLangObj?.nativeName})</strong>. Translation availability depends on configured services.
             </p>
           </div>
 

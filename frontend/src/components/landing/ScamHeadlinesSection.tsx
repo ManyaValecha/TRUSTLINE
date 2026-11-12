@@ -21,7 +21,7 @@ export const ScamHeadlinesSection: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [isGrounded, setIsGrounded] = useState<boolean>(true);
+  const [isGrounded, setIsGrounded] = useState<boolean>(false);
   const [groundingSources, setGroundingSources] = useState<string[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -43,8 +43,8 @@ export const ScamHeadlinesSection: React.FC = () => {
         setGroundingSources(data.groundingSources || []);
       }
     } catch (err: unknown) {
-      console.warn('Could not fetch live Google Search headlines, using default set', err);
-      setError('Live search grounding stream took longer than expected; displaying verified national fraud bulletins.');
+      console.warn('Could not load scam advisory headlines', err);
+      setError('Live search is unavailable. The curated safety examples below are not current news.');
     } finally {
       setLoading(false);
       setIsRefreshing(false);
@@ -93,13 +93,13 @@ export const ScamHeadlinesSection: React.FC = () => {
         <div className="space-y-2 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-500/30 text-xs font-bold text-cyan-300">
             <Globe className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Google Search API &bull; Grounded Intelligence</span>
+            <span>Live search when available · curated examples otherwise</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Latest Voice Scam Headlines & Fraud Trends
+            Scam Safety Advisories
           </h2>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Real-time scam threat intelligence verified via Google Search grounding. Understand active coercion methods to safeguard your family.
+            Search-derived items appear only when grounded source links are returned. Otherwise, curated examples are shown and should not be treated as current reports.
           </p>
         </div>
 
@@ -154,12 +154,12 @@ export const ScamHeadlinesSection: React.FC = () => {
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-400" />
           <span>
-            {isGrounded ? 'Connected to Google Search Grounding Tool' : 'Offline Verified National Cache'}
+            {isGrounded ? 'Live search results with source links' : 'Curated safety examples · not current news'}
           </span>
         </div>
         {groundingSources.length > 0 && (
           <div className="flex items-center gap-2">
-            <span>Verified Sources:</span>
+            <span>Search source links:</span>
             <span className="font-mono text-cyan-400">{groundingSources.length} citation links</span>
           </div>
         )}

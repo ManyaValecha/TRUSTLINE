@@ -1,0 +1,15 @@
+{
+  "name": "trustline-synthetic-v1-grouped-seed-20261111",
+  "seed": 20261111,
+  "method": "SHA-256 rank scenario-family names with the fixed seed, then hold out 20% of families within each label stratum (rounded to nearest family). All variants remain together.",
+  "held_out_families": [
+    "scam-10",
+    "scam-11",
+    "scam-00",
+    "legitimate-security_awareness",
+    "legitimate-routine_account_alert",
+    "legitimate-routine_upi_payment",
+    "legitimate-refund_status"
+  ],
+  "warning": "This is a reproducible re-partition of the existing authored synthetic pilot, not a newly collected or blind external validation set."
+}

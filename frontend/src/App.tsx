@@ -22,6 +22,7 @@ const DashboardPage = trustlineLazy(() => import("./pages/DashboardPage").then((
 const FamilyPage = trustlineLazy(() => import("./pages/FamilyPage").then((m) => ({ default: m["FamilyPage"] })));
 const HowItWorksPage = trustlineLazy(() => import("./pages/HowItWorksPage").then((m) => ({ default: m["HowItWorksPage"] })));
 const SettingsPage = trustlineLazy(() => import("./pages/SettingsPage").then((m) => ({ default: m["SettingsPage"] })));
+const EvaluationPage = trustlineLazy(() => import("./pages/EvaluationPage").then((m) => ({ default: m["EvaluationPage"] })));
 
 const AppContent: React.FC = () => {
   const { activeTab, settings } = useApp();
@@ -50,6 +51,7 @@ const AppContent: React.FC = () => {
         {activeTab === 'family' && <FamilyPage />}
         {activeTab === 'how-it-works' && <HowItWorksPage />}
         {activeTab === 'settings' && <SettingsPage />}
+        {activeTab === 'evaluation' && <EvaluationPage />}
               </TrustlineSuspense>
       </main>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import {
   ShieldCheck,
   PhoneCall,
@@ -20,12 +20,12 @@ import {
 } from 'lucide-react';
 import { ShieldLogo } from '../components/common/ShieldLogo';
 import { useApp } from '../context/AppContext';
-import { ThreeCyberShield } from '../components/landing/ThreeCyberShield';
-import { ScamHeadlinesSection } from '../components/landing/ScamHeadlinesSection';
+
+const ThreeCyberShield = lazy(() => import('../components/landing/ThreeCyberShield').then((module) => ({ default: module.ThreeCyberShield })));
 
 export const LandingPage: React.FC = () => {
   const { setActiveTab, user } = useApp();
-  const [heroVisualMode, setHeroVisualMode] = useState<'3d' | 'call'>('3d');
+  const [heroVisualMode, setHeroVisualMode] = useState<'3d' | 'call'>('call');
 
   return (
     <div className="space-y-24 py-6 sm:py-10">
@@ -49,8 +49,8 @@ export const LandingPage: React.FC = () => {
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
-              TRUSTLINE uses AI to analyse suspicious conversations, identify manipulation tactics, and help protect you and your family from voice scams.
+              <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
+              When you choose to submit a recording, TRUSTLINE can analyze its transcript for suspicious behavior and offer practical safety guidance.
             </p>
 
             {/* CTAs */}
@@ -84,7 +84,7 @@ export const LandingPage: React.FC = () => {
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>10 Indian regional languages</span>
+                <span>Language choices depend on configured provider support</span>
               </div>
             </div>
           </div>
@@ -121,7 +121,9 @@ export const LandingPage: React.FC = () => {
 
             {heroVisualMode === '3d' ? (
               <div className="w-full max-w-md">
-                <ThreeCyberShield />
+                <Suspense fallback={<div className="aspect-square w-full animate-pulse rounded-3xl bg-violet-950/30" aria-label="Loading shield illustration" />}>
+                  <ThreeCyberShield />
+                </Suspense>
               </div>
             ) : (
               <div className="relative w-full max-w-md">
@@ -132,11 +134,11 @@ export const LandingPage: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping" />
                       <span className="text-xs font-extrabold text-rose-300 uppercase tracking-widest">
-                        Incoming Call Analysis
+                        Illustrative Transcript Review
                       </span>
                     </div>
                     <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40">
-                      AI GUARDIAN LIVE
+                      DEMO VISUAL
                     </span>
                   </div>
 
@@ -155,8 +157,8 @@ export const LandingPage: React.FC = () => {
                     {/* Simulated Acoustic Waveform */}
                     <div className="p-3 rounded-xl bg-[#080B18] border border-violet-950/60 space-y-1.5">
                       <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono">
-                        <span>VOICE STREAM</span>
-                        <span className="text-violet-400">Gnani STT: en-IN</span>
+                        <span>SIMULATED AUDIO VISUAL</span>
+                        <span className="text-violet-400">Illustrative only</span>
                       </div>
                       <div className="flex items-center justify-between gap-1 h-8 px-1">
                         {[40, 75, 95, 60, 30, 85, 100, 70, 45, 90, 65, 80, 50, 95, 30, 70].map((h, i) => (
@@ -174,10 +176,10 @@ export const LandingPage: React.FC = () => {
                       <div className="flex items-center justify-between">
                         <div className="text-xs font-black text-rose-300 flex items-center gap-1.5">
                           <AlertTriangle className="w-3.5 h-3.5" />
-                          <span>COERCION TACTIC DETECTED</span>
+                          <span>EXAMPLE WARNING SIGNAL</span>
                         </div>
                         <span className="text-[9px] font-mono px-1.5 py-0.5 bg-rose-900/60 text-rose-200 rounded">
-                          Cohere AI
+                          Sample content
                         </span>
                       </div>
                       <p className="text-[11px] text-rose-100 font-mono leading-tight">
@@ -207,7 +209,7 @@ export const LandingPage: React.FC = () => {
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-white">Zero Deepfake Guesswork</div>
+                    <div className="text-xs font-bold text-white">Transcript Behavior Only</div>
                     <div className="text-[10px] text-slate-400">Strictly Behavioral Coercion Analysis</div>
                   </div>
                 </div>
@@ -217,20 +219,17 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* LATEST VOICE SCAM HEADLINES & FRAUD TRENDS (Powered by Google Search Grounding) */}
-      <ScamHeadlinesSection />
-
       {/* THREE TECHNOLOGY PROVIDER CARDS */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
         <div className="text-center space-y-2 max-w-2xl mx-auto">
           <div className="text-xs font-bold uppercase tracking-widest text-violet-400">
-            Enterprise AI Pipeline
+            Configurable Analysis Pipeline
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-            Powered by Leading Indian & Global AI Systems
+            Speech, Context, and Safety Rules
           </h2>
           <p className="text-xs sm:text-sm text-slate-400">
-            A purpose-built multi-model pipeline tailored specifically to Indian linguistic nuances and common financial coercion tactics.
+            Provider integrations can add transcription, contextual analysis, translation, and spoken guidance. Availability depends on backend configuration; the deterministic rules remain a separate signal source.
           </p>
         </div>
 
@@ -248,7 +247,7 @@ export const LandingPage: React.FC = () => {
                 <h3 className="text-lg font-bold text-white">Gnani Conversational STT</h3>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Specialized in recognizing Indian English, regional accents, mixed phrasing (Hinglish/Tanglish), and low-bandwidth telecom voice audio with high precision.
+                The configured transcription integration converts submitted audio into text. Recognition quality varies with language, recording quality, and provider behavior; no accuracy figure has been measured here.
               </p>
             </div>
             <div className="pt-4 border-t border-violet-900/20 text-[11px] text-slate-500 font-mono">
@@ -290,11 +289,11 @@ export const LandingPage: React.FC = () => {
                 <h3 className="text-lg font-bold text-white">Sarvam Indic Safety Translation</h3>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Transforms complex cybersecurity threat assessments into clear, reassuring, and immediate warning advisories in 10 official Indian languages.
+                Can translate the safety guidance into a selected language when the provider is configured and the request succeeds. Availability and translation quality have not been independently evaluated.
               </p>
             </div>
             <div className="pt-4 border-t border-violet-900/20 text-[11px] text-slate-500 font-mono">
-              10 Indian Languages &bull; Reassuring Tone
+              Provider-dependent language output
             </div>
           </div>
         </div>
@@ -319,22 +318,22 @@ export const LandingPage: React.FC = () => {
             {
               step: '01',
               title: 'Upload or Record',
-              desc: 'Select a saved call recording or speak into your browser microphone with explicit consent.',
+              desc: 'Select a saved call recording or record through the browser after granting microphone permission and confirming the consent control.',
             },
             {
               step: '02',
               title: 'Speech Transcription',
-              desc: 'Gnani STT translates the conversational voice frequencies into structured textual dialogue.',
+              desc: 'The configured speech provider attempts to convert the submitted recording into a transcript.',
             },
             {
               step: '03',
               title: 'Manipulation Audit',
-              desc: 'Cohere AI and TRUSTLINE rules scan for OTP extraction, fake authority, and payment coercion.',
+              desc: 'When configured, contextual AI and deterministic rules independently check for selected warning patterns in the transcript.',
             },
             {
               step: '04',
               title: 'Safety Directive',
-              desc: 'Receive immediate actionable advice and translated warnings in your regional mother tongue.',
+              desc: 'See safety actions and, when configured, a translated warning. Provider failure leaves on-screen guidance available.',
             },
           ].map((item, idx) => (
             <div key={idx} className="p-6 rounded-2xl bg-[#0D1126] border border-violet-900/30 space-y-3 relative">
@@ -354,10 +353,10 @@ export const LandingPage: React.FC = () => {
               Core Capabilities
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-white">
-              Targeted Scam Modalities Identified
+              Patterns Included in Current Rules
             </h2>
             <p className="text-xs sm:text-sm text-slate-400">
-              Scammers rely on psychological triggers rather than technical exploits. TRUSTLINE recognizes the signatures.
+              The current deterministic rules include patterns for these behaviors. Coverage is limited, so missed signals are possible.
             </p>
           </div>
 
@@ -390,29 +389,29 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* PRIVACY-FIRST PROMISE */}
+      {/* DATA HANDLING */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center space-y-6">
         <div className="inline-flex p-3 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
           <Lock className="w-6 h-6" />
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-          Our Privacy-First Covenant
+          Understand How Your Data Is Used
         </h2>
         <p className="text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto">
-          We believe true cybersecurity starts with user autonomy. TRUSTLINE does not monitor phone calls in the background, does not share audio recordings, and enforces zero-retention defaults.
+          TRUSTLINE only processes audio after you submit it. The backend forwards audio to Gnani for transcription and sends transcript text to Cohere; safety guidance may be sent to Sarvam. Reports are stored in this browser, and generated speech can remain on the backend filesystem.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
           <div className="p-4 rounded-xl bg-[#0D1022] border border-slate-800 space-y-1">
-            <div className="text-xs font-bold text-white">Explicit User Action Only</div>
-            <div className="text-[11px] text-slate-400">Audio is analysed only when you click "Analyse".</div>
+            <div className="text-xs font-bold text-white">You Choose What to Submit</div>
+            <div className="text-[11px] text-slate-400">Audio analysis starts only after you submit a recording.</div>
           </div>
           <div className="p-4 rounded-xl bg-[#0D1022] border border-slate-800 space-y-1">
-            <div className="text-xs font-bold text-white">No Silent Wiretapping</div>
-            <div className="text-[11px] text-slate-400">We never claim to tap regular cellular phone calls.</div>
+            <div className="text-xs font-bold text-white">No Call Interception</div>
+            <div className="text-[11px] text-slate-400">The app does not monitor ordinary cellular calls.</div>
           </div>
           <div className="p-4 rounded-xl bg-[#0D1022] border border-slate-800 space-y-1">
-            <div className="text-xs font-bold text-white">Local-First Storage</div>
-            <div className="text-[11px] text-slate-400">Settings and history stay entirely in your browser.</div>
+            <div className="text-xs font-bold text-white">Report History Is Local</div>
+            <div className="text-[11px] text-slate-400">History includes transcripts in browser storage; clear it in Settings. Provider and server copies are not cleared there.</div>
           </div>
         </div>
       </section>

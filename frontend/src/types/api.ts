@@ -5,7 +5,7 @@
  * - POST /api/analyze?speech_language={speech_lang}&target_language={target_lang}
  */
 
-export type RiskLevel = 'LOW' | 'MEDIUM' | 'HIGH';
+export type RiskLevel = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
 
 export interface TranscriptionResult {
   success: boolean;
@@ -22,6 +22,22 @@ export interface ScamAnalysisResult {
   evidence: string[];
   recommended_action: string;
   explanation: string;
+  analysis_complete?: boolean;
+  uncertainty?: string | null;
+  signals?: DetectionSignal[];
+}
+
+export interface DetectionSignal {
+  category: string;
+  severity: RiskLevel;
+  evidence: string;
+  start: number;
+  end: number;
+  explanation: string;
+  source: 'deterministic_rule' | 'cohere';
+  supporting_signals: string[];
+  conflicting_signals: string[];
+  recommended_action: string;
 }
 
 export interface DetailedAiAnalysis {
@@ -41,10 +57,28 @@ export interface DetailedRuleAnalysis {
 
 export interface AnalyzeAudioResponse {
   success: boolean;
+  /** True when this report is illustrative demo data, not backend analysis. */
+  simulation?: boolean;
   transcription: TranscriptionResult;
   scam_analysis: ScamAnalysisResult;
   translated_warning?: string;
   target_language?: string;
+  translated_warning_language?: string;
+  provider_status?: {
+    transcription?: string;
+    contextual_analysis?: string;
+    translation?: string;
+    spoken_guidance?: string;
+  };
+  spoken_warning?: {
+    success: boolean;
+    message?: string;
+    provider?: string;
+    voice?: string;
+    language?: string;
+    audio_url?: string;
+    audio_size?: number;
+  };
   // Optional extended backend fields
   ai_analysis?: DetailedAiAnalysis;
   rule_analysis?: DetailedRuleAnalysis;
@@ -53,9 +87,8 @@ export interface AnalyzeAudioResponse {
 
 export interface HealthCheckResponse {
   status: string;
-  service?: string;
-  version?: string;
-  providers?: {
+  note?: string;
+  provider_configuration?: {
     gnani?: boolean;
     cohere?: boolean;
     sarvam?: boolean;

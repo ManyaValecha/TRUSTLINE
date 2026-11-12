@@ -13,7 +13,8 @@ import {
   ExternalLink,
   Eye,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  BarChart3
 } from 'lucide-react';
 import { ShieldLogo } from '../common/ShieldLogo';
 import { useApp } from '../../context/AppContext';
@@ -50,6 +51,7 @@ export const Header: React.FC = () => {
     { id: 'dashboard', label: 'Protection', icon: Activity },
     { id: 'family', label: 'Family Safety', icon: Users },
     { id: 'settings', label: 'Settings', icon: SettingsIcon },
+    { id: 'evaluation', label: 'Evaluation', icon: BarChart3 },
   ];
 
   const handleNav = (id: string) => {

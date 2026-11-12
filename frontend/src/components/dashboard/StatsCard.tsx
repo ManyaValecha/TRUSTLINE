@@ -6,7 +6,7 @@ export const StatsCard: React.FC = () => {
   const { analysisHistory } = useApp();
 
   const total = analysisHistory.length;
-  const highCount = analysisHistory.filter((item) => item.riskLevel === 'HIGH').length;
+  const highCount = analysisHistory.filter((item) => item.riskLevel === 'HIGH' || item.riskLevel === 'CRITICAL').length;
   const mediumCount = analysisHistory.filter((item) => item.riskLevel === 'MEDIUM').length;
   const lowCount = analysisHistory.filter((item) => item.riskLevel === 'LOW').length;
 

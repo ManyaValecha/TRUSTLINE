@@ -1,10 +1,10 @@
 import React from 'react';
-import { Sparkles, ShieldAlert, CheckCircle2, AlertTriangle, ArrowRight } from 'lucide-react';
+import { Sparkles, ShieldAlert, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export interface SampleScenario {
-  id: 'bank_kyc_scam' | 'courier_threat_scam' | 'safe_hospital_call';
+  id: 'digital_arrest_scam' | 'legitimate_bank_call' | 'family_emergency_scam';
   title: string;
-  category: 'High-Risk Scam' | 'Extortion Scam' | 'Legitimate Call';
+  category: 'High-Risk Scam' | 'Legitimate Call';
   expectedRisk: 'HIGH' | 'LOW';
   description: string;
   transcriptSnippet: string;
@@ -12,31 +12,31 @@ export interface SampleScenario {
 
 export const SAMPLE_SCENARIOS: SampleScenario[] = [
   {
-    id: 'bank_kyc_scam',
-    title: 'Bank KYC Deactivation & Urgent OTP Demand',
+    id: 'digital_arrest_scam',
+    title: 'Digital Arrest and OTP Demand',
     category: 'High-Risk Scam',
     expectedRisk: 'HIGH',
-    description: 'Impersonates SBI Fraud Dept, claims account will be frozen in 10 minutes, demands SMS OTP.',
+    description: 'A caller impersonates a bank and police authority, threatens account action, demands an OTP, and asks for secrecy.',
     transcriptSnippet:
-      '"Your net banking is suspended due to unverified KYC. Give me the 6-digit OTP code received on SMS right now..."',
+      '"Give me the 6-digit OTP now or your account will be frozen. Do not tell anyone; this is an active police case."',
   },
   {
-    id: 'courier_threat_scam',
-    title: 'Customs Contraband & Digital Arrest Threat',
-    category: 'Extortion Scam',
-    expectedRisk: 'HIGH',
-    description: 'Fabricates illegal package seizure at airport, claims CBI warrant, extorts urgent UPI payment.',
-    transcriptSnippet:
-      '"Package seized with contraband. A CBI warrant has been issued against your Aadhaar. Transfer 25,000 via UPI..."',
-  },
-  {
-    id: 'safe_hospital_call',
-    title: 'Apollo Clinic Routine Appointment Confirmation',
+    id: 'legitimate_bank_call',
+    title: 'Legitimate Bank Security Call',
     category: 'Legitimate Call',
     expectedRisk: 'LOW',
-    description: 'Routine healthcare confirmation with Dr. Verma. No advance payment or credentials asked.',
+    description: 'A bank representative reminds the customer never to share an OTP and asks them to call the official number on their card.',
     transcriptSnippet:
-      '"Calling from City Apollo Clinic to confirm your routine checkup tomorrow at 10:30 AM with Dr. Verma..."',
+      '"We will never ask for your OTP or PIN. Please call the customer service number printed on your card if you need help."',
+  },
+  {
+    id: 'family_emergency_scam',
+    title: 'Family Emergency Impersonation',
+    category: 'High-Risk Scam',
+    expectedRisk: 'HIGH',
+    description: 'A caller claims a relative is in danger, demands an immediate transfer, and pressures the listener not to verify.',
+    transcriptSnippet:
+      '"Your son has been detained. Send money now and do not call him; there is no time to check."',
   },
 ];
 
@@ -55,11 +55,11 @@ export const SampleAudioSelector: React.FC<SampleAudioSelectorProps> = ({
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-violet-400" />
           <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
-            Hackathon / Benchmark Scenarios
+            Demo scenarios · simulated
           </span>
         </div>
         <span className="text-[11px] text-slate-400">
-          Instant test without external audio file
+          Prewritten examples only; no audio or provider is used
         </span>
       </div>
 
@@ -110,7 +110,7 @@ export const SampleAudioSelector: React.FC<SampleAudioSelectorProps> = ({
 
               <div className="flex items-center justify-between pt-2 border-t border-slate-800/60 text-[11px]">
                 <span className={isSelected ? 'text-violet-300 font-bold' : 'text-slate-400'}>
-                  {isSelected ? 'Selected' : 'Use this benchmark'}
+                  {isSelected ? 'Selected' : 'View simulation'}
                 </span>
                 <ArrowRight className={`w-3.5 h-3.5 ${isSelected ? 'text-violet-400' : 'text-slate-500'}`} />
               </div>

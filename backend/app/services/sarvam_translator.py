@@ -33,7 +33,8 @@ def translate_text(
 
     try:
         client = SarvamAI(
-            api_subscription_key=api_key
+            api_subscription_key=api_key,
+            timeout=30.0,
         )
 
         response = client.text.translate(

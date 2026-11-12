@@ -35,6 +35,13 @@ export const RiskBadge: React.FC<RiskBadgeProps> = ({
       badgeClass: 'bg-rose-950/80 border-rose-500/70 text-rose-300 shadow-[0_0_20px_-2px_rgba(239,68,68,0.4)]',
       dotColor: 'bg-rose-500 animate-pulse',
     },
+    CRITICAL: {
+      label: 'CRITICAL RISK',
+      sublabel: 'Multiple independent coercive indicators',
+      icon: ShieldAlert,
+      badgeClass: 'bg-red-950 border-red-400 text-red-200 shadow-[0_0_24px_-2px_rgba(248,113,113,0.55)]',
+      dotColor: 'bg-red-400 animate-pulse',
+    },
   };
 
   const current = configs[level] || configs.LOW;

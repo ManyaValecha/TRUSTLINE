@@ -94,7 +94,7 @@ export const Footer: React.FC = () => {
                   }}
                   className="hover:text-violet-300 transition cursor-pointer"
                 >
-                  Privacy Controls & Data Deletion
+                  Settings & Local Data
                 </button>
               </li>
             </ul>
@@ -113,7 +113,7 @@ export const Footer: React.FC = () => {
               </li>
               <li className="flex items-start gap-1.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Zero default audio retention or secret call surveillance.</span>
+                <span>Submitted audio is sent to the transcription provider; transcripts and guidance may be sent to analysis and translation providers. Report history is stored in this browser. Provider and server retention depends on their policies.</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />

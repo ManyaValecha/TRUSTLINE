@@ -64,7 +64,7 @@ export const FamilyPage: React.FC = () => {
             Protect Loved Ones Together
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 max-w-xl">
-            Designate trusted relatives who will receive automated emergency safety advisories when high-risk coercion is detected.
+            Save trusted-contact details locally and review the alert preference. TRUSTLINE does not send messages to contacts.
           </p>
         </div>
 
@@ -77,18 +77,18 @@ export const FamilyPage: React.FC = () => {
         </button>
       </div>
 
-      {/* COMING SOON NOTICE (Honest Backend Capability Badge) */}
+      {/* Local-only trusted-contact notice */}
       <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/50 via-purple-950/40 to-amber-950/50 border border-amber-500/40 space-y-2">
         <div className="flex items-center gap-2">
           <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[10px] uppercase tracking-wider border border-amber-500/40">
-            Feature In Preview &bull; Coming Soon
+            Local contact setup only
           </span>
           <span className="text-xs font-bold text-white">
-            SMS / WhatsApp Relay Pipeline Prototype
+            No notification delivery is connected
           </span>
         </div>
         <p className="text-xs text-slate-300 leading-relaxed">
-          The current FastAPI backend analyzes audio locally and does not yet transmit real SMS or WhatsApp messages. This circle lets you configure alert rules and emergency contact details ahead of live notification gateway deployment.
+          Contact details and alert preferences stay in this browser. There is no invitation, SMS, or WhatsApp delivery flow connected to the backend.
         </p>
       </div>
 
@@ -147,9 +147,9 @@ export const FamilyPage: React.FC = () => {
 
           <div className="p-3.5 rounded-xl bg-black/30 border border-violet-900/30 flex items-center justify-between">
             <div className="space-y-0.5">
-              <div className="text-xs font-bold text-white">Alert on High-Risk Scam Alerts</div>
+              <div className="text-xs font-bold text-white">Include in a future alert preview</div>
               <p className="text-[11px] text-slate-400">
-                Send emergency warning only when severe coercion or OTP extortion is identified.
+                This preference is stored on this device. No alert is sent by TRUSTLINE.
               </p>
             </div>
             <input
@@ -188,7 +188,7 @@ export const FamilyPage: React.FC = () => {
       <div className="space-y-4">
         <h2 className="text-base font-extrabold text-white flex items-center gap-2">
           <Users className="w-4 h-4 text-violet-400" />
-          <span>Registered Family Circle ({familyContacts.length})</span>
+          <span>Trusted Contacts on This Device ({familyContacts.length})</span>
         </h2>
 
         {familyContacts.length === 0 ? (
@@ -198,7 +198,7 @@ export const FamilyPage: React.FC = () => {
             </div>
             <div className="text-sm font-bold text-white">No Family Contacts Added Yet</div>
             <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
-              Add your children, spouse, or trusted relatives. In upcoming updates, TRUSTLINE can alert them immediately if a dangerous scam targeting you is detected.
+              Add a trusted person for your own reference. Contact details stay in this browser; no invitation or alert is sent.
             </p>
             <button
               onClick={() => setShowAddForm(true)}

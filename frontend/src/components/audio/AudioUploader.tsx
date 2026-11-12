@@ -18,7 +18,7 @@ export const AudioUploader: React.FC<AudioUploaderProps> = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const allowedFormats = ['.wav', '.mp3', '.m4a', '.aac', '.webm', '.ogg'];
-  const maxSizeBytes = 25 * 1024 * 1024; // 25 MB
+  const maxSizeBytes = 20 * 1024 * 1024; // Match the backend's 20 MB limit
 
   const validateAndSet = (file: File) => {
     setError(null);
@@ -30,7 +30,7 @@ export const AudioUploader: React.FC<AudioUploaderProps> = ({
     }
 
     if (file.size > maxSizeBytes) {
-      setError('File size exceeds 25 MB limit.');
+      setError('File size exceeds the 20 MB limit.');
       return;
     }
 
@@ -119,7 +119,7 @@ export const AudioUploader: React.FC<AudioUploaderProps> = ({
             Click to upload or drag & drop call recording
           </div>
           <p className="mt-1 text-xs text-slate-400 text-center">
-            WAV, MP3, M4A, AAC, WebM (Max 25 MB)
+            WAV, MP3, M4A, AAC, WebM (Max 20 MiB)
           </p>
           <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-950/60 border border-violet-800/40 text-[11px] text-violet-300 font-medium">
             <span>Explicit user consent required before analysis</span>

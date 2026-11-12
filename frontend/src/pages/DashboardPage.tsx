@@ -70,7 +70,7 @@ export const DashboardPage: React.FC = () => {
   };
 
   const handleStartAnalysis = async () => {
-    if (!consentConfirmed) {
+    if (inputTab !== 'benchmark' && !consentConfirmed) {
       setAnalysisError('Please confirm the safety consent checkbox before submitting.');
       return;
     }
@@ -102,7 +102,7 @@ export const DashboardPage: React.FC = () => {
         result = await simulateAnalysis(selectedSample.id, selectedLanguage);
       } else if (settings.diagnosticMode || (!backendOnline && audioToSubmit)) {
         // If local backend is down and user wants to proceed, offer clear simulation fallback
-        result = await simulateAnalysis('bank_kyc_scam', selectedLanguage);
+        result = await simulateAnalysis('digital_arrest_scam', selectedLanguage);
       } else {
         if (!audioToSubmit) {
           throw new Error('No audio recording selected.');
@@ -173,6 +173,7 @@ export const DashboardPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <AnalysisTimeline
           isAnalyzing={isAnalyzing}
+          isSimulation={inputTab === 'benchmark'}
           error={analysisError}
           onRetry={handleStartAnalysis}
           onCancel={handleResetAnalysis}
@@ -300,8 +301,8 @@ export const DashboardPage: React.FC = () => {
             />
           )}
 
-          {/* Explicit User Safety Consent Notice */}
-          <div className="p-4 rounded-2xl bg-[#090C1A] border border-violet-900/30 space-y-2">
+          {/* Explicit User Safety Consent Notice: only real audio is sent to providers. */}
+          {inputTab !== 'benchmark' && <div className="p-4 rounded-2xl bg-[#090C1A] border border-violet-900/30 space-y-2">
             <label className="flex items-start gap-3 cursor-pointer select-none">
               <input
                 type="checkbox"
@@ -313,22 +314,22 @@ export const DashboardPage: React.FC = () => {
                 <span className="font-bold text-white">Explicit Safety Consent:</span> I authorize TRUSTLINE to process this audio file with speech recognition (Gnani) and AI analysis (Cohere & Sarvam). I understand this is an informational assistance tool and does not replace official verification.
               </div>
             </label>
-          </div>
+          </div>}
 
           {/* Submission CTA Button */}
           <div className="pt-2">
             <button
               type="button"
-              disabled={!hasAudioReady || !consentConfirmed}
+              disabled={!hasAudioReady || (inputTab !== 'benchmark' && !consentConfirmed)}
               onClick={handleStartAnalysis}
               className={`w-full py-4 rounded-2xl font-black text-base shadow-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ${
-                hasAudioReady && consentConfirmed
+                hasAudioReady && (inputTab === 'benchmark' || consentConfirmed)
                   ? 'bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-violet-900/40 hover:scale-[1.01]'
                   : 'bg-slate-800 text-slate-500 cursor-not-allowed opacity-60'
               }`}
             >
               <ShieldAlert className="w-5 h-5" />
-              <span>Analyse Recording with TRUSTLINE AI</span>
+              <span>{inputTab === 'benchmark' ? 'Run Labeled Simulation' : 'Analyse Recording with TRUSTLINE AI'}</span>
             </button>
             {!hasAudioReady && (
               <p className="mt-2 text-center text-[11px] text-slate-500">

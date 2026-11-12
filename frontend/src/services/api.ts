@@ -148,26 +148,25 @@ export async function analyzeAudio(
 }
 
 /**
- * Diagnostic Simulator:
- * Provides realistic Gnani + Cohere + Sarvam + TRUSTLINE results
- * for testing and demonstration when the user doesn't have the Python backend running locally.
+ * Demo simulator: returns prewritten scenario content without audio or provider calls.
  */
 export async function simulateAnalysis(
-  sampleType: 'bank_kyc_scam' | 'courier_threat_scam' | 'safe_hospital_call',
+  sampleType: 'digital_arrest_scam' | 'legitimate_bank_call' | 'family_emergency_scam',
   targetLanguage = 'hi-IN'
 ): Promise<AnalyzeAudioResponse> {
   // Simulate honest multi-step latency
   await new Promise((resolve) => setTimeout(resolve, 2400));
 
-  if (sampleType === 'bank_kyc_scam') {
+  if (sampleType === 'digital_arrest_scam') {
     return {
       success: true,
+      simulation: true,
       transcription: {
         success: true,
-        provider: 'Gnani',
+        provider: 'Simulation',
         transcript:
           'Hello, this is Inspector Rajesh Sharma calling urgently from State Bank Fraud Department. Your debit card and net banking are immediately suspended due to unverified KYC documents. Within 10 minutes, all your funds will be frozen. To prevent permanent deactivation, open your phone immediately and give me the 6-digit OTP code received on SMS right now. Do not inform anyone as this is an active police case.',
-        request_id: 'gnani-req-984210',
+        request_id: 'DEMO-SAMPLE',
         language_code: 'en-IN',
       },
       scam_analysis: {
@@ -191,8 +190,10 @@ export async function simulateAnalysis(
         explanation:
           'The caller employs severe psychological coercion, impersonates official bank law enforcement, establishes an extreme false deadline (10 minutes), demands confidentiality, and directly attempts to harvest a one-time password (OTP) to drain bank accounts.',
       },
-      translated_warning:
-        'चेतावनी: यह एक बहुत खतरनाक बैंक धोखाधड़ी कॉल है। अपना ओटीपी किसी के साथ साझा न करें। तुरंत फोन काट दें और साइबर क्राइम हेल्पलाइन 1930 पर सूचित करें।',
+      translated_warning: targetLanguage === 'hi-IN'
+        ? 'चेतावनी: यह बैंक धोखाधड़ी की कोशिश हो सकती है। अपना ओटीपी साझा न करें, कॉल काटें और बैंक से आधिकारिक नंबर पर संपर्क करें.'
+        : 'Warning: this may be an attempt to defraud you. Do not share your OTP. End the call and contact your bank through its official number.',
+      translated_warning_language: targetLanguage === 'hi-IN' ? 'hi-IN' : 'en-IN',
       target_language: targetLanguage,
       ai_analysis: {
         confidence_score: 0.98,
@@ -211,39 +212,35 @@ export async function simulateAnalysis(
     };
   }
 
-  if (sampleType === 'courier_threat_scam') {
+  if (sampleType === 'legitimate_bank_call') {
     return {
       success: true,
+      simulation: true,
       transcription: {
         success: true,
-        provider: 'Gnani',
+        provider: 'Simulation',
         transcript:
-          'Greetings, this is FedEx Customs Express. A package sent in your name containing 5 passports and illegal contraband was seized at Mumbai airport. A CBI warrant has been issued against your Aadhaar number. Transfer a security deposit of 25,000 rupees via UPI to this clearing account immediately to cancel the arrest warrant. You are under digital arrest; stay on this line.',
-        request_id: 'gnani-req-739112',
+          'Hello, I am calling from your bank security team. We will never ask you to share an OTP, UPI PIN, or password on a call. Please end this call and use the official number printed on your card if you need help. No payment is due.',
+        request_id: 'DEMO-SAMPLE',
         language_code: 'en-IN',
       },
       scam_analysis: {
-        risk_level: 'HIGH',
-        is_scam_likely: true,
+        risk_level: 'LOW',
+        is_scam_likely: false,
         detected_tactics: [
-          'Digital Arrest / Law Enforcement Extortion',
-          'UPI Payment Pressure',
-          'Courier / Customs Impersonation',
-          'Threat of arrest warrant',
-          'Coercive isolation (Stay on the line)',
+          'Protective credential warning',
+          'Independent verification guidance',
         ],
-        evidence: [
-          'Transfer a security deposit of 25,000 rupees via UPI',
-          'CBI warrant has been issued against your Aadhaar',
-          'You are under digital arrest; stay on this line',
-        ],
+        evidence: [],
         recommended_action:
-          'HANG UP NOW. There is NO legal provision for "digital arrest" in India. Law enforcement, customs, and police NEVER conduct arrests or demand money via video or phone calls. Block the number and dial 1930.',
+          'No major warning indicators were found in this sample. Never share an OTP or PIN on a call; verify unexpected requests using the official number on your card.',
         explanation:
-          'Classic courier digital arrest scam. The caller manufactures legal panic by claiming a contraband parcel was seized, fabricates a CBI arrest warrant, and attempts to extort an instant UPI fund transfer under duress.',
+          'This simulated bank-security call warns the listener not to disclose credentials and directs them to an independently verifiable contact number.',
       },
-      translated_warning:
-        'सावधान: "डिजिटल अरेस्ट" नाम की कोई कानूनी व्यवस्था नहीं है। यह गंभीर ब्लैकमेल और ठगी है। कोई पैसा या यूपीआई ट्रांसफर न करें। तुरंत कॉल काटें।',
+      translated_warning: targetLanguage === 'hi-IN'
+        ? 'कॉल पर ओटीपी या पिन साझा न करें। जरूरत हो तो कार्ड पर दिए गए आधिकारिक नंबर से बैंक से संपर्क करें।'
+        : 'Do not share an OTP or PIN on a call. If needed, contact your bank using the official number printed on your card.',
+      translated_warning_language: targetLanguage === 'hi-IN' ? 'hi-IN' : 'en-IN',
       target_language: targetLanguage,
       ai_analysis: {
         confidence_score: 0.99,
@@ -251,40 +248,43 @@ export async function simulateAnalysis(
         coercion_score: 9.8,
       },
       rule_analysis: {
-        rules_triggered: ['RULE_DIGITAL_ARREST_EXTORTION', 'RULE_UPI_DEMAND', 'RULE_LEGAL_THREAT'],
-        critical_flags: true,
+        rules_triggered: ['RULE_PROTECTIVE_OTP_WARNING', 'RULE_INDEPENDENT_VERIFICATION'],
+        critical_flags: false,
       },
     };
   }
 
-  // Safe sample
+  // Family-emergency impersonation simulation
   return {
     success: true,
+    simulation: true,
     transcription: {
       success: true,
-      provider: 'Gnani',
+      provider: 'Simulation',
       transcript:
-        'Hello Mr. Sharma, this is Priya calling from City Apollo Clinic to confirm your routine health checkup scheduled for tomorrow at 10:30 AM with Dr. Verma. Please remember to fast for 8 hours prior to the blood test. No advance payment is needed; you may pay at the hospital reception when you arrive. Have a wonderful day!',
-      request_id: 'gnani-req-412891',
+        'Your son has been detained after an accident. Send 25,000 rupees to this UPI account right now so we can release him. Do not call him or anyone else; there is no time to check.',
+      request_id: 'DEMO-SAMPLE',
       language_code: 'en-IN',
     },
     scam_analysis: {
-      risk_level: 'LOW',
-      is_scam_likely: false,
-      detected_tactics: [],
-      evidence: [],
+      risk_level: 'HIGH',
+      is_scam_likely: true,
+      detected_tactics: ['Family emergency impersonation', 'Urgent payment pressure', 'Isolation to prevent verification'],
+      evidence: ['Send 25,000 rupees to this UPI account right now', 'Do not call him or anyone else; there is no time to check'],
       recommended_action:
-        'Safe conversational behavior. No sensitive credentials requested, no artificial urgency, and standard clinic appointment confirmation protocol followed.',
+        'Stop and verify the emergency by calling your relative or another trusted person on a number you already know. Do not send money based only on this call.',
       explanation:
-        'The call follows normal healthcare appointment confirmation etiquette. No OTPs, passwords, bank details, or urgent money transfers were requested.',
+        'The caller claims a family emergency, demands an urgent transfer, and discourages independent verification. These are warning indicators, but the example is simulated and not proof of a real incident.',
     },
-    translated_warning:
-      'यह बातचीत सुरक्षित प्रतीत होती है। डॉक्टर की अपॉइंटमेंट की सामान्य पुष्टि है। कोई व्यक्तिगत गोपनीय जानकारी नहीं मांगी गई।',
+    translated_warning: targetLanguage === 'hi-IN'
+      ? 'रुकें और पहले से भरोसेमंद नंबर पर अपने परिवार से संपर्क करके स्थिति जांचें। केवल इस कॉल के आधार पर पैसे न भेजें।'
+      : 'Pause and contact your family using a number you already trust. Do not send money based only on this call.',
+    translated_warning_language: targetLanguage === 'hi-IN' ? 'hi-IN' : 'en-IN',
     target_language: targetLanguage,
     ai_analysis: {
       confidence_score: 0.95,
-      sentiment: 'Polite / Professional Confirmation',
-      coercion_score: 0.2,
+      sentiment: 'Urgent / Coercive',
+      coercion_score: 8,
     },
     rule_analysis: {
       rules_triggered: [],

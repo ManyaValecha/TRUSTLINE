@@ -364,7 +364,7 @@ Before starting, install:
 - Python 3.10 or later.
 - Node.js and npm.
 - Git.
-- Valid API credentials for the speech and AI services used by the backend.
+- Provider credentials are needed only for live audio analysis. The built-in simulated examples require no audio upload or provider credentials.
 
 ## 1. Clone the repository
 
@@ -384,7 +384,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Create a local `.env` file inside `backend/`.
+For live provider-backed audio analysis only, configure credentials in a local `.env` file inside `backend/`. The prewritten simulation flow does not need them. Keep that file private and out of Git.
 
 ```env
 GNANI_API_KEY_ID=your_gnani_key
@@ -392,9 +392,7 @@ COHERE_API_KEY=your_cohere_key
 SARVAM_API_KEY=your_sarvam_key
 ```
 
-Replace the placeholders with your own credentials.
-
-**Never commit `.env` files or publish API keys.**
+Use the providers’ official account setup for any credentials you configure locally. Do not paste credentials into chat, put them in frontend variables, commit `.env`, or publish API keys.
 
 Start the backend:
 
@@ -506,8 +504,8 @@ Voice recordings may contain personal, financial, and sensitive information. TRU
 - **No hidden call surveillance:** The current browser-based MVP does not monitor ordinary cellular calls in the background.
 - **Server-side credentials:** AI and speech provider credentials are stored in backend environment variables.
 - **No frontend secrets:** Provider API keys must never be exposed through Vite environment variables or browser code.
-- **Data minimization:** Audio retention should be disabled by default and verified against the actual storage and hosting configuration.
-- **Consent-based family safety:** Any sharing with trusted contacts must be optional and explicitly authorized.
+- **Data handling:** Audio is sent to the backend and external providers. The browser stores reports, including transcripts, in localStorage; generated warning audio may remain on the backend filesystem.
+- **Family contacts:** Contact details are stored in local browser state. The current application does not send contact invitations or alerts.
 - **Transparent risk communication:** A low-risk result does not guarantee that a conversation is safe.
 
 ### Security checklist
@@ -516,10 +514,10 @@ Voice recordings may contain personal, financial, and sensitive information. TRU
 |---|---|
 | API credentials | Environment variables |
 | Git protection | `.gitignore` excludes private files |
-| Audio data | Minimize storage and retention |
+| Audio data | 20 MiB request limit; external/provider and hosting retention must be checked |
 | Transport | HTTPS in production |
 | CORS | Restrict to trusted frontend origins |
-| Family notifications | Explicit consent |
+| Family notifications | Not implemented; no messages are delivered |
 | Error handling | Avoid leaking credentials or sensitive transcripts |
 
 > **A safety warning is not a financial guarantee.** Users should independently verify unexpected payment requests and never disclose OTPs, UPI PINs, passwords, or banking credentials.
@@ -557,7 +555,9 @@ Testing should cover more than whether the AI can identify obvious scam phrases.
 | False Negative Rate | Proportion of suspicious conversations missed |
 | F1 Score | Harmonic mean of precision and recall |
 
-**We do not publish an unsupported detection-accuracy percentage.** Meaningful performance claims require a sufficiently large, representative, independently evaluated dataset.
+A reproducible **synthetic text-only pilot** contains 220 authored transcripts from 35 scenario families. The current deterministic rules run reports 98.6% accuracy, 97.5% recall, and 0.0% FPR over those authored examples; on a grouped 44-record re-partition, recall is 87.5% and three courier/customs scams are missed. The development split reaches 100%, which indicates template fit. The new split is not independent or blind validation, and the scores are **not real-world performance estimates**. The improvement run covers all Hindi scam examples in this pilot, but this does not establish reliable multilingual performance outside it. AI-only, provider-backed hybrid, and full audio pipeline metrics are unavailable. Review the [improvement report](docs/DETECTION_IMPROVEMENTS.md), [evaluation report](docs/EVALUATION_REPORT.md), and [methodology](docs/EVALUATION_METHODOLOGY.md) before interpreting the figures.
+
+Reproduce from the repository root with `cd backend && PYTHONPATH=.. python -m evaluation.generate_dataset && PYTHONPATH=.. python -m evaluation.run_benchmark`. Run software checks with `cd backend && PYTHONPATH=. python -m pytest -q -p no:cacheprovider`.
 
 ---
 
@@ -574,47 +574,28 @@ The repository includes the following frontend experiences:
 | How It Works | Explains the protection workflow |
 | Family | Family safety experience |
 | Settings | Application preferences |
+| Evaluation | Synthetic benchmark results, breakdowns, and limitations |
 
 ## Screenshots
 
 A polished product README should show the actual application, not just its source code.
 
-Add real screenshots to:
-
-```text
-docs/
-└── screenshots/
-    ├── landing.png
-    ├── onboarding.png
-    ├── dashboard.png
-    ├── analysis-report.png
-    ├── family.png
-    └── settings.png
-```
-
-Then add them to this README:
-
-### Landing page
-
-![TRUSTLINE Landing Page](docs/screenshots/landing.png)
-
-### Dashboard
-
-![TRUSTLINE Dashboard](docs/screenshots/dashboard.png)
-
-### Analysis report
-
-![TRUSTLINE Analysis Report](docs/screenshots/analysis-report.png)
-
-### Family safety
-
-![TRUSTLINE Family Safety](docs/screenshots/family.png)
-
-*Add the actual screenshot files before publishing this section. Until then, GitHub will show broken image placeholders.*
+Screenshots are not included in the repository yet. Add real captures after verifying the application in a browser; no placeholder image links are used here.
 
 ---
 
 # ◈ Engineering decisions
+
+## Verified implementation status
+
+- The deterministic rules emit typed, exact transcript spans. The ordinal rule weight is not a probability.
+- The Cohere response is checked against a Pydantic schema and unsupported quotations are rejected.
+- A Cohere failure leaves a clearly marked deterministic-only result; translation and spoken guidance have text fallbacks.
+- Demo/sample reports are labeled as simulations and do not claim provider calls. Low risk is described as “no major indicators found,” not as proof a conversation is safe.
+- Trusted contacts are saved locally only; the app does not deliver alerts.
+- The offline pytest suite can be run with `cd backend && PYTHONPATH=. python -m pytest -q -p no:cacheprovider`. Provider scripts beginning `manual_test_` are separate and may require credentials/external calls.
+
+See [Architecture](docs/ARCHITECTURE.md), [Detection Methodology](docs/DETECTION_METHODOLOGY.md), [Detection Error Analysis](docs/DETECTION_ERROR_ANALYSIS.md), [Detection Improvements](docs/DETECTION_IMPROVEMENTS.md), [Evaluation Methodology](docs/EVALUATION_METHODOLOGY.md), [Evaluation Report](docs/EVALUATION_REPORT.md), [Security and Privacy](docs/SECURITY_AND_PRIVACY.md), [Deployment](docs/DEPLOYMENT.md), [Known Limitations](docs/KNOWN_LIMITATIONS.md), [Demo Script](docs/DEMO_SCRIPT.md), [Pitch Deck Outline](docs/PITCH_DECK_OUTLINE.md), and [Judge Q&A](docs/COMPETITION_DEMO.md), [Competition Readiness Audit](docs/COMPETITION_READINESS_AUDIT.md), and the [Final Implementation Plan](docs/FINAL_IMPLEMENTATION_PLAN.md) for implementation details and remaining gaps.
 
 ## Why combine AI with deterministic rules?
 
@@ -706,13 +687,13 @@ TRUSTLINE is an evolving product. The roadmap separates the working foundation f
 - [x] Integrate spoken warning generation.
 - [x] Build the React frontend.
 - [x] Establish the PWA foundation.
-- [x] Run an end-to-end backend integration test.
+- [ ] Run a credentialed end-to-end backend integration test.
 
 ### Next engineering milestones
 
 - [ ] Expand multilingual test coverage.
-- [ ] Build a representative scam and legitimate-conversation evaluation dataset.
-- [ ] Improve risk explanations and evidence presentation.
+- [x] Create a synthetic text-only evaluation pilot and rules-only runner (not representative validation).
+- [x] Improve risk explanations and evidence presentation, including family-friendly English/Hindi guidance.
 - [ ] Evaluate false positives and false negatives systematically.
 - [ ] Validate trusted-family notification workflows.
 - [ ] Complete production deployment.
