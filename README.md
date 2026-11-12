@@ -672,36 +672,7 @@ flowchart TD
 
 ---
 
-# ◈ Roadmap
 
-TRUSTLINE is an evolving product. The roadmap separates the working foundation from future improvements.
-
-### Foundation
-
-- [x] Initialize the GitHub repository.
-- [x] Build the FastAPI backend foundation.
-- [x] Integrate speech-to-text.
-- [x] Integrate AI transcript analysis.
-- [x] Implement deterministic scam-pattern rules.
-- [x] Integrate translation.
-- [x] Integrate spoken warning generation.
-- [x] Build the React frontend.
-- [x] Establish the PWA foundation.
-- [ ] Run a credentialed end-to-end backend integration test.
-
-### Next engineering milestones
-
-- [ ] Expand multilingual test coverage.
-- [x] Create a synthetic text-only evaluation pilot and rules-only runner (not representative validation).
-- [x] Improve risk explanations and evidence presentation, including family-friendly English/Hindi guidance.
-- [ ] Evaluate false positives and false negatives systematically.
-- [ ] Validate trusted-family notification workflows.
-- [ ] Complete production deployment.
-- [ ] Conduct a privacy and security review.
-- [ ] Perform accessibility and usability testing.
-- [ ] Improve production monitoring and reliability.
-
----
 
 # ◈ Contributing
 
@@ -744,11 +715,7 @@ For substantial changes, please describe:
 
 **Repository:** [github.com/ManyaValecha/TRUSTLINE](https://github.com/ManyaValecha/TRUSTLINE)
 
-## License
 
-No open-source license has been added yet. Unless a license is included in the repository, all rights remain reserved.
-
----
 
 <p align="center">
   <img src="https://img.shields.io/badge/TRUSTLINE-7C3AED?style=for-the-badge&labelColor=120D24" alt="TRUSTLINE"/>
