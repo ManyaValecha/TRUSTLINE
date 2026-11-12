@@ -654,18 +654,18 @@ flowchart TD
 | Backend | Vercel |
 | Credentials | Backend hosting environment variables |
 
-The current frontend and FastAPI deployment URLs, verified routes, deployment limits, and remaining production checks are recorded in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). Provider credentials are not configured in the current Vercel API project, so production audio analysis is not yet verified.
+The current frontend and FastAPI deployment URLs, verified routes, deployment limits, and remaining production checks are recorded in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). A synthetic audio check completed transcription, analysis, and translation through the production API; this does not establish performance on real calls.
 
 ### Production deployment checklist
 
 - [x] Deploy the FastAPI backend.
-- [ ] Configure backend environment variables.
+- [x] Configure backend environment variables in Vercel Production.
 - [x] Configure production CORS origins.
 - [x] Deploy the React frontend.
 - [x] Set the production API base URL.
 - [x] Verify the backend health endpoint.
-- [ ] Test audio upload and analysis.
-- [ ] Test translation and generated warnings.
+- [x] Test a synthetic audio upload through transcription, analysis, and translation.
+- [ ] Test generated spoken warnings; the optional TTS SDK is not installed.
 - [ ] Review recording retention and storage.
 - [ ] Verify HTTPS and error handling.
 - [ ] Conduct production security testing.
