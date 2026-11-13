@@ -192,6 +192,13 @@ This section supersedes earlier numeric status above for the current implementat
 
 **Readiness judgment:** the signature demonstration now exercises the real upload pipeline by design, but this source change has only been type-checked and production-built. It must not be described as three newly provider-tested recordings or as measured code-mix accuracy.
 
+### Deployment and browser smoke follow-up (2026-11-13)
+
+- Pushed implementation commit `bb09dfe` to `origin/main` and deployed the frontend to Vercel production deployment `dpl_5GyPmhocH63Ww64u31mHdVXgtt7J`, alias `https://trustline-teal.vercel.app` (READY).
+- Production frontend returned HTTP 200. The Hinglish MP3 and Benglish 8 kHz noisy WAV sample assets both returned HTTP 200 with audio content types.
+- Browser smoke check on the deployed site: the dashboard rendered all three signature cards; selecting Hinglish, Tanglish, and Benglish in turn loaded the matching MP3 and set the expected speech profile and target language. The consent control stayed unchecked and Analyze remained disabled. No audio was submitted and no paid/provider API was called during this smoke check.
+- This verifies the UI selection and consent gate, not audio upload to backend, live transcription, contextual analysis, translation, speech generation, or mobile layout. Those remain unverified for this change.
+
 ### Provider deployment follow-up (2026-11-13)
 
 - A local authorized smoke call confirmed the Cohere service was reachable, but the model sometimes paraphrased evidence and failed the exact-substring guard. The prompt now explicitly requires verbatim, continuous transcript excerpts; a follow-up smoke call returned grounded evidence.
