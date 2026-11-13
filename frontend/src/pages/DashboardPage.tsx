@@ -19,6 +19,7 @@ import { StatsCard } from '../components/dashboard/StatsCard';
 import { AudioUploader } from '../components/audio/AudioUploader';
 import { AudioRecorder } from '../components/audio/AudioRecorder';
 import { SampleAudioSelector, SampleScenario } from '../components/audio/SampleAudioSelector';
+import { SignatureDemo } from '../components/audio/SignatureDemo';
 import { AnalysisTimeline } from '../components/analysis/AnalysisTimeline';
 import { AnalysisReportView } from '../components/analysis/AnalysisReportView';
 import { RiskBadge } from '../components/common/RiskBadge';
@@ -149,6 +150,20 @@ export const DashboardPage: React.FC = () => {
     setConsentConfirmed(false);
   };
 
+  const handleSignatureClipSelect = (file: File, profile: string, targetLanguage: string) => {
+    setUploadedFile(file);
+    setSpeechProfile(profile);
+    setSelectedLanguage(targetLanguage);
+    setSelectedSample(null);
+    setRecordedBlob(null);
+    setConsentConfirmed(false);
+    setInputTab('upload');
+    setAnalysisError(null);
+    window.requestAnimationFrame(() => {
+      document.getElementById('call-analyzer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
+
   const handleViewHistoricalReport = (record: StoredAnalysisRecord) => {
     setAnalyzedFileName(record.fileName);
     setActiveReport(record.response);
@@ -237,8 +252,10 @@ export const DashboardPage: React.FC = () => {
       {/* 3. DASHBOARD STATISTICS */}
       <StatsCard />
 
+      <SignatureDemo onSelect={handleSignatureClipSelect} />
+
       {/* 4. MAIN ACTION: ANALYSE A CALL SECTION */}
-      <section className="p-6 sm:p-8 rounded-3xl bg-[#0E132A] border border-violet-900/40 shadow-xl space-y-6">
+      <section id="call-analyzer" className="scroll-mt-4 p-6 sm:p-8 rounded-3xl bg-[#0E132A] border border-violet-900/40 shadow-xl space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-violet-900/20">
           <div>
             <h2 className="text-xl font-extrabold text-white flex items-center gap-2">

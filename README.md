@@ -165,6 +165,12 @@ TRUSTLINE is built around a simple safety principle:
 
 PAUSE & VERIFY represents the product's decision-support direction. The recommendations above describe general safety guidance, not proof that a particular caller is fraudulent or legitimate.
 
+## Signature demo: one scam in three code-mixed languages
+
+The dashboard includes fictional generated Hinglish, Tanglish, and Benglish audio for the same authored bank-impersonation and OTP-demand scenario. Each clip can be loaded into the real upload flow with a matching speech-language hint; the user must still review the clip, confirm provider-processing consent, and start analysis. The reference script shown beside a clip is not its transcription. Synthetic 8 kHz/10 dB variants are controlled stress fixtures, not real phone calls. See [the demo walkthrough](docs/MIXED_LANGUAGE_DEMO.md) for the complete provider boundary and limitations.
+
+The current transcription response does not expose a confidence score to the app, so TRUSTLINE does not display an invented confidence value. Review the returned transcript; garbled or incomplete speech is inconclusive. There is no measured real-call noise-robustness result.
+
 ---
 
 ## What Makes TRUSTLINE Distinctive?

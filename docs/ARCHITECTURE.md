@@ -15,6 +15,8 @@ flowchart LR
   R --> FE
 ```
 
+The dashboard's signature demonstration loads one of three bundled synthetic clips into this same upload path and applies its matching speech hint. It does not substitute a canned report: provider processing still requires the user's explicit consent and Analyze action. The visible script is an authored reference, not the resulting transcript.
+
 ## Components
 
 - `frontend/src`: React pages/components, API client, PWA registration and local application state.
@@ -29,6 +31,8 @@ flowchart LR
 Audio is uploaded to the backend and sent to Gnani for transcription. The transcript is sent to Cohere and detected safety text is sent to Sarvam when configured. Translated guidance can be sent to Gnani Timbre v3.0 for spoken output in ten supported locales. Speech is returned inline rather than written to shared backend storage. The browser stores profile/settings, contact details, and up to 30 recent analysis records in localStorage; records include transcript/report data and may include generated speech. Hosting and provider retention have not been verified.
 
 Cohere output is schema-validated and evidence must be a substring of the transcript. Rule output is validated using Pydantic. External provider responses remain untrusted, and errors are returned to clients without provider exception details.
+
+The current transcription adapter returns the provider transcript, request identifier, and language code; it does not expose a model confidence score to the frontend. The app must not imply calibrated transcription confidence. It also has no audio-quality score or measured real-call noise robustness.
 
 ## Current endpoints
 

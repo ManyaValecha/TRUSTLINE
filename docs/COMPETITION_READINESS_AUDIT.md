@@ -181,6 +181,17 @@ This section supersedes earlier numeric status above for the current implementat
 
 **Readiness judgment:** the project now demonstrates a documented multilingual STT integration with explicit mixed-language profiles. It is not a claim of all-Indian-language coverage, low-resource language coverage beyond Gnani's documented list, or proven performance on noisy telephonic recordings.
 
+### Signature demo and award framing update (2026-11-13)
+
+- Added a dashboard signature-demo panel for the same authored OTP/account-blocking scam scenario in Hinglish, Tanglish, and Benglish. Each card includes playback, the authored reference script, and controls to load either the clean audio or the bundled 8 kHz/10 dB synthetic variant.
+- Selecting a clip populates the existing audio upload route and matching speech/translation language profile. It does not call providers by itself: explicit processing consent and the normal Analyze action remain required. The reference script is labeled as authored text, not a transcription.
+- Added a “Why this is Jugaad Genius” architecture explanation that separates Gnani speech services from TRUSTLINE detection and uncertainty behavior. Documented that the current STT adapter exposes no confidence score and that real-call audio quality/noise robustness is not measured.
+- Added `docs/MIXED_LANGUAGE_DEMO.md`; updated README and architecture docs with demo instructions and evidence boundaries.
+- Verification on 2026-11-13: backend **84 passed**; frontend `npm run lint` passed; `npm run build` passed and generated the PWA bundle; all six bundled clean/noisy demo audio assets exist; `git diff --check` passed. The existing optional Three.js chunk-size warning (>500 kB) remains.
+- A local browser/server smoke test was not completed: the dev command's `tsx` IPC socket creation failed with OS `EPERM` in this sandbox. No paid/provider API was called. Mobile layout, actual browser interaction, provider-backed three-clip transcription, and Vercel redeployment remain unverified in this pass.
+
+**Readiness judgment:** the signature demonstration now exercises the real upload pipeline by design, but this source change has only been type-checked and production-built. It must not be described as three newly provider-tested recordings or as measured code-mix accuracy.
+
 ### Provider deployment follow-up (2026-11-13)
 
 - A local authorized smoke call confirmed the Cohere service was reachable, but the model sometimes paraphrased evidence and failed the exact-substring guard. The prompt now explicitly requires verbatim, continuous transcript excerpts; a follow-up smoke call returned grounded evidence.

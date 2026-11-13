@@ -125,6 +125,35 @@ export const HowItWorksPage: React.FC = () => {
         </div>
       </div>
 
+      <section aria-labelledby="jugaad-title" className="space-y-6 rounded-3xl border border-violet-500/30 bg-gradient-to-br from-[#171432] to-[#0E132A] p-6 sm:p-9">
+        <div className="max-w-3xl space-y-3">
+          <div className="text-xs font-bold uppercase tracking-widest text-violet-300">Engineering contribution</div>
+          <h2 id="jugaad-title" className="text-2xl font-black text-white sm:text-3xl">Why this is Jugaad Genius</h2>
+          <p className="text-sm leading-relaxed text-slate-300">TRUSTLINE combines a multilingual speech interface with a separate, inspectable safety layer. Gnani provides speech recognition and optional spoken guidance; TRUSTLINE owns the scam-pattern rules, grounded evidence display, risk synthesis, and fallback behavior.</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          <article className="rounded-2xl border border-violet-400/25 bg-black/20 p-5">
+            <h3 className="mb-3 flex items-center gap-2 font-bold text-violet-200"><BrainCircuit className="h-4 w-4" /> Gnani technology used</h3>
+            <ul className="space-y-2 text-xs leading-relaxed text-slate-300">
+              <li>• Prisma v3 transcription receives Indic auto-detection or selected Hindi/English, Tamil/English, and Bengali/English language hints.</li>
+              <li>• Timbre v3 can synthesize the translated warning in its documented supported locales when configured.</li>
+              <li>• Speech output or language support does not itself establish scam detection quality.</li>
+            </ul>
+          </article>
+          <article className="rounded-2xl border border-cyan-400/25 bg-black/20 p-5">
+            <h3 className="mb-3 flex items-center gap-2 font-bold text-cyan-200"><ShieldCheck className="h-4 w-4" /> TRUSTLINE engineering</h3>
+            <ul className="space-y-2 text-xs leading-relaxed text-slate-300">
+              <li>• Separate deterministic behavior rules from Cohere contextual analysis; validate quoted evidence against the transcript.</li>
+              <li>• Combine signals without treating rule weights as calibrated probabilities; surface missing contextual analysis.</li>
+              <li>• Keep synthetic fixtures and offline benchmark results distinct from live-provider and real-call evidence.</li>
+            </ul>
+          </article>
+        </div>
+        <div className="rounded-2xl border border-amber-500/30 bg-amber-950/20 p-4 text-xs leading-relaxed text-amber-100">
+          <strong>Uncertainty boundary:</strong> The current transcription response does not provide a confidence score used by TRUSTLINE. The app therefore does not invent one. Always inspect the transcript and treat a short, garbled, or incomplete transcript as inconclusive; a LOW result cannot certify that a call is safe. TRUSTLINE does not yet measure audio quality or real noisy-call robustness.
+        </div>
+      </section>
+
       {/* CTA TO DASHBOARD */}
       <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-violet-900/50 via-purple-900/40 to-indigo-900/50 border border-violet-500/40 text-center space-y-4 shadow-xl">
         <h2 className="text-2xl font-black text-white">
