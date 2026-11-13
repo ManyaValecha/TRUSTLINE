@@ -188,7 +188,9 @@ async def analyze_audio(
             text=translated_text,
             language_code=target_language,
             voice="Nalini",
-            output_path=str(WARNING_AUDIO),
+            # Vercel function filesystems are read-only outside /tmp. Return
+            # the compact audio payload with this result instead of persisting it.
+            output_path=None,
         )
 
         spoken_warning = {
@@ -196,7 +198,7 @@ async def analyze_audio(
             "provider": tts_result["provider"],
             "voice": tts_result["voice"],
             "language": tts_result["language"],
-            "audio_url": "/api/warnings/audio",
+            "audio_url": f"data:audio/wav;base64,{tts_result['audio_base64']}",
             "audio_size": tts_result["audio_size"],
         }
         provider_status["spoken_guidance"] = "complete"

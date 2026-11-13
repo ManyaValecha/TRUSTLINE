@@ -80,6 +80,52 @@ def test_pipeline_keeps_rule_result_when_optional_providers_fail(monkeypatch) ->
     assert result["spoken_warning"]["success"] is False
 
 
+def test_pipeline_returns_generated_warning_audio_inline(monkeypatch):
+    async def transcribe(**_kwargs):
+        return {
+            "success": True,
+            "provider": "Gnani",
+            "transcript": "Please share the OTP now.",
+            "language_code": "en-IN",
+        }
+
+    def cohere_succeeds(_transcript):
+        return {
+            "success": True,
+            "provider": "Cohere",
+            "risk_level": "HIGH",
+            "is_scam_likely": True,
+            "detected_tactics": ["OTP Request"],
+            "evidence": ["share the OTP"],
+            "recommended_action": "Stop and verify the caller.",
+            "explanation": "The caller requests a one-time password.",
+        }
+
+    def translate(**_kwargs):
+        return {"translated_text": "अपना ओटीपी साझा न करें।"}
+
+    def speak(**kwargs):
+        assert kwargs["output_path"] is None
+        return {
+            "provider": "Gnani Timbre",
+            "voice": "Nalini",
+            "language": "hi-IN",
+            "audio_base64": "d2F2",
+            "audio_size": 3,
+        }
+
+    monkeypatch.setattr(pipeline, "transcribe_audio", transcribe)
+    monkeypatch.setattr(pipeline, "analyze_transcript", cohere_succeeds)
+    monkeypatch.setattr(pipeline, "translate_text", translate)
+    monkeypatch.setattr(pipeline, "generate_speech", speak)
+
+    result = asyncio.run(pipeline.analyze_audio(b"test audio"))
+
+    assert result["provider_status"]["contextual_analysis"] == "complete"
+    assert result["provider_status"]["spoken_guidance"] == "complete"
+    assert result["spoken_warning"]["audio_url"] == "data:audio/wav;base64,d2F2"
+
+
 def test_code_switch_profiles_pass_expected_language_hints_to_gnani(monkeypatch):
     observed = {}
 

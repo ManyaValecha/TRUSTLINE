@@ -117,6 +117,7 @@ def analyze_transcript(transcript: str) -> dict:
                         "audio, translation or technology is not itself a "
                         "scam. Use only evidence present in the transcript. "
                         "If evidence is insufficient, say so. "
+                        "Every evidence item must be copied exactly as a continuous, character-for-character excerpt from the transcript. Do not paraphrase, translate, or normalize evidence. If no exact excerpt supports a tactic, return an empty evidence array. "
                         "Set risk_level to LOW, MEDIUM, HIGH or CRITICAL. Use CRITICAL only for at least three distinct high-risk behaviors supported by multiple transcript excerpts; a single request or keyword cannot be CRITICAL. "
                         "Return the requested JSON object."
                     )

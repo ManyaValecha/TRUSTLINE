@@ -180,3 +180,11 @@ This section supersedes earlier numeric status above for the current implementat
 - Verification: backend **78 passed**; frontend lint passed; production build passed after granting sandbox access to Vite/PWA output paths. The existing optional Three.js chunk warning (>500 kB) remains. No real 8 kHz noisy-call evaluation was run.
 
 **Readiness judgment:** the project now demonstrates a documented multilingual STT integration with explicit mixed-language profiles. It is not a claim of all-Indian-language coverage, low-resource language coverage beyond Gnani's documented list, or proven performance on noisy telephonic recordings.
+
+### Provider deployment follow-up (2026-11-13)
+
+- A local authorized smoke call confirmed the Cohere service was reachable, but the model sometimes paraphrased evidence and failed the exact-substring guard. The prompt now explicitly requires verbatim, continuous transcript excerpts; a follow-up smoke call returned grounded evidence.
+- Production TTS failed because the Gnani SDK was not declared in `requirements.txt` and serverless app directories are not writable. Added the official `gnani-vachana` SDK dependency, returned generated WAV audio inline with the analysis response, and added a report audio player.
+- Verification: backend **79 passed**; frontend lint and build passed (the existing Three.js chunk-size warning remains). One production request using the bundled synthetic sample returned HTTP 200 with transcription, Cohere contextual analysis, Sarvam translation, and Gnani spoken guidance all marked complete. The response contained playable audio. CORS preflight from `https://trustline-teal.vercel.app` succeeded.
+- Production redeployed on Vercel: API `dpl_4ffn4K95bXTh1v5JKkonPjLr4rds`; frontend `dpl_Bqr57wKeLo4Y9Th9Xc6TyCiTyDLu`.
+- This is one synthetic English scam recording with a Hinglish language-hint profile. It does not establish detection accuracy across Indian languages or noisy real-world phone recordings; the generated TTS response is also larger because audio is returned inline.

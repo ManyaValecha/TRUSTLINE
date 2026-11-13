@@ -501,6 +501,14 @@ Warning: ${translated_warning || scam_analysis?.explanation || 'N/A'}
             Req ID: {transcription?.request_id || 'LOCAL-AUDIT'}
           </div>
         </div>}
+        {!report.simulation && report.spoken_warning?.success && report.spoken_warning.audio_url && (
+          <div className="pt-3">
+            <div className="mb-2 text-xs font-semibold text-slate-300">Listen to the safety warning</div>
+            <audio controls preload="none" className="w-full" src={report.spoken_warning.audio_url}>
+              Your browser does not support audio playback.
+            </audio>
+          </div>
+        )}
       </div>
 
       {/* Mandatory Disclaimer Box */}

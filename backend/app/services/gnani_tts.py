@@ -1,4 +1,5 @@
 import os
+import base64
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -14,7 +15,7 @@ def generate_speech(
     text: str,
     language_code: str = "hi-IN",
     voice: str = "Nalini",
-    output_path: str = "tests/audio/trustline_warning_hi.wav",
+    output_path: str | None = "tests/audio/trustline_warning_hi.wav",
 ) -> dict:
 
     api_key = os.getenv("GNANI_API_KEY_ID")
@@ -50,16 +51,18 @@ def generate_speech(
         if not audio:
             raise GnaniTTSError("Gnani returned empty audio.")
 
-        output = Path(output_path)
-        output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_bytes(audio)
+        if output_path is not None:
+            output = Path(output_path)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_bytes(audio)
 
         return {
             "success": True,
             "provider": "Gnani Timbre",
             "voice": voice,
             "language": language_code,
-            "audio_path": str(output),
+            "audio_base64": base64.b64encode(audio).decode("ascii"),
+            "audio_path": str(output) if output_path is not None else None,
             "audio_size": len(audio),
         }
 
