@@ -45,6 +45,10 @@ export class ApiError extends Error {
 const STT_SAMPLE_RATE = 16000;
 // Prisma v3.0 REST documents a 30-second request limit.
 const MAX_STT_DURATION_SECONDS = 30;
+const PRESERVED_STT_MIME_TYPES = new Set([
+  'audio/wav', 'audio/x-wav', 'audio/mpeg', 'audio/mp3',
+  'audio/ogg', 'audio/mp4', 'audio/x-m4a', 'audio/flac',
+]);
 
 function encodePcmWav(samples: Float32Array, sampleRate: number): Blob {
   const dataBytes = samples.length * 2;
@@ -78,6 +82,14 @@ function encodePcmWav(samples: Float32Array, sampleRate: number): Blob {
   return new Blob([buffer], { type: 'audio/wav' });
 }
 
+function sourceFileName(audio: Blob): string {
+  return audio instanceof File && audio.name.trim() ? audio.name : 'recording.wav';
+}
+
+function canPreserveProviderAudio(audio: Blob): boolean {
+  return PRESERVED_STT_MIME_TYPES.has(audio.type.toLowerCase().split(';')[0]);
+}
+
 async function normalizeAudioForTranscription(audio: Blob): Promise<Blob> {
   let decoded: AudioBuffer;
   const decoder = new AudioContext();
@@ -96,6 +108,14 @@ async function normalizeAudioForTranscription(audio: Blob): Promise<Blob> {
     throw new ApiError('Gnani Prisma v3 accepts recordings up to 30 seconds. Trim the audio and try again.');
   }
 
+  // Keep provider-supported source files intact. This preserves 8 kHz
+  // telephony sampling and codec characteristics instead of upsampling and
+  // re-encoding the call in the browser.
+  if (canPreserveProviderAudio(audio)) return audio;
+
+  // Browser-recorded WebM/MP4 is not accepted by the STT REST upload API.
+  // AudioContext may resample during decode, so its sampleRate cannot reliably
+  // identify the original telephony rate. Normalize this fallback to 16 kHz.
   const frameCount = Math.ceil(decoded.duration * STT_SAMPLE_RATE);
   const encoder = new OfflineAudioContext(1, frameCount, STT_SAMPLE_RATE);
   const source = encoder.createBufferSource();
@@ -162,7 +182,7 @@ export async function analyzeAudio(
     const controller = new AbortController();
     timeoutId = setTimeout(() => controller.abort(), timeoutMs);
     const formData = new FormData();
-    formData.append('audio', normalizedAudio, 'recording.wav');
+    formData.append('audio', normalizedAudio, sourceFileName(normalizedAudio));
 
     const response = await fetch(`${baseUrl}/api/analyze?${queryParams.toString()}`, {
       method: 'POST',
