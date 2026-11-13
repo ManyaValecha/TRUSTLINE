@@ -14,8 +14,8 @@ class GnaniTTSError(Exception):
 def generate_speech(
     text: str,
     language_code: str = "hi-IN",
-    voice: str = "Nalini",
-    output_path: str | None = "tests/audio/trustline_warning_hi.wav",
+    voice: str = "Shivani",
+    output_path: str | None = "tests/audio/trustline_warning_hi.mp3",
 ) -> dict:
 
     api_key = os.getenv("GNANI_API_KEY_ID")
@@ -39,12 +39,13 @@ def generate_speech(
         audio = client.synthesize(
             text,
             voice=voice,
-            model="timbre-v2.5",
+            model="timbre-v3.0",
             language=language_code,
             speed=1.0,
             audio_config=AudioConfig(
-                container="wav",
-                sample_rate=48000,
+                container="mp3",
+                sample_rate=24000,
+                bitrate="32k",
             ),
         )
 
@@ -62,6 +63,7 @@ def generate_speech(
             "voice": voice,
             "language": language_code,
             "audio_base64": base64.b64encode(audio).decode("ascii"),
+            "audio_mime_type": "audio/mpeg",
             "audio_path": str(output) if output_path is not None else None,
             "audio_size": len(audio),
         }

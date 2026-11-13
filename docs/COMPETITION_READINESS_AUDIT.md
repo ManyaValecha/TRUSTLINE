@@ -188,3 +188,13 @@ This section supersedes earlier numeric status above for the current implementat
 - Verification: backend **79 passed**; frontend lint and build passed (the existing Three.js chunk-size warning remains). One production request using the bundled synthetic sample returned HTTP 200 with transcription, Cohere contextual analysis, Sarvam translation, and Gnani spoken guidance all marked complete. The response contained playable audio. CORS preflight from `https://trustline-teal.vercel.app` succeeded.
 - Production redeployed on Vercel: API `dpl_4ffn4K95bXTh1v5JKkonPjLr4rds`; frontend `dpl_Bqr57wKeLo4Y9Th9Xc6TyCiTyDLu`.
 - This is one synthetic English scam recording with a Hinglish language-hint profile. It does not establish detection accuracy across Indian languages or noisy real-world phone recordings; the generated TTS response is also larger because audio is returned inline.
+
+### Multilingual and telephony demo pass (2026-11-13)
+
+- Switched spoken guidance to Gnani Timbre v3.0 with compressed MP3 payloads. A local authorized smoke set produced short output in all ten documented language locales. This verifies the integration path and available output only, not pronunciation quality or user comprehension.
+- Added Tamil- and Bengali-script OTP rule patterns and Bengali-danda sentence boundaries, with protective-warning regressions. Added downloadable fictional Hinglish, Tanglish, and Benglish samples plus reproducible 8 kHz, 300–3400 Hz, 10 dB white-noise variants.
+- A local full-pipeline smoke run completed transcription, Cohere, Sarvam, and Timbre for each of the three clean synthetic code-mix samples. A separate six-condition STT/rules smoke run (clean and synthetic-noisy per mix) retained the OTP indicator and HIGH rule band in all six runs. The sample count is too small and too synthetic to estimate performance.
+- Added a 60-second live-demo recording plan. No video has been recorded; town/college eligibility and public-vote results remain unknown and are not claimed.
+- Production redeployed: API `dpl_EGtUAZiAAQdEctt86yeEgcoCosbZ`; frontend `dpl_H9cmocZg2qgXfoRnuKp428ZC9hfL`. The live frontend and synthetic sample downloads returned HTTP 200; production CORS preflight allowed the frontend origin.
+- One production upload of the synthetic, noisy 8 kHz Benglish sample returned HTTP 200, detected `bn-IN`, marked all four providers complete, returned a HIGH band, and included 42,841 bytes of MP3 speech. This is a single generated stress test, not real-noise performance evidence.
+- Final verification for this pass: backend **84 passed**; frontend TypeScript lint and Vite/PWA production build passed. The existing optional Three.js chunk-size warning (>500 kB) remains.

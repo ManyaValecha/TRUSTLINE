@@ -1,6 +1,6 @@
 # Competition Demo and Pitch Notes
 
-The detailed presentation materials are in [90-second demo script](DEMO_SCRIPT.md) and [10-slide pitch outline](PITCH_DECK_OUTLINE.md). All three built-in examples are prewritten simulations; selecting them does not upload audio or contact providers.
+The detailed presentation materials are in [60-second recording plan](DEMO_DAY_60S.md), [90-second demo script](DEMO_SCRIPT.md), and [10-slide pitch outline](PITCH_DECK_OUTLINE.md). The downloadable Hinglish, Tanglish, Benglish, and 8 kHz/noise clips are synthetic provider-generated samples, not real caller recordings. Built-in scenario examples remain local simulations; selecting those examples does not upload audio or contact providers.
 
 ## Judge / interview Q&A
 

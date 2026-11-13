@@ -178,16 +178,11 @@ async def analyze_audio(
     }
 
     try:
-        if target_language != "hi-IN":
-            raise GnaniTTSError(
-                "The current configured Timbre voice is for Hindi warnings."
-            )
-
         tts_result = await asyncio.to_thread(
             generate_speech,
             text=translated_text,
             language_code=target_language,
-            voice="Nalini",
+            voice="Shivani",
             # Vercel function filesystems are read-only outside /tmp. Return
             # the compact audio payload with this result instead of persisting it.
             output_path=None,
@@ -198,7 +193,7 @@ async def analyze_audio(
             "provider": tts_result["provider"],
             "voice": tts_result["voice"],
             "language": tts_result["language"],
-            "audio_url": f"data:audio/wav;base64,{tts_result['audio_base64']}",
+            "audio_url": f"data:{tts_result['audio_mime_type']};base64,{tts_result['audio_base64']}",
             "audio_size": tts_result["audio_size"],
         }
         provider_status["spoken_guidance"] = "complete"

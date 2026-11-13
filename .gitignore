@@ -54,3 +54,4 @@ backend/storage/audio/
 .vercel
 !frontend/public/samples/
 !frontend/public/samples/*.wav
+!frontend/public/samples/*.mp3

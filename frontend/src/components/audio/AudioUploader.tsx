@@ -1,6 +1,16 @@
 import React, { useRef, useState } from 'react';
 import { UploadCloud, FileAudio, X, AlertCircle, Play, Pause } from 'lucide-react';
 
+const syntheticAudioSamples = [
+  { name: 'English', href: '/samples/trustline-synthetic-scam-call.wav', file: 'trustline-synthetic-scam-call.wav' },
+  { name: 'Hinglish', href: '/samples/trustline-synthetic-hinglish-call.mp3', file: 'trustline-synthetic-hinglish-call.mp3' },
+  { name: 'Tanglish', href: '/samples/trustline-synthetic-tanglish-call.mp3', file: 'trustline-synthetic-tanglish-call.mp3' },
+  { name: 'Benglish', href: '/samples/trustline-synthetic-benglish-call.mp3', file: 'trustline-synthetic-benglish-call.mp3' },
+  { name: '8 kHz noisy · Hi', href: '/samples/trustline-synthetic-hinglish-call-telephony-10db.wav', file: 'trustline-synthetic-hinglish-call-telephony-10db.wav' },
+  { name: '8 kHz noisy · Ta', href: '/samples/trustline-synthetic-tanglish-call-telephony-10db.wav', file: 'trustline-synthetic-tanglish-call-telephony-10db.wav' },
+  { name: '8 kHz noisy · Bn', href: '/samples/trustline-synthetic-benglish-call-telephony-10db.wav', file: 'trustline-synthetic-benglish-call-telephony-10db.wav' },
+];
+
 interface AudioUploaderProps {
   onFileSelect: (file: File | null) => void;
   selectedFile: File | null;
@@ -131,15 +141,20 @@ export const AudioUploader: React.FC<AudioUploaderProps> = ({
         </label>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 rounded-xl border border-cyan-900/40 bg-cyan-950/20 px-4 py-3">
           <p className="text-xs text-slate-300">
-            Need a test file? This fictional, synthetic sample contains urgency and an OTP request.
+            Synthetic samples: code-mix plus 8 kHz phone-band versions with generated 10 dB noise. Not real calls.
           </p>
-          <a
-            href="/samples/trustline-synthetic-scam-call.wav"
-            download="trustline-synthetic-scam-call.wav"
-            className="shrink-0 text-xs font-bold text-cyan-300 hover:text-cyan-200 underline underline-offset-4"
-          >
-            Download sample recording (18 sec)
-          </a>
+          <div className="flex shrink-0 flex-wrap gap-x-3 gap-y-1">
+            {syntheticAudioSamples.map((sample) => (
+              <a
+                key={sample.name}
+                href={sample.href}
+                download={sample.file}
+                className="text-xs font-bold text-cyan-300 hover:text-cyan-200 underline underline-offset-4"
+              >
+                {sample.name}
+              </a>
+            ))}
+          </div>
         </div>
         </>
       ) : (

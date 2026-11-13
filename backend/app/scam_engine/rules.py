@@ -17,8 +17,11 @@ SCAM_RULES: dict[str, tuple[str, ...]] = {
         r"\b(?:share|tell|send|provide|reveal|read(?:\s+out)?|give)\b[^.!?;\n]{0,45}\b(?:otp|one[- ]time password|verification code)\b",
         r"\b(?:otp|one[- ]time password|verification code)\b[^.!?;\n]{0,35}\b(?:share|tell|send|provide|reveal|read|give)\b",
         r"\b(?:otp|code)\s+(?:batao|bataye|bhejo|share karo)\b",
-        r"(?:ओटीपी|OTP|एक\s*बार\s*का\s*पासवर्ड|सत्यापन\s*कोड)[^.!?;\n]{0,35}(?:बताओ|बताइए|बताएं|बताना|साझा\s*करो|भेजो|भेजिए|पढ़कर\s*सुनाओ|पढ़कर\s*सुनाओ)",
+        r"(?:ओटीपी|OTP|एक\s*बार\s*का\s*पासवर्ड|सत्यापन\s*कोड)[^.!?;।॥\n]{0,35}(?:बताओ|बताइए|बताएं|बताना|साझा\s*करो|भेजो|भेजिए|पढ़कर\s*सुनाओ|पढ़कर\s*सुनाओ)",
+        r"(?:ओटीपी|OTP|एक\s*बार\s*का\s*पासवर्ड|सत्यापन\s*कोड)[^.!?;।॥\n]{0,35}(?:बता\s*(?:दीजिए|दिजिए)|दीजिए)",
         r"(?:बताओ|बताइए|बताएं|बताना|साझा\s*करो|भेजो|भेजिए|पढ़कर\s*सुनाओ|पढ़कर\s*सुनाओ)[^.!?;\n]{0,35}(?:ओटीपी|एक\s*बार\s*का\s*पासवर्ड|सत्यापन\s*कोड)",
+        r"(?:OTP|ஒ\s*டி\s*பி|ஓடிபி)[^.!?;।॥\n]{0,40}?(?:சொல்லு|சொல்லுங்கள்|சொல்லுங்க|பகிர்|பகிருங்கள்|அனுப்பு|அனுப்புங்கள்|கொடு|கொடுங்கள்)",
+        r"(?:ওটিপি|OTP)[^.!?;।॥\n]{0,40}?(?:বলুন|বলবেন(?!\s*না)|বলেন|দিন|জানান|পাঠান|শেয়ার\s*করুন|শেয়ার\s*করুন)",
         r"\b(?:otp|verification\s*code)\b[^.!?;\n]{0,35}\b(?:(?:mujhe|abhi|please)\s+){0,2}(?:batao|batayiye|bataye|bhejo|bhejiye|padhkar\s+sunao|share\s+karo)\b",
         r"\b(?:batao|batayiye|bataye|bhejo|bhejiye|share\s+karo)\b[^.!?;\n]{0,35}\b(?:apna\s+)?(?:otp|verification\s*code)\b",
     ),
@@ -54,6 +57,8 @@ SCAM_RULES: dict[str, tuple[str, ...]] = {
         r"\b(?:account|card)\b[^.!?;\n]{0,40}\b(?:blocked|suspended|frozen)\b[^.!?;\n]{0,35}\b(?:unless|pay|verify|immediately|otherwise)\b",
         r"(?:बैंक|केवाईसी|खाता)[^.!?;\n]{0,40}(?:बंद|ब्लॉक|फ्रीज़|जमा|अपडेट|सत्यापित)[^.!?;\n]{0,30}(?:अभी|तुरंत|वरना|नहीं तो)",
         r"\b(?:bank|kyc|account)\b[^.!?;\n]{0,35}\b(?:block|band|freeze|update)\b[^.!?;\n]{0,25}\b(?:abhi|turant|warna|nahito)\b",
+        r"\b(?:calling|speaking)\s+from\s+your\s+bank(?:'s)?\s+(?:security|fraud)\s+(?:team|department)\b",
+        r"\b(?:bank|banking)\s+(?:security|fraud)\s+(?:team|department)\b",
     ),
     "Payment Pressure": (
         r"\b(?:transfer|send|pay|deposit)\b[^.!?;\n]{0,45}\b(?:money|funds|amount|rupees|rs\.?|₹|upi)\b",
@@ -87,6 +92,8 @@ SCAM_RULES: dict[str, tuple[str, ...]] = {
         r"(?:परिवार|घरवालों|बैंक|पुलिस)[^.!?;\n]{0,25}(?:मत\s*बताओ|नहीं\s*बताएं|मत\s*कहना|संपर्क\s*मत|फोन\s*मत)",
         r"(?:मत\s*बताओ|नहीं\s*बताएं|मत\s*कहना|संपर्क\s*मत|फोन\s*मत)[^.!?;\n]{0,25}(?:परिवार|घरवालों|बैंक|पुलिस)",
         r"\b(?:gharwalo|parivaar|bank|police)\b[^.!?;\n]{0,25}\b(?:mat\s+batao|mat\s+batana|call\s+mat|phone\s+mat)\b",
+        r"(?:யாரிடமும்|குடும்பத்திடம்|வங்கியிடம்|போலீசிடம்)[^.!?;\n]{0,30}(?:சொல்ல\s*வேண்டாம்|பகிர\s*வேண்டாம்|தொடர்பு\s*கொள்ளாதீர்கள்)",
+        r"(?:কাউকে|পরিবারকে|ব্যাংককে|পুলিশকে)[^.!?;\n]{0,30}(?:বলবেন\s*না|জানাবেন\s*না|যোগাযোগ\s*করবেন\s*না)",
     ),
     "Remote Access Request": (
         r"\b(?:install|download)\b[^.!?;\n]{0,45}\b(?:anydesk|teamviewer|quick support|remote access app)\b",
@@ -149,20 +156,26 @@ EDUCATIONAL_CONTEXT = re.compile(
 
 
 def _sentence_prefix(text: str, start: int) -> str:
-    boundary = max(text.rfind(mark, 0, start) for mark in ".!?;:\n")
+    boundary = max(text.rfind(mark, 0, start) for mark in ".!?;:\n।॥")
     return text[boundary + 1:start]
 
 
 def _sentence_context(text: str, start: int, end: int) -> tuple[str, int]:
     """Return the containing sentence and its original transcript offset."""
-    left = max(text.rfind(mark, 0, start) for mark in ".!?;:\n") + 1
-    rights = [text.find(mark, end) for mark in ".!?;:\n"]
+    left = max(text.rfind(mark, 0, start) for mark in ".!?;:\n।॥") + 1
+    rights = [text.find(mark, end) for mark in ".!?;:\n।॥"]
     rights = [position for position in rights if position >= 0]
     right = min(rights) if rights else len(text)
     return text[left:right], left
 
 
-def _is_negated_or_awareness_context(tactic: str, context: str, candidate_start: int, context_start: int) -> bool:
+def _is_negated_or_awareness_context(
+    tactic: str,
+    context: str,
+    candidate_start: int,
+    candidate_end: int,
+    context_start: int,
+) -> bool:
     """Suppress clear warnings and negation while retaining active scam requests."""
     lower = context.lower()
     prefix = context[:candidate_start - context_start]
@@ -172,8 +185,21 @@ def _is_negated_or_awareness_context(tactic: str, context: str, candidate_start:
     credentials = tactic in {"OTP Request", "UPI PIN Request", "Credential Request"}
     install = tactic in {"Remote Access Request", "Suspicious APK Request"}
     money = tactic in {"Payment Pressure", "Investment or Job Lure", "Refund Manipulation", "Courier or Customs Demand"}
-    if credentials and re.search(r"(?:\bnever\b|\bdo not\b|\bdon't\b|\bmust not\b|\bshould not\b|नहीं|मत|(?:^|\s)न(?:\s|$)|कभी\s+भी|mat\s+|nahi\s+)", lower):
-        return True
+    relative_start = candidate_start - context_start
+    relative_end = candidate_end - context_start
+    evidence = context[relative_start:relative_end].lower()
+    nearby_prefix = context[max(0, relative_start - 32):relative_start].lower()
+    immediate_suffix = context[relative_end:relative_end + 8].lower()
+    if credentials:
+        negative = r"(?:\bnever\b|\bdo not\b|\bdon't\b|\bmust not\b|\bshould not\b|नहीं|मत|(?:^|\s)न(?:\s|$)|कभी\s+भी|mat\s+|nahi\s+|வேண்டாம்|கூடாது|செய்யாதீர்கள்|না|வேண்டாம்)"
+        if re.search(negative, evidence) or re.search(negative, nearby_prefix[-28:]):
+            return True
+        if re.match(r"^\s*(?:not\b|nahi\b|mat\b|না\b|வேண்டாம்|கூடாது)", immediate_suffix):
+            return True
+    if tactic == "Secrecy and Isolation" and re.search(r"(?:otp|one[- ]time password|ওটিপি|ஒ\s*டி\s*பி)", lower):
+        earlier = context[:relative_start]
+        if not any(re.search(pattern, earlier, re.IGNORECASE) for pattern in SCAM_RULES["OTP Request"]):
+            return True
     if install and (re.search(r"(?:\bdo not\b|\bdon't\b|\bnot to\b|\bnever\b|मत\s*|नहीं\s*|mat\s+|nahi\s+).{0,35}(?:install|download|open|इंस्टॉल|डाउनलोड|खोल)", lower)
                     or re.search(r"(?:install|download|open|इंस्टॉल|डाउनलोड|खोल).{0,24}(?:\bnot\b|\bna\b|\bnahi\b|न\s*(?:करने|करें|करना)|नहीं\s*(?:किया|करने|करें|करना))", lower)):
         return True
@@ -224,7 +250,13 @@ def detect_rule_based_risks(transcript: str) -> dict[str, Any]:
                 if key in seen:
                     continue
                 context, context_start = _sentence_context(transcript, match.start(), match.end())
-                if _is_negated_or_awareness_context(tactic, context, match.start(), context_start):
+                if _is_negated_or_awareness_context(
+                    tactic,
+                    context,
+                    match.start(),
+                    match.end(),
+                    context_start,
+                ):
                     continue
                 seen.add(key)
                 signals.append({

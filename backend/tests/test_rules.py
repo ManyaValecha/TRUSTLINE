@@ -147,3 +147,40 @@ def test_duplicated_patterns_do_not_inflate_score() -> None:
     single = detect_rule_based_risks("Please tell me the OTP immediately.")
     repeated = detect_rule_based_risks("Please tell me the OTP immediately. OTP request: share the OTP now.")
     assert repeated["score"] <= single["score"] * 2
+
+
+@pytest.mark.parametrize(
+    ("transcript", "expected_tactics"),
+    [
+        (
+            "Verification के लिए अपना OTP बता दीजिए। किसी को मत बताना।",
+            {"OTP Request"},
+        ),
+        (
+            "Verification க்காக OTP சொல்லுங்கள். யாரிடமும் சொல்ல வேண்டாம்",
+            {"OTP Request", "Secrecy and Isolation"},
+        ),
+        (
+            "verification-এর জন্য ওটিপি বলুন কাউকে বলবেন না",
+            {"OTP Request", "Secrecy and Isolation"},
+        ),
+        (
+            "ব্যাংক কখনোই আপনার OTP চাইবে না; OTP কাউকে বলবেন না।",
+            set(),
+        ),
+        (
+            "வங்கி உங்கள் OTP கேட்காது. OTP-ஐ யாரிடமும் பகிர வேண்டாம்.",
+            set(),
+        ),
+    ],
+)
+def test_regional_script_otp_requests_and_safety_warnings(
+    transcript: str,
+    expected_tactics: set[str],
+) -> None:
+    result = detect_rule_based_risks(transcript)
+    assert expected_tactics.issubset(set(result["detected_tactics"]))
+    if expected_tactics:
+        assert result["risk_level"] == "HIGH"
+    else:
+        assert result["detected_tactics"] == []

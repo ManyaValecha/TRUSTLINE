@@ -108,9 +108,10 @@ def test_pipeline_returns_generated_warning_audio_inline(monkeypatch):
         assert kwargs["output_path"] is None
         return {
             "provider": "Gnani Timbre",
-            "voice": "Nalini",
+            "voice": "Shivani",
             "language": "hi-IN",
             "audio_base64": "d2F2",
+            "audio_mime_type": "audio/mpeg",
             "audio_size": 3,
         }
 
@@ -123,7 +124,7 @@ def test_pipeline_returns_generated_warning_audio_inline(monkeypatch):
 
     assert result["provider_status"]["contextual_analysis"] == "complete"
     assert result["provider_status"]["spoken_guidance"] == "complete"
-    assert result["spoken_warning"]["audio_url"] == "data:audio/wav;base64,d2F2"
+    assert result["spoken_warning"]["audio_url"] == "data:audio/mpeg;base64,d2F2"
 
 
 def test_code_switch_profiles_pass_expected_language_hints_to_gnani(monkeypatch):

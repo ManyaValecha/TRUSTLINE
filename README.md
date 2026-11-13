@@ -68,6 +68,8 @@ Gnani Prisma v3 STT transcribes Indian-language speech. Choose Indic auto-detect
 
 The current Prisma v3 integration documents ten language choices: Bengali, English (India), Gujarati, Hindi, Kannada, Malayalam, Marathi, Punjabi, Tamil, and Telugu. This is not coverage of every Indian language or dialect. Browser recordings request echo cancellation, noise suppression, and automatic gain control where supported. TRUSTLINE does not apply denoising to uploads, and real noisy-call accuracy has not yet been measured.
 
+Gnani Timbre v3.0 can speak the safety warning in those ten supported locales. The app includes fictional generated Hinglish, Tanglish, and Benglish call samples plus narrow-band noisy test variants; these provide reproducible demos, not evidence of real-call accuracy.
+
 ### 03 — Understand
 
 Cohere analyses the transcript for contextual warning signs, suspicious requests, impersonation, pressure tactics, and manipulation.
@@ -82,7 +84,7 @@ The contextual findings and deterministic indicators are combined into a structu
 
 ### 06 — Communicate
 
-Sarvam supports multilingual translation, while Gnani Timbre provides text-to-speech functionality for spoken safety guidance where the services are available.
+Sarvam supports multilingual translation, while Gnani Timbre v3.0 generates compressed spoken guidance for ten supported language locales. The analysis response carries the audio inline for playback in the report.
 
 The result is an analysis experience designed to make suspicious conversational behaviour easier to understand.
 
@@ -411,10 +413,10 @@ The current implementation has the following data-handling considerations:
 
 - Submitted audio is sent to the backend and external providers for processing.
 - Transcripts and reports are stored in browser localStorage.
-- Generated warning audio may remain on the backend filesystem.
+- Generated speech is returned inline and may be stored with recent reports in browser `localStorage`.
 - Trusted-contact details are stored locally.
 - The browser MVP does not monitor cellular calls in the background.
-- Audio uploads are limited to 20 MiB.
+- Backend uploads are limited to 20 MiB; the production frontend caps uploads at 4 MiB for Vercel function compatibility.
 - Trusted contacts do not currently receive automatic notifications.
 
 Users should submit only recordings they have permission to share.
@@ -495,6 +497,8 @@ The project documents its current data-handling limitations and avoids claiming 
 | `DEPLOYMENT.md` | Deployment instructions |
 | `KNOWN_LIMITATIONS.md` | Known limitations |
 | `DEMO_SCRIPT.md` | Demonstration script |
+| `DEMO_DAY_60S.md` | 60-second recording plan |
+| `evaluation/audio_samples.json` | Synthetic mixed-language and noisy audio samples |
 | `COMPETITION_DEMO.md` | Competition demonstration |
 | `COMPETITION_READINESS_AUDIT.md` | Readiness assessment |
 
