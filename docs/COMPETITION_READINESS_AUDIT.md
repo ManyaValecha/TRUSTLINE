@@ -218,6 +218,14 @@ This section supersedes earlier numeric status above for the current implementat
 - Verification: backend **85 passed**; benchmark runner completed and generated the updated JSON/report/UI artifact; frontend TypeScript lint and PWA production build passed (the optional Three.js chunk warning remains); sample manifest JSON validated; generated variants repeated byte-for-byte. No external speech/LLM/TTS API call was made in this pass.
 - Browser/mobile review and deployment of this pass are pending final verification; the new waveform UI and additional variants are not yet confirmed on Vercel.
 
+### API routing and DPDFNet assessment follow-up (2026-11-13)
+
+- Production smoke initially showed the frontend API badge as offline even though `https://trustline-api-eight.vercel.app/health` returned healthy. Root cause: the separate Vercel frontend project had no Production environment variables and the built app fell back to the frontend origin for `/health`.
+- Added the non-secret `VITE_API_BASE_URL=https://trustline-api-eight.vercel.app` Vercel Production variable and changed `getApiBaseUrl()` to disregard stale localhost overrides in production. Pushed commit `ead25d7`, redeployed frontend as `dpl_5DyEbaGtQWJvMoPepnE9NqM6weqZ` (READY), reloaded the production app, and confirmed the dashboard reports **FastAPI Connected**. Production `/health` reports provider configuration only; no provider request was made.
+- Deployed browser checks also confirmed the new synthetic quiet clip triggers low-level/near-silence advisories and the 8 kHz/16 kbps MP3 decodes in the browser; these checks did not submit audio. The evaluation dashboard displays the keyword-only versus rules comparison.
+- Added `docs/DPDFNET_EVALUATION.md` after reviewing the upstream project. DPDFNet's 8 kHz enhancement is a plausible future pre-STT experiment, but weights/runtime, safety-critical speech preservation, Vercel compatibility, and measured transcription benefit are unverified. It was not integrated or invoked.
+- Backend tests: **85 passed**; benchmark runner completed; frontend lint and production build passed. PWA build still shows the existing optional Three.js chunk warning. No provider-backed analysis was run; mobile viewport/device accessibility and real-call/native-speaker evaluations remain incomplete.
+
 ### Provider deployment follow-up (2026-11-13)
 
 - A local authorized smoke call confirmed the Cohere service was reachable, but the model sometimes paraphrased evidence and failed the exact-substring guard. The prompt now explicitly requires verbatim, continuous transcript excerpts; a follow-up smoke call returned grounded evidence.

@@ -41,3 +41,9 @@ The API project has `TRUSTLINE_CORS_ORIGINS` set to `https://trustline-teal.verc
 - The analysis response contains a compressed inline audio payload; include this in browser-local report retention and provider-data reviews.
 
 The deployments were made with the Vercel CLI. GitHub is not configured for automatic Vercel deployments in this setup.
+
+### Frontend API routing correction (2026-11-13)
+
+The frontend and FastAPI API are separate Vercel projects. A production deployment was initially built without `VITE_API_BASE_URL`, so the static frontend attempted to read `/health` from its own origin and showed “Backend Offline.” Added the public production API URL to the frontend Vercel Production environment (this is an endpoint, not a credential), changed the frontend to ignore stale localhost overrides in production, and redeployed. Production dashboard smoke check now shows **FastAPI Connected**. This health result confirms the API process responds; `/health` reports configuration presence only and does not call Gnani, Cohere, or Sarvam.
+
+Latest frontend deployment after the routing correction: `dpl_5DyEbaGtQWJvMoPepnE9NqM6weqZ` (READY). Continue to pass the `VITE_API_BASE_URL` build environment explicitly in CLI deployments; the project Production variable is also configured.
