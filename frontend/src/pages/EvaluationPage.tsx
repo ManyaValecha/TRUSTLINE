@@ -29,6 +29,13 @@ type EvaluationData = {
     rule_version: string;
     overall: MetricSet;
     held_out_test: MetricSet;
+    keyword_only: {
+      overall: MetricSet;
+      held_out_test: MetricSet;
+      development: MetricSet;
+      per_language: Record<string, MetricSet>;
+      description: string;
+    };
     per_language: Record<string, MetricSet>;
     per_scam_category: Record<string, { n: number; recall: number | null; expected_signal_recall: number | null }>;
     latency_ms: { mean: number; median: number; p95: number };
@@ -120,6 +127,28 @@ export const EvaluationPage: React.FC = () => {
             </dl>
             <p className="mt-4 text-xs leading-relaxed text-slate-400">{data.dataset.provenance} Languages: {Object.entries(data.dataset.languages).map(([language, count]) => `${language} ${count}`).join(' · ')}. Uncertain result rate: {pct(data.evaluation.uncertainty_rate)}.</p>
           </article>
+        </section>
+
+        <section className="rounded-2xl border border-violet-900/40 bg-[#0E132A] p-5 sm:p-6">
+          <h2 className="mb-2 text-lg font-bold text-white">Keyword baseline vs contextual rules</h2>
+          <p className="mb-4 text-xs leading-relaxed text-slate-400">Both rows analyze authored reference text. The keyword baseline flags credential tokens without context; rules-only adds deterministic phrase, negation, and behavior patterns. Neither row measures speech transcription or AI-provider performance.</p>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[760px] text-left text-xs sm:text-sm">
+              <thead className="text-slate-400"><tr><th className="py-2">System · split</th><th>N</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>FPR</th><th>FNR</th></tr></thead>
+              <tbody>
+                {[
+                  ['Keyword-only · all', data.evaluation.keyword_only.overall],
+                  ['Keyword-only · held-out families', data.evaluation.keyword_only.held_out_test],
+                  ['Rules-only · all', data.evaluation.overall],
+                  ['Rules-only · held-out families', data.evaluation.held_out_test],
+                ].map(([label, metrics]) => {
+                  const measured = metrics as MetricSet;
+                  return <tr key={label as string} className="border-t border-slate-800 text-slate-200"><th className="py-3 font-semibold">{label as string}</th><td>{measured.n}</td><td>{pct(measured.accuracy)}</td><td>{pct(measured.precision)}</td><td>{pct(measured.recall)}</td><td>{pct(measured.f1)}</td><td>{pct(measured.false_positive_rate)}</td><td>{pct(measured.false_negative_rate)}</td></tr>;
+                })}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-[11px] text-amber-200">Transcription + keyword and full contextual/audio pipeline comparisons remain unavailable: this corpus contains no audio or provider-generated predictions.</p>
         </section>
 
         <section className="rounded-2xl border border-violet-900/40 bg-[#0E132A] p-5 sm:p-6">

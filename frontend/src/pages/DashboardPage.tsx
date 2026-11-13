@@ -20,6 +20,7 @@ import { AudioUploader } from '../components/audio/AudioUploader';
 import { AudioRecorder } from '../components/audio/AudioRecorder';
 import { SampleAudioSelector, SampleScenario } from '../components/audio/SampleAudioSelector';
 import { SignatureDemo } from '../components/audio/SignatureDemo';
+import { AudioQualityAssessment } from '../components/audio/AudioQualityAssessment';
 import { AnalysisTimeline } from '../components/analysis/AnalysisTimeline';
 import { AnalysisReportView } from '../components/analysis/AnalysisReportView';
 import { RiskBadge } from '../components/common/RiskBadge';
@@ -330,6 +331,13 @@ export const DashboardPage: React.FC = () => {
             <SampleAudioSelector
               selectedSampleId={selectedSample?.id || null}
               onSelectSample={(sample) => setSelectedSample(sample)}
+            />
+          )}
+
+          {inputTab !== 'benchmark' && (
+            <AudioQualityAssessment
+              audio={inputTab === 'upload' ? uploadedFile : recordedBlob}
+              filename={inputTab === 'upload' ? uploadedFile?.name : recordedBlob ? 'Browser recording' : undefined}
             />
           )}
 

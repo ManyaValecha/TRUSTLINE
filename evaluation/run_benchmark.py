@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import hashlib
+import re
 import statistics
 import sys
 import time
@@ -31,6 +32,15 @@ FRONTEND_RESULT = ROOT.parent / "frontend" / "public" / "evaluation-results.json
 RULE_VERSION = "rules-v5-contextual-multilingual-2026-11-12"
 SPLIT_CONFIG = ROOT / "splits" / "trustline-synthetic-v1-grouped-seed-20261111.json"
 BASELINE_RESULT = RESULTS / "baseline-rules-v1-2026-11-11.json"
+KEYWORD_ONLY_RE = re.compile(
+    r"\b(?:otp|one[- ]time password|upi|pin|password)\b|ओ\s*टी\s*पी|ओटीपी|पिन|पासवर्ड",
+    re.IGNORECASE,
+)
+
+
+def keyword_only_matches(text: str) -> list[str]:
+    """Return credential-token hits without context, deliberately naive."""
+    return list(dict.fromkeys(match.group(0) for match in KEYWORD_ONLY_RE.finditer(text)))
 
 
 def load_records(path: Path = DATASET, split_config_path: Path = SPLIT_CONFIG) -> list[dict[str, Any]]:
@@ -134,6 +144,8 @@ def evaluate(records: list[dict[str, Any]]) -> dict[str, Any]:
             "uncertainty": detected.get("uncertainty"),
             "error": error,
             "latency_ms": elapsed,
+            "keyword_only_predicted_scam": bool(keyword_only_matches(record["transcript"])),
+            "keyword_only_matches": keyword_only_matches(record["transcript"]),
         })
 
     per_language: dict[str, Any] = {}
@@ -158,6 +170,10 @@ def evaluate(records: list[dict[str, Any]]) -> dict[str, Any]:
         {**baseline_by_id[row["id"]], "split": row["split"]}
         for row in results
     ] if baseline else []
+    keyword_only_rows = [
+        {**row, "predicted_scam": row["keyword_only_predicted_scam"]}
+        for row in results
+    ]
     split_config = json.loads(SPLIT_CONFIG.read_text(encoding="utf-8"))
     summary = {
         "dataset": {
@@ -177,6 +193,16 @@ def evaluate(records: list[dict[str, Any]]) -> dict[str, Any]:
             "method": "Rules-only classification from deterministic risk result; MEDIUM/HIGH/CRITICAL counts as a warning.",
             "rule_version": RULE_VERSION,
             "overall": calculate_metrics(results),
+            "keyword_only": {
+                "overall": calculate_metrics(keyword_only_rows),
+                "held_out_test": calculate_metrics([row for row in keyword_only_rows if row["split"] == "held_out_test"]),
+                "development": calculate_metrics([row for row in keyword_only_rows if row["split"] == "development"]),
+                "per_language": {
+                    language: calculate_metrics([row for row in keyword_only_rows if row["language"] == language])
+                    for language in sorted({row["language"] for row in keyword_only_rows})
+                },
+                "description": "Naive multilingual credential-token baseline run on authored reference transcripts. It is not an audio, ASR, or production pipeline measurement.",
+            },
             "held_out_test": calculate_metrics([row for row in results if row["split"] == "held_out_test"]),
             "development": calculate_metrics([row for row in results if row["split"] == "development"]),
             "per_language": per_language,
@@ -196,8 +222,11 @@ def evaluate(records: list[dict[str, Any]]) -> dict[str, Any]:
         },
         "ablations": {
             "rules_only": {"status": "measured", "metrics_key": "evaluation.overall"},
+            "keyword_only_reference_text": {"status": "measured", "metrics_key": "evaluation.keyword_only.overall"},
+            "transcription_plus_keyword": {"status": "unavailable", "reason": "The corpus has reference text but no audio or ASR outputs; using reference text would not measure transcription."},
             "ai_only": {"status": "unavailable", "reason": "No live Cohere calls are made by the offline benchmark."},
             "hybrid": {"status": "unavailable", "reason": "Provider credentials/network are not assumed in automated evaluation."},
+            "full_contextual_pipeline": {"status": "unavailable", "reason": "This offline text corpus does not contain consented audio or provider-produced predictions."},
             "full_audio_to_guidance": {"status": "unavailable", "reason": "Dataset is synthetic text-only and contains no audio."},
         },
         "limitations": [
@@ -244,6 +273,20 @@ def write_report(report: dict[str, Any]) -> None:
         "|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for label, metrics in (("All", overall), ("Held-out families", heldout), ("Development families", evaluation["development"])):
+        lines.append(f"| {label} | {metrics['n']} | {_pct(metrics['accuracy'])} | {_pct(metrics['precision'])} | {_pct(metrics['recall'])} | {_pct(metrics['f1'])} | {_pct(metrics['false_positive_rate'])} | {_pct(metrics['false_negative_rate'])} |")
+    keyword = evaluation["keyword_only"]
+    lines += [
+        "",
+        "## Keyword-only reference-text baseline",
+        "",
+        keyword["description"],
+        "",
+        "This baseline flags any transcript containing a predefined OTP/PIN/password/UPI token. It intentionally has no negation or conversational context handling.",
+        "",
+        "| Split | N | Accuracy | Precision | Recall | F1 | False positive rate | False negative rate |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
+    ]
+    for label, metrics in (("All", keyword["overall"]), ("Held-out families", keyword["held_out_test"]), ("Development families", keyword["development"])):
         lines.append(f"| {label} | {metrics['n']} | {_pct(metrics['accuracy'])} | {_pct(metrics['precision'])} | {_pct(metrics['recall'])} | {_pct(metrics['f1'])} | {_pct(metrics['false_positive_rate'])} | {_pct(metrics['false_negative_rate'])} |")
     baseline_overall = evaluation.get("baseline_overall")
     if baseline_overall:

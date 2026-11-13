@@ -30,8 +30,10 @@ If a provider is unavailable, inspect the provider status and uncertainty on the
 
 The transcription response currently used by TRUSTLINE does not expose a confidence score to the app. TRUSTLINE does not infer confidence from provider availability or risk level. Review the transcript; short, garbled, or incomplete text is inconclusive. A LOW risk band does not mean a call is safe.
 
+Before consent, the browser can calculate RMS level, sampled peak/clipping share, near-silence share, and duration from decodable uploaded or recorded audio. The thresholds are heuristic warning triggers only; these statistics cannot estimate intelligibility, background noise, or transcription confidence. They run locally, do not change the file, and do not block submission.
+
 ## Reproducible audio variants
 
-The generated fixture manifest is `evaluation/audio_samples.json`. Recreate the noisy variants with `python evaluation/generate_noisy_samples.py` from the repository root. The script applies mono 8 kHz PCM conversion, a 300–3400 Hz band-pass, and deterministic white noise at 10 dB SNR. This controlled degradation is synthetic and must not be described as real-call evaluation.
+The generated fixture manifest is `evaluation/audio_samples.json`. Recreate the variants with `python evaluation/generate_noisy_samples.py` from the repository root. It produces mono 8 kHz PCM with a 300–3400 Hz band-pass and deterministic 10 dB white noise, a −24 dB attenuated version, and 16 kbps MP3 encoding. These conditions are controlled and synthetic; there are no traffic/TV/competing-speech backgrounds or real-call results.
 
-The offline benchmark (`python -m evaluation.run_benchmark` from `backend/`, with `PYTHONPATH=..`) evaluates authored text examples against deterministic rules only. It does not measure transcription quality, Cohere, full-pipeline behavior, or the three audio samples. No audio benchmark or real-world noise robustness estimate is currently available.
+The offline benchmark (`python -m evaluation.run_benchmark` from `backend/`, with `PYTHONPATH=..`) compares a naive keyword-token baseline and deterministic behavior rules on authored reference text. It does not measure transcription quality, Cohere, full-pipeline behavior, or the audio samples. No audio benchmark or real-world noise robustness estimate is currently available. The proposed native-speaker review protocol and blank response sheet are in `evaluation/NATIVE_SPEAKER_REVIEW_PROTOCOL.md` and `evaluation/native_speaker_review_template.csv`; no responses have been collected.

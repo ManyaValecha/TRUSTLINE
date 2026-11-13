@@ -9,7 +9,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPOSITORY_ROOT))
 
 from evaluation.generate_dataset import build_records  # noqa: E402
-from evaluation.run_benchmark import calculate_metrics, load_records  # noqa: E402
+from evaluation.run_benchmark import calculate_metrics, keyword_only_matches, load_records  # noqa: E402
 
 
 def test_generator_creates_220_unique_labeled_synthetic_records() -> None:
@@ -78,3 +78,10 @@ def test_metric_confidence_intervals_include_small_sample_bounds() -> None:
     assert interval is not None
     assert interval[0] < 1
     assert interval[1] == pytest.approx(1)
+
+
+def test_keyword_baseline_matches_tokens_without_understanding_negation() -> None:
+    assert keyword_only_matches("Tell me the OTP and UPI PIN") == ["OTP", "UPI", "PIN"]
+    # This documented false-positive mode is why the keyword baseline is naive.
+    assert keyword_only_matches("Never share your OTP with anyone") == ["OTP"]
+    assert keyword_only_matches("The account will be blocked") == []

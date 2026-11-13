@@ -11,13 +11,19 @@
     "generator_script": "evaluation/generate_noisy_samples.py",
     "channel": "mono 8 kHz PCM with a 300–3400 Hz band-pass",
     "noise": "deterministic white noise at 10 dB signal-to-noise ratio",
-    "limitation": "controlled synthetic degradation; not a substitute for real noisy phone recordings"
+    "additional_conditions": {
+      "quiet": "phone-band mono 8 kHz PCM attenuated by 24 dB; level-only manipulation, not distance or microphone simulation",
+      "compressed": "phone-band mono 8 kHz, 16 kbps MP3 encoding"
+    },
+    "limitation": "controlled synthetic degradation; no traffic/TV/competing speech backgrounds; not a substitute for real noisy phone recordings"
   },
   "cases": [
     {
       "id": "hinglish-otp-pressure",
       "file": "frontend/public/samples/trustline-synthetic-hinglish-call.mp3",
       "noisy_file": "frontend/public/samples/trustline-synthetic-hinglish-call-telephony-10db.wav",
+      "quiet_file": "frontend/public/samples/trustline-synthetic-hinglish-call-quiet-24db.wav",
+      "compressed_file": "frontend/public/samples/trustline-synthetic-hinglish-call-telephony-16kbps.mp3",
       "speech_profile": "hi-en",
       "tts_language": "auto",
       "reference_text": "Namaste, main aapke bank security team se bol raha hoon. Aapka account das minute mein block ho sakta hai. Verification ke liye apna OTP bata dijiye. Kisi ko mat batana."
@@ -26,6 +32,8 @@
       "id": "tanglish-otp-pressure",
       "file": "frontend/public/samples/trustline-synthetic-tanglish-call.mp3",
       "noisy_file": "frontend/public/samples/trustline-synthetic-tanglish-call-telephony-10db.wav",
+      "quiet_file": "frontend/public/samples/trustline-synthetic-tanglish-call-quiet-24db.wav",
+      "compressed_file": "frontend/public/samples/trustline-synthetic-tanglish-call-telephony-16kbps.mp3",
       "speech_profile": "ta-en",
       "tts_language": "ta-IN",
       "reference_text": "வணக்கம், நான் உங்கள் bank security team-லிருந்து பேசுகிறேன். உங்கள் account பத்து நிமிடத்தில் block ஆகும். verification-க்காக OTP சொல்லுங்கள். யாரிடமும் சொல்ல வேண்டாம்."
@@ -34,6 +42,8 @@
       "id": "benglish-otp-pressure",
       "file": "frontend/public/samples/trustline-synthetic-benglish-call.mp3",
       "noisy_file": "frontend/public/samples/trustline-synthetic-benglish-call-telephony-10db.wav",
+      "quiet_file": "frontend/public/samples/trustline-synthetic-benglish-call-quiet-24db.wav",
+      "compressed_file": "frontend/public/samples/trustline-synthetic-benglish-call-telephony-16kbps.mp3",
       "speech_profile": "bn-en",
       "tts_language": "bn-IN",
       "reference_text": "নমস্কার, আমি আপনার bank security team থেকে বলছি। আপনার account দশ মিনিটের মধ্যে block হবে। verification-এর জন্য OTP বলুন। কাউকে বলবেন না।"

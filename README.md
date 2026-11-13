@@ -171,6 +171,8 @@ The dashboard includes fictional generated Hinglish, Tanglish, and Benglish audi
 
 The current transcription response does not expose a confidence score to the app, so TRUSTLINE does not display an invented confidence value. Review the returned transcript; garbled or incomplete speech is inconclusive. There is no measured real-call noise-robustness result.
 
+Before consent, the upload/record view also computes local waveform summaries (RMS level, sampled peak/clipping, near-silence share, and duration) when the browser can decode the audio. The initial warning thresholds are heuristics, not validated speech-quality cutoffs. This check cannot determine speech intelligibility, background-noise level, transcription confidence, or scam risk and never blocks submission.
+
 ---
 
 ## What Makes TRUSTLINE Distinctive?
@@ -385,11 +387,13 @@ TRUSTLINE includes a synthetic, text-only benchmark to examine the behaviour of 
 
 These results describe performance on authored examples. They are not estimates of real-world scam detection performance.
 
+The runner now also reports a deliberately naive keyword-only reference-text baseline: 43.6% accuracy, 46.2% precision, 20.0% recall, and 28.0% false-positive rate over all 220 records; on the 44-record grouped re-partition it has 33.3% recall and a 65.0% false-positive rate. Improved deterministic rules report 98.6% accuracy, 100.0% precision, and 97.5% recall over the same authored text. Both are same-corpus diagnostics; they are not independent comparisons and none of these rows includes audio or actual transcription. The keyword baseline intentionally fires on protective text such as “Never share your OTP.”
+
 The 100% development-split result indicates strong fit to development examples, not proven generalisation.
 
 A grouped 44-record repartition produced 87.5% recall and exposed missed courier and customs scam scenarios.
 
-The evaluation is not independent, blind, or representative real-world validation. Complete audio-pipeline performance, AI-only performance, and provider-backed hybrid performance have not been established.
+The evaluation is not independent, blind, or representative real-world validation. The measured keyword baseline runs against authored reference text, not ASR output. Complete audio-pipeline performance, AI-only performance, and provider-backed hybrid performance have not been established. See the [native-speaker review protocol](evaluation/NATIVE_SPEAKER_REVIEW_PROTOCOL.md); it is a plan only, with no responses collected.
 
 ### Reproduce the evaluation
 

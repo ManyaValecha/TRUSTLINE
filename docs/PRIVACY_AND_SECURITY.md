@@ -5,6 +5,7 @@
 - A recording selected for analysis is uploaded to the configured FastAPI backend. The backend forwards audio to Gnani for transcription.
 - Transcript text is sent to Cohere for contextual analysis. Safety guidance is sent to Sarvam when translation is enabled; translated guidance may be sent to Gnani Timbre v3.0 for speech in one of ten supported language locales.
 - The frontend stores profile, preferences, trusted-contact details, and up to 30 analysis records in browser localStorage. Records contain transcript/report data and may include inline speech audio. Anyone with access to that browser profile may be able to read them.
+- The optional audio signal check decodes the selected file in the browser and computes waveform summaries locally. Those summaries are not added to analysis history or sent to providers by this feature; the audio itself is still uploaded only after the existing consent and submission flow.
 - The current analysis pipeline returns generated MP3 warning audio inline and does not write it to shared backend storage. Provider processing and hosting retention have not been independently verified.
 - TRUSTLINE does not send contact invitations, family alerts, or police reports. Contact details remain in local browser state unless a user exports/shares something independently.
 

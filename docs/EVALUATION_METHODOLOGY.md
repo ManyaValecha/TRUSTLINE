@@ -2,6 +2,8 @@
 
 ## Current implementation
 
+The offline runner includes a deliberately naive keyword-only reference-text baseline alongside the deterministic behavior rules. It searches for OTP, UPI, PIN, and password tokens without negation or conversational context and reports per-example matches plus overall and held-out metrics. It does not run on ASR output. Transcription-plus-keyword, Cohere-only, and full audio/contextual pipeline results remain unavailable without eligible audio and real provider predictions.
+
 The repository now contains a 220-record, authored synthetic **text-only** pilot at `evaluation/dataset/trustline-synthetic-v1.jsonl`, a deterministic generator, an offline rules-only runner, machine-readable predictions, a Markdown report, and an in-app dashboard. This corpus is deliberately not presented as representative real-world data. The unit tests remain separate software checks.
 
 The corpus contains 120 scam-intent and 100 legitimate examples across English, Hindi, and Hinglish. It includes protective OTP/UPI warnings, routine banking and payment discussion, awareness examples, and other difficult negative contexts. Every row records an ID, label, category/topic, language, transcript, synthetic provenance, permission basis, expected signals/action, scenario family, and split.

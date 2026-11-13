@@ -208,6 +208,16 @@ This section supersedes earlier numeric status above for the current implementat
 - Follow-up frontend deploy after the claims corrections: production deployment `dpl_6SG1JXxeU6f4xg69gvjMSDMeJuYz` is READY at the existing alias; the live page returns HTTP 200 and the served landing-page bundle contains “Language hints available” with the unsupported “Accent Adaptive” wording removed.
 - A further safety-copy correction changed the history tile from “High-Risk Alerts / scam attempts” to “High-Risk Reports / strong warning indicators; not proof of fraud.” Frontend lint and production build passed; the latest deployment `dpl_HndoUxJUgQv3Z3Xvm5VuyHANwcTZ` is READY, the alias returns HTTP 200, and the served dashboard bundle contains the corrected wording.
 
+### Evaluation and audio-quality improvement pass (2026-11-13)
+
+- Added a deliberately naive OTP/UPI/PIN/password token-only baseline to the offline reference-text benchmark. It emits per-example matches and overall, held-out, development, and per-language metrics next to deterministic rules. It is labeled reference-text-only; no ASR is run.
+- Re-ran the authored 220-record benchmark. Keyword-only: overall accuracy 43.6%, precision 46.2%, recall 20.0%, FPR 28.0%; grouped held-out N=44: recall 33.3%, FPR 65.0%. Existing deterministic rules: overall accuracy 98.6%, precision 100%, recall 97.5%; grouped held-out recall 87.5%. The sharp development/holdout gap and shared authoring context remain warnings against generalization. ASR+keyword, contextual provider, and full audio-pipeline comparisons remain unavailable.
+- Added an advisory browser-local audio waveform check for RMS level, sampled peak/clipping, near-silence share, and duration. Heuristic warnings do not block submission. The UI and docs explicitly state that it does not assess intelligibility, background noise, transcription confidence, or scam risk.
+- Extended reproducible generated fixtures with −24 dB level and 8 kHz/16 kbps MP3 variants for each of the three code-mix scripts, alongside existing 8 kHz/10 dB white-noise conditions. All nine generated stress variants reproduced byte-for-byte in a repeat-run check. These do not model traffic/TV/competing speech or real call paths.
+- Added a native-speaker review protocol and blank sheet; no study or participant feedback has been collected.
+- Verification: backend **85 passed**; benchmark runner completed and generated the updated JSON/report/UI artifact; frontend TypeScript lint and PWA production build passed (the optional Three.js chunk warning remains); sample manifest JSON validated; generated variants repeated byte-for-byte. No external speech/LLM/TTS API call was made in this pass.
+- Browser/mobile review and deployment of this pass are pending final verification; the new waveform UI and additional variants are not yet confirmed on Vercel.
+
 ### Provider deployment follow-up (2026-11-13)
 
 - A local authorized smoke call confirmed the Cohere service was reachable, but the model sometimes paraphrased evidence and failed the exact-substring guard. The prompt now explicitly requires verbatim, continuous transcript excerpts; a follow-up smoke call returned grounded evidence.

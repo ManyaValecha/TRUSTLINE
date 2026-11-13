@@ -2,7 +2,7 @@
 
 **Dataset:** TRUSTLINE synthetic text-only pilot (trustline-synthetic-v1)<br>
 **Records:** 220; **scenario families:** 35<br>
-**Run:** 2026-11-12T04:25:50.412905+00:00<br>
+**Run:** 2026-11-13T14:04:12.126948+00:00<br>
 **Rule version:** `rules-v5-contextual-multilingual-2026-11-12`
 
 > Exploratory synthetic text-only pilot. These figures do not estimate real-world detection performance.
@@ -14,6 +14,18 @@
 | All | 220 | 98.6% | 100.0% | 97.5% | 98.7% | 0.0% | 2.5% |
 | Held-out families | 44 | 93.2% | 100.0% | 87.5% | 93.3% | 0.0% | 12.5% |
 | Development families | 176 | 100.0% | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% |
+
+## Keyword-only reference-text baseline
+
+Naive multilingual credential-token baseline run on authored reference transcripts. It is not an audio, ASR, or production pipeline measurement.
+
+This baseline flags any transcript containing a predefined OTP/PIN/password/UPI token. It intentionally has no negation or conversational context handling.
+
+| Split | N | Accuracy | Precision | Recall | F1 | False positive rate | False negative rate |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| All | 220 | 43.6% | 46.2% | 20.0% | 27.9% | 28.0% | 80.0% |
+| Held-out families | 44 | 34.1% | 38.1% | 33.3% | 35.6% | 65.0% | 66.7% |
+| Development families | 176 | 46.0% | 51.6% | 16.7% | 25.2% | 18.8% | 83.3% |
 
 ### Original versus improved rules (same 220 records)
 
@@ -100,7 +112,7 @@ Intervals use the Wilson binomial method. They treat records as independent; rep
 
 ## Latency and failures
 
-- Rules-only mean/median/p95: 0.1751 / 0.1291 / 0.1769 ms per synthetic transcript in this local run.
+- Rules-only mean/median/p95: 0.1879 / 0.1426 / 0.2001 ms per synthetic transcript in this local run.
 - Detector failures: 0
 - Uncertainty rate: 34.1%
 - Transcription failure rate: unavailable. Unavailable: this corpus contains synthetic text and no audio/transcription stage.
@@ -110,8 +122,11 @@ Intervals use the Wilson binomial method. They treat records as independent; rep
 | Component | Status |
 |---|---|
 | Rules Only | measured |
+| Keyword Only Reference Text | measured |
+| Transcription Plus Keyword | unavailable — The corpus has reference text but no audio or ASR outputs; using reference text would not measure transcription. |
 | Ai Only | unavailable — No live Cohere calls are made by the offline benchmark. |
 | Hybrid | unavailable — Provider credentials/network are not assumed in automated evaluation. |
+| Full Contextual Pipeline | unavailable — This offline text corpus does not contain consented audio or provider-produced predictions. |
 | Full Audio To Guidance | unavailable — Dataset is synthetic text-only and contains no audio. |
 
 ## Limitations

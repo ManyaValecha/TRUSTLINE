@@ -39,7 +39,7 @@
     "provenance": "Original synthetic transcripts; no audio or personal recordings."
   },
   "evaluation": {
-    "timestamp_utc": "2026-11-12T04:25:50.412905+00:00",
+    "timestamp_utc": "2026-11-13T14:04:12.126948+00:00",
     "method": "Rules-only classification from deterministic risk result; MEDIUM/HIGH/CRITICAL counts as a warning.",
     "rule_version": "rules-v5-contextual-multilingual-2026-11-12",
     "overall": {
@@ -78,6 +78,233 @@
           0.0709300333278661
         ]
       }
+    },
+    "keyword_only": {
+      "overall": {
+        "n": 220,
+        "accuracy": 0.43636363636363634,
+        "precision": 0.46153846153846156,
+        "recall": 0.2,
+        "f1": 0.27906976744186046,
+        "false_positive_rate": 0.28,
+        "false_negative_rate": 0.8,
+        "confusion_matrix": {
+          "true_positive": 24,
+          "false_positive": 28,
+          "true_negative": 72,
+          "false_negative": 96
+        },
+        "confidence_intervals_95_wilson": {
+          "accuracy": [
+            0.37247823924936585,
+            0.5024332264481969
+          ],
+          "precision": [
+            0.3334047468175682,
+            0.5949638867304212
+          ],
+          "recall": [
+            0.13824476478840256,
+            0.2803667350628196
+          ],
+          "false_positive_rate": [
+            0.20139685211186212,
+            0.3748802870992116
+          ],
+          "false_negative_rate": [
+            0.7196332649371805,
+            0.8617552352115975
+          ]
+        }
+      },
+      "held_out_test": {
+        "n": 44,
+        "accuracy": 0.3409090909090909,
+        "precision": 0.38095238095238093,
+        "recall": 0.3333333333333333,
+        "f1": 0.35555555555555557,
+        "false_positive_rate": 0.65,
+        "false_negative_rate": 0.6666666666666666,
+        "confusion_matrix": {
+          "true_positive": 8,
+          "false_positive": 13,
+          "true_negative": 7,
+          "false_negative": 16
+        },
+        "confidence_intervals_95_wilson": {
+          "accuracy": [
+            0.21875819519344444,
+            0.48860858782061756
+          ],
+          "precision": [
+            0.20751011368564493,
+            0.5912134622488425
+          ],
+          "recall": [
+            0.1797219032729775,
+            0.5329368316186824
+          ],
+          "false_positive_rate": [
+            0.43285427668523624,
+            0.818808175898918
+          ],
+          "false_negative_rate": [
+            0.4670631683813174,
+            0.8202780967270225
+          ]
+        }
+      },
+      "development": {
+        "n": 176,
+        "accuracy": 0.4602272727272727,
+        "precision": 0.5161290322580645,
+        "recall": 0.16666666666666666,
+        "f1": 0.25196850393700787,
+        "false_positive_rate": 0.1875,
+        "false_negative_rate": 0.8333333333333334,
+        "confusion_matrix": {
+          "true_positive": 16,
+          "false_positive": 15,
+          "true_negative": 65,
+          "false_negative": 80
+        },
+        "confidence_intervals_95_wilson": {
+          "accuracy": [
+            0.3882276996884185,
+            0.5339259566942385
+          ],
+          "precision": [
+            0.348403954480288,
+            0.6802974843758269
+          ],
+          "recall": [
+            0.10527382371950136,
+            0.2537099015189491
+          ],
+          "false_positive_rate": [
+            0.11705310466977323,
+            0.28658322628993116
+          ],
+          "false_negative_rate": [
+            0.7462900984810511,
+            0.8947261762804989
+          ]
+        }
+      },
+      "per_language": {
+        "English": {
+          "n": 73,
+          "accuracy": 0.4246575342465753,
+          "precision": 0.4444444444444444,
+          "recall": 0.2,
+          "f1": 0.2758620689655173,
+          "false_positive_rate": 0.30303030303030304,
+          "false_negative_rate": 0.8,
+          "confusion_matrix": {
+            "true_positive": 8,
+            "false_positive": 10,
+            "true_negative": 23,
+            "false_negative": 32
+          },
+          "confidence_intervals_95_wilson": {
+            "accuracy": [
+              0.31784191542578866,
+              0.5390061953620611
+            ],
+            "precision": [
+              0.24559518127005633,
+              0.6628358435795723
+            ],
+            "recall": [
+              0.10499989725437704,
+              0.347573063463995
+            ],
+            "false_positive_rate": [
+              0.17375531424053606,
+              0.47338135145800575
+            ],
+            "false_negative_rate": [
+              0.652426936536005,
+              0.895000102745623
+            ]
+          }
+        },
+        "Hindi": {
+          "n": 74,
+          "accuracy": 0.44594594594594594,
+          "precision": 0.47058823529411764,
+          "recall": 0.2,
+          "f1": 0.2807017543859649,
+          "false_positive_rate": 0.2647058823529412,
+          "false_negative_rate": 0.8,
+          "confusion_matrix": {
+            "true_positive": 8,
+            "false_positive": 9,
+            "true_negative": 25,
+            "false_negative": 32
+          },
+          "confidence_intervals_95_wilson": {
+            "accuracy": [
+              0.3381582232846784,
+              0.5590687798933092
+            ],
+            "precision": [
+              0.26165106442409436,
+              0.6903676493999558
+            ],
+            "recall": [
+              0.10499989725437704,
+              0.347573063463995
+            ],
+            "false_positive_rate": [
+              0.14601190677211745,
+              0.43117141282944665
+            ],
+            "false_negative_rate": [
+              0.652426936536005,
+              0.895000102745623
+            ]
+          }
+        },
+        "Hinglish": {
+          "n": 73,
+          "accuracy": 0.4383561643835616,
+          "precision": 0.47058823529411764,
+          "recall": 0.2,
+          "f1": 0.2807017543859649,
+          "false_positive_rate": 0.2727272727272727,
+          "false_negative_rate": 0.8,
+          "confusion_matrix": {
+            "true_positive": 8,
+            "false_positive": 9,
+            "true_negative": 24,
+            "false_negative": 32
+          },
+          "confidence_intervals_95_wilson": {
+            "accuracy": [
+              0.3304534902599767,
+              0.552422236748264
+            ],
+            "precision": [
+              0.26165106442409436,
+              0.6903676493999558
+            ],
+            "recall": [
+              0.10499989725437704,
+              0.347573063463995
+            ],
+            "false_positive_rate": [
+              0.1506744088542064,
+              0.44217559002872625
+            ],
+            "false_negative_rate": [
+              0.652426936536005,
+              0.895000102745623
+            ]
+          }
+        }
+      },
+      "description": "Naive multilingual credential-token baseline run on authored reference transcripts. It is not an audio, ASR, or production pipeline measurement."
     },
     "held_out_test": {
       "n": 44,
@@ -344,9 +571,9 @@
       }
     },
     "latency_ms": {
-      "mean": 0.17514752727272728,
-      "median": 0.129125,
-      "p95": 0.176875
+      "mean": 0.18789942272727272,
+      "median": 0.14256249999999998,
+      "p95": 0.200125
     },
     "detector_failures": 0,
     "uncertainty_rate": 0.3409090909090909,
@@ -469,6 +696,14 @@
       "status": "measured",
       "metrics_key": "evaluation.overall"
     },
+    "keyword_only_reference_text": {
+      "status": "measured",
+      "metrics_key": "evaluation.keyword_only.overall"
+    },
+    "transcription_plus_keyword": {
+      "status": "unavailable",
+      "reason": "The corpus has reference text but no audio or ASR outputs; using reference text would not measure transcription."
+    },
     "ai_only": {
       "status": "unavailable",
       "reason": "No live Cohere calls are made by the offline benchmark."
@@ -476,6 +711,10 @@
     "hybrid": {
       "status": "unavailable",
       "reason": "Provider credentials/network are not assumed in automated evaluation."
+    },
+    "full_contextual_pipeline": {
+      "status": "unavailable",
+      "reason": "This offline text corpus does not contain consented audio or provider-produced predictions."
     },
     "full_audio_to_guidance": {
       "status": "unavailable",
@@ -516,7 +755,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 8.492667
+      "latency_ms": 8.174958,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "S01-02",
@@ -544,7 +787,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.144709
+      "latency_ms": 0.143958,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "ओटीपी"
+      ]
     },
     {
       "id": "S01-03",
@@ -574,7 +821,11 @@
       "score": 5,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.118792
+      "latency_ms": 0.125459,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "S01-04",
@@ -602,7 +853,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.116375
+      "latency_ms": 0.1155,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "S01-05",
@@ -630,7 +885,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.135833
+      "latency_ms": 0.121375,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "ओटीपी"
+      ]
     },
     {
       "id": "S01-06",
@@ -660,7 +919,11 @@
       "score": 5,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.1045
+      "latency_ms": 0.103792,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "S01-07",
@@ -688,7 +951,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.111542
+      "latency_ms": 0.108459,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "S01-08",
@@ -716,7 +983,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.132416
+      "latency_ms": 0.12275,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "ओटीपी"
+      ]
     },
     {
       "id": "S02-01",
@@ -746,7 +1017,11 @@
       "score": 5,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.475667
+      "latency_ms": 0.436334,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "पिन"
+      ]
     },
     {
       "id": "S02-02",
@@ -776,7 +1051,12 @@
       "score": 5,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.124334
+      "latency_ms": 0.121584,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI",
+        "PIN"
+      ]
     },
     {
       "id": "S02-03",
@@ -804,7 +1084,12 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.13075
+      "latency_ms": 0.12875,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI",
+        "PIN"
+      ]
     },
     {
       "id": "S02-04",
@@ -834,7 +1119,11 @@
       "score": 5,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.149375
+      "latency_ms": 0.158083,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "पिन"
+      ]
     },
     {
       "id": "S02-05",
@@ -864,7 +1153,12 @@
       "score": 5,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.103625
+      "latency_ms": 0.110042,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI",
+        "PIN"
+      ]
     },
     {
       "id": "S02-06",
@@ -892,7 +1186,12 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.113958
+      "latency_ms": 0.120083,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI",
+        "PIN"
+      ]
     },
     {
       "id": "S02-07",
@@ -922,7 +1221,11 @@
       "score": 5,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.147208
+      "latency_ms": 0.156667,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "पिन"
+      ]
     },
     {
       "id": "S02-08",
@@ -952,7 +1255,12 @@
       "score": 5,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.114375
+      "latency_ms": 0.19925,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI",
+        "PIN"
+      ]
     },
     {
       "id": "S03-01",
@@ -980,7 +1288,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.086917
+      "latency_ms": 0.107125,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "password"
+      ]
     },
     {
       "id": "S03-02",
@@ -1008,7 +1320,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.102792
+      "latency_ms": 0.120167,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "password"
+      ]
     },
     {
       "id": "S03-03",
@@ -1036,7 +1352,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.137292
+      "latency_ms": 0.147708,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "पासवर्ड"
+      ]
     },
     {
       "id": "S03-04",
@@ -1064,7 +1384,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.095125
+      "latency_ms": 0.107083,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "password"
+      ]
     },
     {
       "id": "S03-05",
@@ -1092,7 +1416,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.094292
+      "latency_ms": 0.122291,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "password"
+      ]
     },
     {
       "id": "S03-06",
@@ -1120,7 +1448,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.121542
+      "latency_ms": 0.143916,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "पासवर्ड"
+      ]
     },
     {
       "id": "S03-07",
@@ -1148,7 +1480,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.094583
+      "latency_ms": 0.106292,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "password"
+      ]
     },
     {
       "id": "S03-08",
@@ -1176,7 +1512,11 @@
       "score": 3,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.108875
+      "latency_ms": 0.1195,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "password"
+      ]
     },
     {
       "id": "S04-01",
@@ -1205,7 +1545,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.111292
+      "latency_ms": 0.123209,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S04-02",
@@ -1233,7 +1575,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.139083
+      "latency_ms": 0.15625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S04-03",
@@ -1261,7 +1605,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.118792
+      "latency_ms": 0.131875,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S04-04",
@@ -1290,7 +1636,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.122917
+      "latency_ms": 0.137083,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S04-05",
@@ -1318,7 +1666,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.141292
+      "latency_ms": 0.158042,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S04-06",
@@ -1346,7 +1696,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.109209
+      "latency_ms": 0.122875,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S04-07",
@@ -1375,7 +1727,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.121667
+      "latency_ms": 0.127083,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S04-08",
@@ -1403,7 +1757,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.153166
+      "latency_ms": 0.147541,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S05-01",
@@ -1431,7 +1787,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.14025
+      "latency_ms": 0.138916,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S05-02",
@@ -1459,7 +1817,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.109583
+      "latency_ms": 0.112542,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S05-03",
@@ -1487,7 +1847,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.123167
+      "latency_ms": 0.129125,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S05-04",
@@ -1515,7 +1877,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.131917
+      "latency_ms": 0.137334,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S05-05",
@@ -1543,7 +1907,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.102417
+      "latency_ms": 0.106458,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S05-06",
@@ -1571,7 +1937,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.11625
+      "latency_ms": 0.121584,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S05-07",
@@ -1599,7 +1967,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.131917
+      "latency_ms": 0.137042,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S05-08",
@@ -1627,7 +1997,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.131916
+      "latency_ms": 0.115458,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S06-01",
@@ -1655,7 +2027,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.124167
+      "latency_ms": 0.117708,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S06-02",
@@ -1683,7 +2057,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.132375
+      "latency_ms": 0.132,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S06-03",
@@ -1711,7 +2087,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.145375
+      "latency_ms": 0.154,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S06-04",
@@ -1739,7 +2117,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.123041
+      "latency_ms": 0.128209,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S06-05",
@@ -1767,7 +2147,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.113583
+      "latency_ms": 0.118708,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S06-06",
@@ -1795,7 +2177,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.140417
+      "latency_ms": 0.146542,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S06-07",
@@ -1823,7 +2207,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.121792
+      "latency_ms": 0.127375,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S06-08",
@@ -1851,7 +2237,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.127042
+      "latency_ms": 0.13325,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S07-01",
@@ -1881,7 +2269,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.12825
+      "latency_ms": 0.133875,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S07-02",
@@ -1911,7 +2301,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.150792
+      "latency_ms": 0.158792,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S07-03",
@@ -1942,7 +2334,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.14275
+      "latency_ms": 0.153083,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S07-04",
@@ -1972,7 +2366,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.13875
+      "latency_ms": 0.146083,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S07-05",
@@ -2002,7 +2398,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.153041
+      "latency_ms": 0.16075,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S07-06",
@@ -2033,7 +2431,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.135333
+      "latency_ms": 0.141958,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S07-07",
@@ -2063,7 +2463,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.13625
+      "latency_ms": 0.14325,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S07-08",
@@ -2093,7 +2495,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.153209
+      "latency_ms": 0.160042,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S08-01",
@@ -2121,7 +2525,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.151959
+      "latency_ms": 0.158459,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S08-02",
@@ -2149,7 +2555,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.111291
+      "latency_ms": 0.11525,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S08-03",
@@ -2177,7 +2585,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.155292
+      "latency_ms": 0.13175,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S08-04",
@@ -2205,7 +2615,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.161167
+      "latency_ms": 0.157208,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S08-05",
@@ -2233,7 +2645,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.110958
+      "latency_ms": 0.11,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S08-06",
@@ -2261,7 +2675,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.124584
+      "latency_ms": 0.121708,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S08-07",
@@ -2289,7 +2705,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.152042
+      "latency_ms": 0.15625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S08-08",
@@ -2317,7 +2735,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.113167
+      "latency_ms": 0.117875,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S09-01",
@@ -2345,7 +2765,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.108708
+      "latency_ms": 0.274458,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S09-02",
@@ -2373,7 +2795,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.110208
+      "latency_ms": 0.153542,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S09-03",
@@ -2401,7 +2825,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.151958
+      "latency_ms": 0.194625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S09-04",
@@ -2429,7 +2855,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.115125
+      "latency_ms": 0.193792,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S09-05",
@@ -2457,7 +2885,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.101292
+      "latency_ms": 0.116833,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S09-06",
@@ -2485,7 +2915,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.146917
+      "latency_ms": 0.174917,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S09-07",
@@ -2513,7 +2945,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.117625
+      "latency_ms": 0.298625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S09-08",
@@ -2541,7 +2975,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.114833
+      "latency_ms": 0.137541,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S10-01",
@@ -2570,7 +3006,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.372667
+      "latency_ms": 0.439,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S10-02",
@@ -2598,7 +3036,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.147292
+      "latency_ms": 0.180458,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S10-03",
@@ -2626,7 +3066,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.117958
+      "latency_ms": 0.127125,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S10-04",
@@ -2655,7 +3097,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.127584
+      "latency_ms": 0.140292,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S10-05",
@@ -2683,7 +3127,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.148166
+      "latency_ms": 0.164541,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S10-06",
@@ -2711,7 +3157,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.107416
+      "latency_ms": 0.11725,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S10-07",
@@ -2740,7 +3188,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.125666
+      "latency_ms": 0.151958,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S10-08",
@@ -2768,7 +3218,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.147625
+      "latency_ms": 0.163042,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S11-01",
@@ -2796,7 +3248,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.15275
+      "latency_ms": 0.173542,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S11-02",
@@ -2825,7 +3279,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.127
+      "latency_ms": 0.139833,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S11-03",
@@ -2854,7 +3310,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.152417
+      "latency_ms": 0.168291,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S11-04",
@@ -2882,7 +3340,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.152375
+      "latency_ms": 0.187917,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S11-05",
@@ -2911,7 +3371,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.121
+      "latency_ms": 0.13925,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S11-06",
@@ -2940,7 +3402,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.144125
+      "latency_ms": 0.160208,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S11-07",
@@ -2968,7 +3432,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.152291
+      "latency_ms": 0.16725,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S11-08",
@@ -2997,7 +3463,9 @@
       "score": 3,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.130958
+      "latency_ms": 0.143125,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S12-01",
@@ -3026,7 +3494,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.145666
+      "latency_ms": 0.150584,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S12-02",
@@ -3050,7 +3520,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.123791
+      "latency_ms": 0.135375,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S12-03",
@@ -3078,7 +3550,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.164
+      "latency_ms": 0.1825,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S12-04",
@@ -3107,7 +3581,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.158084
+      "latency_ms": 0.157083,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S12-05",
@@ -3131,7 +3607,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.116292
+      "latency_ms": 0.125458,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S12-06",
@@ -3159,7 +3637,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.147583
+      "latency_ms": 0.178292,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S12-07",
@@ -3188,7 +3668,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.143
+      "latency_ms": 0.164,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S12-08",
@@ -3212,7 +3694,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.12825
+      "latency_ms": 0.145625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S13-01",
@@ -3240,7 +3724,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.121375
+      "latency_ms": 0.292667,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S13-02",
@@ -3268,7 +3754,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.160375
+      "latency_ms": 0.185916,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S13-03",
@@ -3299,7 +3787,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.147709
+      "latency_ms": 0.171792,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S13-04",
@@ -3327,7 +3817,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.134959
+      "latency_ms": 0.154958,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S13-05",
@@ -3355,7 +3847,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.162459
+      "latency_ms": 0.185291,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S13-06",
@@ -3386,7 +3880,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.139208
+      "latency_ms": 0.16075,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S13-07",
@@ -3414,7 +3910,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.133791
+      "latency_ms": 0.1535,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S13-08",
@@ -3442,7 +3940,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.163
+      "latency_ms": 0.18525,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S14-01",
@@ -3470,7 +3970,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.133959
+      "latency_ms": 0.152417,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S14-02",
@@ -3498,7 +4000,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.108458
+      "latency_ms": 0.124625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S14-03",
@@ -3526,7 +4030,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.119791
+      "latency_ms": 0.135875,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S14-04",
@@ -3554,7 +4060,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.134375
+      "latency_ms": 0.151458,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S14-05",
@@ -3582,7 +4090,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.103292
+      "latency_ms": 0.116167,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S14-06",
@@ -3610,7 +4120,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.113667
+      "latency_ms": 0.129167,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S14-07",
@@ -3638,7 +4150,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.133459
+      "latency_ms": 0.151542,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S14-08",
@@ -3666,7 +4180,9 @@
       "score": 2,
       "uncertainty": "One indicator was found and may have a benign explanation. Verify the request independently.",
       "error": null,
-      "latency_ms": 0.111458
+      "latency_ms": 0.126333,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S15-01",
@@ -3696,7 +4212,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.1315
+      "latency_ms": 0.151791,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S15-02",
@@ -3726,7 +4244,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.135791
+      "latency_ms": 0.156375,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S15-03",
@@ -3759,7 +4279,9 @@
       "score": 6,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.196084
+      "latency_ms": 0.218541,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S15-04",
@@ -3789,7 +4311,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.15
+      "latency_ms": 0.159834,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S15-05",
@@ -3819,7 +4343,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.126333
+      "latency_ms": 0.144917,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S15-06",
@@ -3852,7 +4378,9 @@
       "score": 6,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.203542
+      "latency_ms": 0.218125,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S15-07",
@@ -3882,7 +4410,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.140375
+      "latency_ms": 0.160917,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "S15-08",
@@ -3912,7 +4442,9 @@
       "score": 4,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.140667
+      "latency_ms": 0.196791,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L01-01",
@@ -3934,7 +4466,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.134042
+      "latency_ms": 0.165625,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "L01-02",
@@ -3956,7 +4492,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.164416
+      "latency_ms": 0.200125,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "ओटीपी"
+      ]
     },
     {
       "id": "L01-03",
@@ -3978,7 +4518,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.122166
+      "latency_ms": 0.143833,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "L01-04",
@@ -4000,7 +4544,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.132834
+      "latency_ms": 0.157208,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "L01-05",
@@ -4022,7 +4570,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.165
+      "latency_ms": 0.191167,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "ओटीपी"
+      ]
     },
     {
       "id": "L02-01",
@@ -4044,7 +4596,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.136958
+      "latency_ms": 0.155459,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L02-02",
@@ -4066,7 +4620,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.103959
+      "latency_ms": 0.120125,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI"
+      ]
     },
     {
       "id": "L02-03",
@@ -4088,7 +4646,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.11675
+      "latency_ms": 0.13425,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI"
+      ]
     },
     {
       "id": "L02-04",
@@ -4110,7 +4672,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.149
+      "latency_ms": 0.16425,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L02-05",
@@ -4132,7 +4696,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.173625
+      "latency_ms": 0.124375,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI"
+      ]
     },
     {
       "id": "L03-01",
@@ -4154,7 +4722,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.115583
+      "latency_ms": 0.12575,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "L03-02",
@@ -4176,7 +4748,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.127792
+      "latency_ms": 0.142667,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "L03-03",
@@ -4198,7 +4774,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.140042
+      "latency_ms": 0.152125,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "ओटीपी"
+      ]
     },
     {
       "id": "L03-04",
@@ -4220,7 +4800,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.110166
+      "latency_ms": 0.121458,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "L03-05",
@@ -4242,7 +4826,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.124917
+      "latency_ms": 0.135833,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "L04-01",
@@ -4264,7 +4852,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.112708
+      "latency_ms": 0.123584,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L04-02",
@@ -4286,7 +4876,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.344875
+      "latency_ms": 0.165792,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L04-03",
@@ -4308,7 +4900,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.117583
+      "latency_ms": 0.124625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L04-04",
@@ -4330,7 +4924,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.112416
+      "latency_ms": 0.122917,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L04-05",
@@ -4352,7 +4948,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.155292
+      "latency_ms": 0.168584,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L05-01",
@@ -4374,7 +4972,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.160416
+      "latency_ms": 0.173625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L05-02",
@@ -4396,7 +4996,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.112791
+      "latency_ms": 0.1235,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L05-03",
@@ -4418,7 +5020,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.116916
+      "latency_ms": 0.128875,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L05-04",
@@ -4440,7 +5044,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.169458
+      "latency_ms": 0.184333,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L05-05",
@@ -4462,7 +5068,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.118208
+      "latency_ms": 0.129291,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L06-01",
@@ -4484,7 +5092,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.109334
+      "latency_ms": 0.118625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L06-02",
@@ -4506,7 +5116,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.127125
+      "latency_ms": 0.138958,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L06-03",
@@ -4528,7 +5140,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.139
+      "latency_ms": 0.152,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L06-04",
@@ -4550,7 +5164,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.107209
+      "latency_ms": 0.117625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L06-05",
@@ -4572,7 +5188,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.125292
+      "latency_ms": 0.137208,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L07-01",
@@ -4594,7 +5212,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.120958
+      "latency_ms": 0.132791,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L07-02",
@@ -4616,7 +5236,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.148084
+      "latency_ms": 0.16125,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L07-03",
@@ -4638,7 +5260,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.120667
+      "latency_ms": 0.130958,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L07-04",
@@ -4660,7 +5284,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.120792
+      "latency_ms": 0.133,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L07-05",
@@ -4682,7 +5308,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.15125
+      "latency_ms": 0.164584,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L08-01",
@@ -4704,7 +5332,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.159292
+      "latency_ms": 0.174375,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L08-02",
@@ -4726,7 +5356,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.125292
+      "latency_ms": 0.134875,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L08-03",
@@ -4748,7 +5380,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.128167
+      "latency_ms": 0.139833,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L08-04",
@@ -4770,7 +5404,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.1675
+      "latency_ms": 0.184,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L08-05",
@@ -4792,7 +5428,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.125583
+      "latency_ms": 0.138375,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L09-01",
@@ -4814,7 +5452,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.118666
+      "latency_ms": 0.138208,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L09-02",
@@ -4836,7 +5476,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.122583
+      "latency_ms": 0.141042,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L09-03",
@@ -4858,7 +5500,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.169541
+      "latency_ms": 0.187541,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L09-04",
@@ -4880,7 +5524,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.117333
+      "latency_ms": 0.129792,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L09-05",
@@ -4902,7 +5548,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.122333
+      "latency_ms": 0.134708,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L10-01",
@@ -4924,7 +5572,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.125
+      "latency_ms": 0.135458,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "PIN"
+      ]
     },
     {
       "id": "L10-02",
@@ -4946,7 +5598,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.174291
+      "latency_ms": 0.190292,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "पिन"
+      ]
     },
     {
       "id": "L10-03",
@@ -4968,7 +5624,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.143458
+      "latency_ms": 0.158709,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "PIN"
+      ]
     },
     {
       "id": "L10-04",
@@ -4990,7 +5650,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.125416
+      "latency_ms": 0.140667,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "PIN"
+      ]
     },
     {
       "id": "L10-05",
@@ -5012,7 +5676,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.174375
+      "latency_ms": 0.194541,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "पिन"
+      ]
     },
     {
       "id": "L11-01",
@@ -5034,7 +5702,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.140333
+      "latency_ms": 0.153209,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L11-02",
@@ -5056,7 +5726,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.106583
+      "latency_ms": 0.11725,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L11-03",
@@ -5078,7 +5750,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.121083
+      "latency_ms": 0.130417,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L11-04",
@@ -5100,7 +5774,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.148792
+      "latency_ms": 0.163375,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L11-05",
@@ -5122,7 +5798,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.111459
+      "latency_ms": 0.122625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L12-01",
@@ -5144,7 +5822,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.111583
+      "latency_ms": 0.122792,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L12-02",
@@ -5166,7 +5846,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.130416
+      "latency_ms": 0.143958,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L12-03",
@@ -5188,7 +5870,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.147208
+      "latency_ms": 0.161292,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L12-04",
@@ -5210,7 +5894,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.11075
+      "latency_ms": 0.122833,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L12-05",
@@ -5232,7 +5918,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.131
+      "latency_ms": 0.144,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L13-01",
@@ -5254,7 +5942,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.115
+      "latency_ms": 0.126459,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "L13-02",
@@ -5276,7 +5968,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.168041
+      "latency_ms": 0.184583,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "ओटीपी"
+      ]
     },
     {
       "id": "L13-03",
@@ -5298,7 +5994,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.125708
+      "latency_ms": 0.139958,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "L13-04",
@@ -5320,7 +6020,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.116459
+      "latency_ms": 0.133375,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "OTP"
+      ]
     },
     {
       "id": "L13-05",
@@ -5342,7 +6046,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.187875
+      "latency_ms": 0.186791,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "ओटीपी"
+      ]
     },
     {
       "id": "L14-01",
@@ -5364,7 +6072,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.171542
+      "latency_ms": 0.186625,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "पिन"
+      ]
     },
     {
       "id": "L14-02",
@@ -5386,7 +6098,12 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.134292
+      "latency_ms": 0.148542,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI",
+        "PIN"
+      ]
     },
     {
       "id": "L14-03",
@@ -5408,7 +6125,12 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.131125
+      "latency_ms": 0.14375,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI",
+        "PIN"
+      ]
     },
     {
       "id": "L14-04",
@@ -5430,7 +6152,11 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.176875
+      "latency_ms": 0.193959,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "पिन"
+      ]
     },
     {
       "id": "L14-05",
@@ -5452,7 +6178,12 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.137833
+      "latency_ms": 0.152459,
+      "keyword_only_predicted_scam": true,
+      "keyword_only_matches": [
+        "UPI",
+        "PIN"
+      ]
     },
     {
       "id": "L15-01",
@@ -5474,7 +6205,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.125208
+      "latency_ms": 0.138292,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L15-02",
@@ -5496,7 +6229,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.119041
+      "latency_ms": 0.130792,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L15-03",
@@ -5518,7 +6253,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.176333
+      "latency_ms": 0.192042,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L15-04",
@@ -5540,7 +6277,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.124334
+      "latency_ms": 0.136708,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L15-05",
@@ -5562,7 +6301,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.118542
+      "latency_ms": 0.129417,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L16-01",
@@ -5584,7 +6325,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.133958
+      "latency_ms": 0.132,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L16-02",
@@ -5606,7 +6349,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.196958
+      "latency_ms": 0.182458,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L16-03",
@@ -5628,7 +6373,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.116667
+      "latency_ms": 0.127,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L16-04",
@@ -5650,7 +6397,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.11825
+      "latency_ms": 0.130125,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L16-05",
@@ -5672,7 +6421,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.167
+      "latency_ms": 0.183541,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L17-01",
@@ -5694,7 +6445,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.196209
+      "latency_ms": 0.200875,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L17-02",
@@ -5716,7 +6469,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.124042
+      "latency_ms": 0.136625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L17-03",
@@ -5738,7 +6493,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.140416
+      "latency_ms": 0.154333,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L17-04",
@@ -5760,7 +6517,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.189708
+      "latency_ms": 0.209667,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L17-05",
@@ -5782,7 +6541,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.127917
+      "latency_ms": 0.141542,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L18-01",
@@ -5804,7 +6565,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.116167
+      "latency_ms": 0.127541,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L18-02",
@@ -5826,7 +6589,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.121875
+      "latency_ms": 0.134541,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L18-03",
@@ -5848,7 +6613,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.160208
+      "latency_ms": 0.176417,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L18-04",
@@ -5870,7 +6637,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.117042
+      "latency_ms": 0.125833,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L18-05",
@@ -5892,7 +6661,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.12225
+      "latency_ms": 0.134625,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L19-01",
@@ -5914,7 +6685,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.122916
+      "latency_ms": 0.134667,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L19-02",
@@ -5936,7 +6709,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.1595
+      "latency_ms": 0.175333,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L19-03",
@@ -5958,7 +6733,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.11075
+      "latency_ms": 0.12125,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L19-04",
@@ -5980,7 +6757,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.122833
+      "latency_ms": 0.134583,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L19-05",
@@ -6002,7 +6781,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.162
+      "latency_ms": 0.177875,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L20-01",
@@ -6024,7 +6805,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.173625
+      "latency_ms": 0.189833,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L20-02",
@@ -6046,7 +6829,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.123875
+      "latency_ms": 0.136958,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L20-03",
@@ -6068,7 +6853,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.1295
+      "latency_ms": 0.15375,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L20-04",
@@ -6090,7 +6877,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.180916
+      "latency_ms": 0.20075,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     },
     {
       "id": "L20-05",
@@ -6112,7 +6901,9 @@
       "score": 0,
       "uncertainty": null,
       "error": null,
-      "latency_ms": 0.12875
+      "latency_ms": 0.142458,
+      "keyword_only_predicted_scam": false,
+      "keyword_only_matches": []
     }
   ]
 }

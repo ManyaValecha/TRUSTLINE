@@ -1,4 +1,4 @@
-"""Create repeatable 8 kHz, narrow-band, noisy variants of the synthetic demos.
+"""Create repeatable phone-band, noisy, quiet, and lossy synthetic variants.
 
 Requires ffmpeg. The added noise is deterministic white noise, not a model of
 every real call channel or a substitute for a real-world audio corpus.
@@ -18,6 +18,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SAMPLE_DIR = ROOT / "frontend" / "public" / "samples"
 SNR_DB = 10.0
+ATTENUATION_DB = -24.0
+MP3_BITRATE = "16k"
 SEED = 20261113
 SAMPLES = (
     "trustline-synthetic-hinglish-call.mp3",
@@ -59,6 +61,25 @@ def add_white_noise(source: Path, destination: Path, *, seed: int) -> None:
         writer.writeframes(encoded)
 
 
+def make_quiet(source: Path, destination: Path) -> None:
+    """Reduce the full waveform level; this does not simulate distance or mic physics."""
+    subprocess.run(
+        ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", str(source),
+         "-af", f"volume={ATTENUATION_DB:g}dB", "-c:a", "pcm_s16le", str(destination)],
+        check=True,
+    )
+
+
+def make_low_bitrate(source: Path, destination: Path) -> None:
+    """Apply telephone-band filtering and lossy low-bitrate MP3 encoding."""
+    subprocess.run(
+        ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", str(source),
+         "-ac", "1", "-ar", "8000", "-af", "highpass=f=300,lowpass=f=3400",
+         "-c:a", "libmp3lame", "-b:a", MP3_BITRATE, str(destination)],
+        check=True,
+    )
+
+
 def main() -> None:
     with tempfile.TemporaryDirectory(prefix="trustline-narrowband-") as tmp:
         temp_dir = Path(tmp)
@@ -69,6 +90,12 @@ def main() -> None:
             convert_to_telephony_wav(source, phone_wav)
             add_white_noise(phone_wav, target, seed=SEED + index)
             print(f"{target.relative_to(ROOT)} ({target.stat().st_size} bytes, 8 kHz, {SNR_DB:g} dB SNR)")
+            quiet = SAMPLE_DIR / f"{source.stem}-quiet-24db.wav"
+            make_quiet(phone_wav, quiet)
+            print(f"{quiet.relative_to(ROOT)} ({quiet.stat().st_size} bytes, {ATTENUATION_DB:g} dB gain)")
+            compressed = SAMPLE_DIR / f"{source.stem}-telephony-16kbps.mp3"
+            make_low_bitrate(source, compressed)
+            print(f"{compressed.relative_to(ROOT)} ({compressed.stat().st_size} bytes, 8 kHz, {MP3_BITRATE} MP3)")
 
 
 if __name__ == "__main__":
