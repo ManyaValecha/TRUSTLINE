@@ -206,6 +206,7 @@ This section supersedes earlier numeric status above for the current implementat
 - Kept the requested “Zero confusion” signature-demo title but explicitly labeled it as a design objective, not a measured error-rate claim.
 - Remaining award/pitch claims must stay bounded: no independent speaker/user study, no real-call noise benchmark, no confidence score from the STT adapter, and no provider-backed three-language run in this pass. The synthetic authored corpus metrics remain rules-only diagnostics.
 - Follow-up frontend deploy after the claims corrections: production deployment `dpl_6SG1JXxeU6f4xg69gvjMSDMeJuYz` is READY at the existing alias; the live page returns HTTP 200 and the served landing-page bundle contains “Language hints available” with the unsupported “Accent Adaptive” wording removed.
+- A further safety-copy correction changed the history tile from “High-Risk Alerts / scam attempts” to “High-Risk Reports / strong warning indicators; not proof of fraud.” Frontend lint and production build passed; the latest deployment `dpl_HndoUxJUgQv3Z3Xvm5VuyHANwcTZ` is READY, the alias returns HTTP 200, and the served dashboard bundle contains the corrected wording.
 
 ### Provider deployment follow-up (2026-11-13)
 
