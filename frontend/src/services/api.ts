@@ -8,15 +8,25 @@ import { AnalyzeAudioResponse, HealthCheckResponse } from '../types/api';
 
 const DEFAULT_API_BASE_URL = 'http://127.0.0.1:8000';
 
+function isLoopbackUrl(value: string): boolean {
+  try {
+    const hostname = new URL(value).hostname.toLowerCase();
+    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]' || hostname === '::1';
+  } catch {
+    return false;
+  }
+}
+
 export function getApiBaseUrl(): string {
-  // Check localStorage override first, then env variable, then default
+  const envUrl = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim();
+  // Keep a stale local development override from sending a deployed app to
+  // localhost. Other explicit overrides remain available for configured hosts.
   if (typeof window !== 'undefined') {
     const customUrl = localStorage.getItem('trustline_api_url');
-    if (customUrl && customUrl.trim()) {
+    if (customUrl && customUrl.trim() && !(import.meta.env.PROD && isLoopbackUrl(customUrl.trim()))) {
       return customUrl.trim().replace(/\/+$/, '');
     }
   }
-  const envUrl = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim();
   if (envUrl && envUrl.length > 0) {
     return envUrl.replace(/\/+$/, '');
   }

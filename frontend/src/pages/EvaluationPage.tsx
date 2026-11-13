@@ -130,7 +130,7 @@ export const EvaluationPage: React.FC = () => {
         </section>
 
         <section className="rounded-2xl border border-violet-900/40 bg-[#0E132A] p-5 sm:p-6">
-          <h2 className="mb-2 text-lg font-bold text-white">Keyword baseline vs contextual rules</h2>
+          <h2 className="mb-2 text-lg font-bold text-white">Keyword baseline vs behavior rules</h2>
           <p className="mb-4 text-xs leading-relaxed text-slate-400">Both rows analyze authored reference text. The keyword baseline flags credential tokens without context; rules-only adds deterministic phrase, negation, and behavior patterns. Neither row measures speech transcription or AI-provider performance.</p>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-left text-xs sm:text-sm">
