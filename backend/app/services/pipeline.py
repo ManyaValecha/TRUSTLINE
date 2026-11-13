@@ -2,7 +2,7 @@ from pathlib import Path
 import asyncio
 import re
 
-from app.services.gnani_stt import transcribe_audio
+from app.services.gnani_stt import transcribe_audio, resolve_speech_profile
 from app.services.cohere_analyzer import analyze_transcript, CohereAnalysisError
 from app.services.sarvam_translator import translate_text
 from app.services.sarvam_translator import SarvamTranslationError
@@ -104,17 +104,19 @@ def combine_analysis(
 async def analyze_audio(
     audio_bytes: bytes,
     filename: str = "recording.wav",
-    speech_language: str = "en-IN",
+    speech_language: str = "indic-auto",
     target_language: str = "hi-IN",
     audio_content_type: str = "audio/wav",
 ) -> dict:
 
     # 1. Speech-to-text
+    gnani_language, language_candidates = resolve_speech_profile(speech_language)
     transcription = await transcribe_audio(
         audio_bytes=audio_bytes,
         filename=filename,
-        language_code=speech_language,
+        language_code=gnani_language,
         content_type=audio_content_type,
+        language_candidates=language_candidates,
     )
 
     transcript = transcription["transcript"]

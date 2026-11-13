@@ -43,7 +43,8 @@ export class ApiError extends Error {
 }
 
 const STT_SAMPLE_RATE = 16000;
-const MAX_STT_DURATION_SECONDS = 60;
+// Prisma v3.0 REST documents a 30-second request limit.
+const MAX_STT_DURATION_SECONDS = 30;
 
 function encodePcmWav(samples: Float32Array, sampleRate: number): Blob {
   const dataBytes = samples.length * 2;
@@ -92,7 +93,7 @@ async function normalizeAudioForTranscription(audio: Blob): Promise<Blob> {
     throw new ApiError('The selected audio has no readable duration. Choose a valid recording and try again.');
   }
   if (decoded.duration > MAX_STT_DURATION_SECONDS) {
-    throw new ApiError('Gnani accepts recordings up to 60 seconds. Trim the audio and try again.');
+    throw new ApiError('Gnani Prisma v3 accepts recordings up to 30 seconds. Trim the audio and try again.');
   }
 
   const frameCount = Math.ceil(decoded.duration * STT_SAMPLE_RATE);

@@ -44,6 +44,15 @@ def test_non_audio_and_empty_uploads_are_rejected() -> None:
     assert empty.status_code == 400
 
 
+def test_unsupported_speech_profile_is_rejected_before_provider_call() -> None:
+    response = client.post(
+        "/api/analyze?speech_language=xx-IN",
+        files={"audio": ("sample.wav", wav_bytes(), "audio/wav")},
+    )
+    assert response.status_code == 422
+    assert "Unsupported speech language profile" in response.json()["detail"]
+
+
 def test_audio_mime_type_must_match_supported_container_signature() -> None:
     response = client.post(
         "/api/analyze",
@@ -72,7 +81,7 @@ def test_gnani_audio_rejection_returns_format_guidance_without_provider_body(mon
         files={"audio": ("recording.wav", wav_bytes(), "audio/wav")},
     )
     assert response.status_code == 422
-    assert "no longer than 60 seconds" in response.json()["detail"]
+    assert "no longer than 30 seconds" in response.json()["detail"]
     assert "private provider response" not in response.text
 
 

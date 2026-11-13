@@ -22,7 +22,7 @@ import { SampleAudioSelector, SampleScenario } from '../components/audio/SampleA
 import { AnalysisTimeline } from '../components/analysis/AnalysisTimeline';
 import { AnalysisReportView } from '../components/analysis/AnalysisReportView';
 import { RiskBadge } from '../components/common/RiskBadge';
-import { SUPPORTED_LANGUAGES, AnalyzeAudioResponse, StoredAnalysisRecord } from '../types/api';
+import { SUPPORTED_LANGUAGES, SPEECH_PROFILES, AnalyzeAudioResponse, StoredAnalysisRecord } from '../types/api';
 import { analyzeAudio, simulateAnalysis, ApiError } from '../services/api';
 
 export const DashboardPage: React.FC = () => {
@@ -49,6 +49,7 @@ export const DashboardPage: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>(
     user.preferredLanguage || 'hi-IN'
   );
+  const [speechProfile, setSpeechProfile] = useState('indic-auto');
 
   // User consent checkbox
   const [consentConfirmed, setConsentConfirmed] = useState(false);
@@ -108,7 +109,7 @@ export const DashboardPage: React.FC = () => {
           throw new Error('No audio recording selected.');
         }
         // REAL BACKEND CALL: POST /api/analyze via FormData
-        result = await analyzeAudio(audioToSubmit, 'en-IN', selectedLanguage);
+        result = await analyzeAudio(audioToSubmit, speechProfile, selectedLanguage);
       }
 
       setIsAnalyzing(false);
@@ -200,7 +201,21 @@ export const DashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 self-start sm:self-auto">
+        <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+          <label htmlFor="speech-profile" className="text-xs text-slate-400">Spoken language:</label>
+          <select
+            id="speech-profile"
+            value={speechProfile}
+            onChange={(e) => setSpeechProfile(e.target.value)}
+            title={SPEECH_PROFILES.find((profile) => profile.code === speechProfile)?.description}
+            className="max-w-[220px] px-3 py-1.5 rounded-xl bg-[#11152A] border border-violet-900/40 text-xs font-semibold text-white focus:outline-none focus:border-violet-500 cursor-pointer"
+          >
+            {SPEECH_PROFILES.map((profile) => (
+              <option key={profile.code} value={profile.code} className="bg-[#0E132A] text-white">
+                {profile.label}
+              </option>
+            ))}
+          </select>
           <span className="text-xs text-slate-400">Target Language:</span>
           <select
             value={selectedLanguage}

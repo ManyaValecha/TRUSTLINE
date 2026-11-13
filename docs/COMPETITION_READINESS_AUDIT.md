@@ -161,3 +161,14 @@ This section supersedes earlier numeric status above for the current implementat
 - Verification on 2026-11-12: backend **71 passed**; frontend TypeScript/lint passed; production build passed with the pre-existing 582.38 kB optional Three.js chunk warning; benchmark generated 220 results with zero detector exceptions. Provider-connected tests and full browser/device PWA checks remain unrun.
 
 **Current readiness:** suitable for a clearly labeled simulated hackathon demo; not validated for real callers, production safety decisions, or a claim of real-world accuracy. The grouped held-out set remains small and from the same authored corpus, so no claim of generalization is justified.
+
+## Multilingual voice readiness update (2026-11-13)
+
+- Verified against Gnani's current official SDK documentation: Prisma v3.0 is an opt-in multilingual REST model for ten documented languages; it supports `indic-auto`, two-to-four language hints, `format="codemix"`, and a 30-second REST audio limit. Source: [Gnani Vachana SDK documentation](https://github.com/Gnani-AI-Mintlify/Gnani-Vachana).
+- Added a user-selectable speech profile for Indic auto-detection, the ten documented Prisma v3 locales (Bengali, Indian English, Gujarati, Hindi, Kannada, Malayalam, Marathi, Punjabi, Tamil, Telugu), and Hinglish, Tanglish, and Benglish language-hint pairs. The backend maps those choices to Prisma v3.0 and requests code-mix transcription.
+- Added server-side profile validation and tests for language hint mapping and unsupported profiles. Updated browser and API feedback to honor the documented 30-second model limit.
+- Recording requests browser echo cancellation, noise suppression, and automatic gain control where available. Uploaded audio is normalized to mono 16 kHz WAV in the browser; TRUSTLINE does not currently apply denoising to uploaded clips. No noisy real-call dataset or language-by-language production accuracy results are available.
+- The existing synthetic rules benchmark remains English, Hindi, and Hinglish oriented. It does not validate detection quality for Tamil, Bengali, Gujarati, Kannada, Malayalam, Marathi, Punjabi, or Telugu. Code-mix transcription support must not be presented as verified scam-detection performance in those languages.
+- Verification on 2026-11-13: backend **78 passed**; frontend TypeScript/lint and production build passed; Vite still reports the existing optional Three.js chunk above 500 kB. Provider-connected multilingual and noisy-audio checks have not yet been run.
+
+**Readiness judgment:** the project now demonstrates a documented multilingual STT integration with explicit mixed-language profiles. It is not a claim of all-Indian-language coverage, low-resource language coverage beyond Gnani's documented list, or proven performance on noisy telephonic recordings.

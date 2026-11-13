@@ -64,7 +64,9 @@ Users submit a suspicious audio recording through the available recording or upl
 
 ### 02 — Transcribe
 
-Gnani Prisma STT converts submitted speech into text for downstream analysis.
+Gnani Prisma v3 STT transcribes Indian-language speech. Choose Indic auto-detection, a supported language, or one of three code-switch profiles: Hinglish (Hindi + English), Tanglish (Tamil + English), and Benglish (Bengali + English). The code-switch profiles pass likely-language hints and request code-mix text so English terms stay readable in Latin script. Browser audio is normalized to mono 16 kHz WAV, and this REST model currently accepts clips up to 30 seconds.
+
+The current Prisma v3 integration documents ten language choices: Bengali, English (India), Gujarati, Hindi, Kannada, Malayalam, Marathi, Punjabi, Tamil, and Telugu. This is not coverage of every Indian language or dialect. Recording noise suppression and automatic gain control are requested where the browser supports them; uploaded files are not denoised by TRUSTLINE, and real noisy-call accuracy has not yet been measured.
 
 ### 03 — Understand
 

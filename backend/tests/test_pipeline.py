@@ -64,6 +64,8 @@ def test_pipeline_keeps_rule_result_when_optional_providers_fail(monkeypatch) ->
     result = asyncio.run(pipeline.analyze_audio(b"test audio", audio_content_type="audio/mpeg"))
 
     assert observed_transcription_options["content_type"] == "audio/mpeg"
+    assert observed_transcription_options["language_code"] == "indic-auto"
+    assert observed_transcription_options["language_candidates"] is None
     assert result["success"] is True
     assert result["scam_analysis"]["risk_level"] == "HIGH"
     assert "OTP Request" in result["scam_analysis"]["detected_tactics"]
@@ -76,3 +78,46 @@ def test_pipeline_keeps_rule_result_when_optional_providers_fail(monkeypatch) ->
     }
     assert result["translated_warning"] == result["scam_analysis"]["recommended_action"]
     assert result["spoken_warning"]["success"] is False
+
+
+def test_code_switch_profiles_pass_expected_language_hints_to_gnani(monkeypatch):
+    observed = {}
+
+    async def transcribe(**kwargs):
+        observed.update(kwargs)
+        return {
+            "success": True,
+            "provider": "Gnani",
+            "transcript": "Please share the OTP.",
+            "language_code": "hi-IN",
+        }
+
+    def cohere_fails(_transcript):
+        raise CohereAnalysisError("offline")
+
+    def translation_fails(**_kwargs):
+        raise SarvamTranslationError("offline")
+
+    def speech_fails(**_kwargs):
+        raise GnaniTTSError("offline")
+
+    monkeypatch.setattr(pipeline, "transcribe_audio", transcribe)
+    monkeypatch.setattr(pipeline, "analyze_transcript", cohere_fails)
+    monkeypatch.setattr(pipeline, "translate_text", translation_fails)
+    monkeypatch.setattr(pipeline, "generate_speech", speech_fails)
+
+    asyncio.run(pipeline.analyze_audio(b"audio", speech_language="ta-en"))
+
+    assert observed["language_code"] == "indic-auto"
+    assert observed["language_candidates"] == ["ta-IN", "en-IN"]
+
+
+def test_speech_profile_resolution_rejects_unsupported_language():
+    from app.services.gnani_stt import resolve_speech_profile
+
+    try:
+        resolve_speech_profile("xx-IN")
+    except ValueError as error:
+        assert "Unsupported" in str(error)
+    else:
+        raise AssertionError("unsupported locale should be rejected")

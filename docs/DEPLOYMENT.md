@@ -11,9 +11,9 @@ TRUSTLINE is deployed as two Vercel projects because the account's CLI project d
 
 The frontend build uses `VITE_API_BASE_URL=https://trustline-api-eight.vercel.app`. The API's production CORS allowlist contains the exact frontend origin. Provider credentials are stored as sensitive Production environment variables in the API project; `/health` reports configuration presence only, not provider connectivity. A locally synthesized, non-personal audio probe completed in production through Gnani transcription, Cohere analysis, and Sarvam translation. This verifies one synthetic request, not real-call performance. Spoken warning audio remains unavailable because the optional Gnani TTS SDK is not installed. If the required speech credential is absent, `/api/analyze` returns HTTP 503 with an explicit explanation.
 
-The Vercel deployment explicitly excludes `.env` files, local virtual environments, tests, and generated audio. Keep provider credentials in Vercel's backend project environment only; never put them in `VITE_` variables or frontend files.
+The Vercel deployment explicitly excludes `.env` files, local virtual environments, tests, and generated audio. The repository-level and per-project ignore rules are part of that protection and must remain in place. Keep provider credentials in Vercel's backend project environment only; never put them in `VITE_` variables or frontend files.
 
-Vercel Functions limit request bodies to 4.5 MB. The production frontend therefore limits source uploads to 4 MiB, leaving room for multipart overhead. Before upload, the browser normalizes audio to mono 16 kHz WAV for Gnani STT and rejects clips longer than 60 seconds. Local development retains the 20 MiB source upload limit.
+Vercel Functions limit request bodies to 4.5 MB. The production frontend therefore limits source uploads to 4 MiB, leaving room for multipart overhead. Before upload, the browser normalizes audio to mono 16 kHz WAV for Gnani STT and rejects clips longer than 30 seconds (the Prisma v3 REST limit). Local development retains the 20 MiB source upload limit.
 
 ## Deploying updates
 

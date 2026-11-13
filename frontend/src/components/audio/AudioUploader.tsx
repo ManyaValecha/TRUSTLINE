@@ -123,7 +123,7 @@ export const AudioUploader: React.FC<AudioUploaderProps> = ({
             Click to upload or drag & drop call recording
           </div>
           <p className="mt-1 text-xs text-slate-400 text-center">
-            WAV, MP3, M4A, AAC, WebM (Max {maxSizeLabel}, 60 seconds)
+            WAV, MP3, M4A, AAC, WebM (Max {maxSizeLabel}, 30 seconds)
           </p>
           <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-950/60 border border-violet-800/40 text-[11px] text-violet-300 font-medium">
             <span>Explicit user consent required before analysis</span>

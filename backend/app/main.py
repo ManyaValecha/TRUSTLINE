@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.services.pipeline import analyze_audio, WARNING_AUDIO
-from app.services.gnani_stt import GnaniSTTError
+from app.services.gnani_stt import GnaniSTTError, resolve_speech_profile
 from app.schemas import AnalyzeAudioResponse
 
 MAX_AUDIO_BYTES = 20 * 1024 * 1024
@@ -148,9 +148,14 @@ async def scam_headlines():
 async def analyze_call(
     request: Request,
     audio: UploadFile = File(...),
-    speech_language: str = Query("en-IN"),
+    speech_language: str = Query("indic-auto"),
     target_language: str = Query("hi-IN"),
 ):
+    try:
+        resolve_speech_profile(speech_language)
+    except ValueError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+
     if (audio.content_type or "").lower().split(";")[0] not in SUPPORTED_AUDIO_TYPES:
         raise HTTPException(
             status_code=415,
@@ -210,7 +215,7 @@ async def analyze_call(
                 status_code=422,
                 detail=(
                     "The speech provider rejected this recording. Use WAV, MP3, FLAC, "
-                    "OGG, or M4A audio no longer than 60 seconds."
+                    "OGG, or M4A audio no longer than 30 seconds."
                 ),
             ) from error
         raise HTTPException(

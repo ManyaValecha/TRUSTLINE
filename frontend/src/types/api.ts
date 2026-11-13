@@ -113,6 +113,30 @@ export interface LanguageOption {
   targetCode: string; // for Sarvam / Translation
 }
 
+export interface SpeechProfileOption {
+  code: string;
+  label: string;
+  description: string;
+}
+
+/** Prisma v3.0 documents ten supported languages plus Indic auto-detection. */
+export const SPEECH_PROFILES: SpeechProfileOption[] = [
+  { code: 'indic-auto', label: 'Auto-detect Indian languages', description: 'Prisma detects the language from the audio' },
+  { code: 'hi-en', label: 'Hinglish · Hindi + English', description: 'For Hindi and English mixed in the same call' },
+  { code: 'ta-en', label: 'Tanglish · Tamil + English', description: 'For Tamil and English mixed in the same call' },
+  { code: 'bn-en', label: 'Benglish · Bengali + English', description: 'For Bengali and English mixed in the same call' },
+  { code: 'bn-IN', label: 'Bengali · বাংলা', description: 'Bengali speech' },
+  { code: 'en-IN', label: 'English · India', description: 'Indian English speech' },
+  { code: 'gu-IN', label: 'Gujarati · ગુજરાતી', description: 'Gujarati speech' },
+  { code: 'hi-IN', label: 'Hindi · हिन्दी', description: 'Hindi speech' },
+  { code: 'kn-IN', label: 'Kannada · ಕನ್ನಡ', description: 'Kannada speech' },
+  { code: 'ml-IN', label: 'Malayalam · മലയാളം', description: 'Malayalam speech' },
+  { code: 'mr-IN', label: 'Marathi · मराठी', description: 'Marathi speech' },
+  { code: 'pa-IN', label: 'Punjabi · ਪੰਜਾਬੀ', description: 'Punjabi speech' },
+  { code: 'ta-IN', label: 'Tamil · தமிழ்', description: 'Tamil speech' },
+  { code: 'te-IN', label: 'Telugu · తెలుగు', description: 'Telugu speech' },
+];
+
 export const SUPPORTED_LANGUAGES: LanguageOption[] = [
   { code: 'en-IN', name: 'English (India)', nativeName: 'English', speechCode: 'en-IN', targetCode: 'en-IN' },
   { code: 'hi-IN', name: 'Hindi', nativeName: 'हिन्दी', speechCode: 'hi-IN', targetCode: 'hi-IN' },
