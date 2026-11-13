@@ -69,6 +69,7 @@ export const SignatureDemo: React.FC<SignatureDemoProps> = ({ onSelect }) => {
         <div>
           <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-violet-400/30 bg-violet-950/50 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-violet-200"><ShieldCheck className="h-3.5 w-3.5" /> Signature demonstration</div>
           <h2 id="signature-demo-title" className="text-xl font-black text-white sm:text-2xl">One scam. Three languages. Zero confusion.</h2>
+          <p className="text-[11px] font-semibold text-violet-200">A design objective for this demonstration, not a measured error-rate claim.</p>
           <p className="mt-2 max-w-3xl text-xs leading-relaxed text-slate-300">Three fictional recordings express the same bank-impersonation, account-threat, and OTP-demand scenario. The text below is the authored reference script, not a transcription result. Select a clip to load it into the real provider flow; analysis starts only after you separately confirm audio-sharing consent.</p>
         </div>
       </div>

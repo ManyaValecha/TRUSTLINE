@@ -251,7 +251,7 @@ export const LandingPage: React.FC = () => {
               </p>
             </div>
             <div className="pt-4 border-t border-violet-900/20 text-[11px] text-slate-500 font-mono">
-              STT Engine &bull; Accent Adaptive
+              Gnani Prisma v3 &bull; Language hints available
             </div>
           </div>
 

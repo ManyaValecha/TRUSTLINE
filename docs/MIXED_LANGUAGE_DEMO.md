@@ -2,7 +2,7 @@
 
 ## What the demo shows
 
-The dashboard's signature-demo panel presents three fictional, Gnani Timbre-generated clips for one authored bank-impersonation scenario: threatened account blocking, a request for an OTP, and an instruction to keep the call secret. Each card includes audio playback, the authored reference script, a clean clip, and an optional 8 kHz/10 dB synthetic variant.
+The dashboard's signature-demo panel presents three fictional, Gnani Timbre-generated clips for one authored bank-impersonation scenario: threatened account blocking, a request for an OTP, and an instruction to keep the call secret. “Zero confusion” is an aspiration for comparing the same intended behavior across the three scripts, not a measured error-rate claim. Each card includes audio playback, the authored reference script, a clean clip, and an optional 8 kHz/10 dB synthetic variant.
 
 The displayed script is the reference used to produce the clip. It is not a transcription result. To run the actual pipeline, choose **Use clean clip** or the noisy variant, review the selected audio in the uploader, confirm the explicit provider-processing consent, and choose **Analyse Recording with TRUSTLINE AI**. The request then follows the same backend path as other user-selected audio. Inspect the returned transcript; no result is prewritten into this demonstration.
 

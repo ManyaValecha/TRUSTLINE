@@ -39,13 +39,13 @@ export const StatsCard: React.FC = () => {
       description: 'Suspicious elements requiring caution',
     },
     {
-      label: 'Verified Safe Calls',
+      label: 'Low-Risk Reports',
       count: lowCount,
       icon: ShieldCheck,
       textColor: 'text-emerald-400',
       bgColor: 'bg-emerald-950/40',
       borderColor: 'border-emerald-900/40',
-      description: 'Normal conversational patterns',
+      description: 'No major indicator found; not proof of safety',
     },
   ];
 

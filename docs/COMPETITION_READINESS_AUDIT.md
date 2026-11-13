@@ -199,6 +199,13 @@ This section supersedes earlier numeric status above for the current implementat
 - Browser smoke check on the deployed site: the dashboard rendered all three signature cards; selecting Hinglish, Tanglish, and Benglish in turn loaded the matching MP3 and set the expected speech profile and target language. The consent control stayed unchecked and Analyze remained disabled. No audio was submitted and no paid/provider API was called during this smoke check.
 - This verifies the UI selection and consent gate, not audio upload to backend, live transcription, contextual analysis, translation, speech generation, or mobile layout. Those remain unverified for this change.
 
+### Claims review follow-up (2026-11-13)
+
+- Removed the unsupported “Accent Adaptive” marketing label from the Gnani card and replaced it with the verified Prisma v3/language-hints description.
+- Renamed “Verified Safe Calls” to “Low-Risk Reports” and clarified that no major indicator found is not proof of safety.
+- Kept the requested “Zero confusion” signature-demo title but explicitly labeled it as a design objective, not a measured error-rate claim.
+- Remaining award/pitch claims must stay bounded: no independent speaker/user study, no real-call noise benchmark, no confidence score from the STT adapter, and no provider-backed three-language run in this pass. The synthetic authored corpus metrics remain rules-only diagnostics.
+
 ### Provider deployment follow-up (2026-11-13)
 
 - A local authorized smoke call confirmed the Cohere service was reachable, but the model sometimes paraphrased evidence and failed the exact-substring guard. The prompt now explicitly requires verbatim, continuous transcript excerpts; a follow-up smoke call returned grounded evidence.
