@@ -205,6 +205,7 @@ This section supersedes earlier numeric status above for the current implementat
 - Renamed “Verified Safe Calls” to “Low-Risk Reports” and clarified that no major indicator found is not proof of safety.
 - Kept the requested “Zero confusion” signature-demo title but explicitly labeled it as a design objective, not a measured error-rate claim.
 - Remaining award/pitch claims must stay bounded: no independent speaker/user study, no real-call noise benchmark, no confidence score from the STT adapter, and no provider-backed three-language run in this pass. The synthetic authored corpus metrics remain rules-only diagnostics.
+- Follow-up frontend deploy after the claims corrections: production deployment `dpl_6SG1JXxeU6f4xg69gvjMSDMeJuYz` is READY at the existing alias; the live page returns HTTP 200 and the served landing-page bundle contains “Language hints available” with the unsupported “Accent Adaptive” wording removed.
 
 ### Provider deployment follow-up (2026-11-13)
 
