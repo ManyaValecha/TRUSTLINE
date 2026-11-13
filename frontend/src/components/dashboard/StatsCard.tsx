@@ -21,13 +21,13 @@ export const StatsCard: React.FC = () => {
       description: 'Total user-authorized audio audits',
     },
     {
-      label: 'High-Risk Alerts',
+      label: 'High-Risk Reports',
       count: highCount,
       icon: ShieldAlert,
       textColor: 'text-rose-400',
       bgColor: 'bg-rose-950/40',
       borderColor: 'border-rose-900/40',
-      description: 'Severe coercive/OTP scam attempts',
+      description: 'Strong warning indicators; not proof of fraud',
     },
     {
       label: 'Medium-Risk Flags',
