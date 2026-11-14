@@ -16,7 +16,11 @@ import {
   CheckCircle2,
   ChevronRight,
   Box,
-  Smartphone
+  Smartphone,
+  Trophy,
+  Star,
+  Zap,
+  Globe
 } from 'lucide-react';
 import { ShieldLogo } from '../components/common/ShieldLogo';
 import { useApp } from '../context/AppContext';
@@ -29,6 +33,63 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="space-y-24 py-6 sm:py-10">
+
+      {/* ══ AWARD SHOWCASE BANNER ══ */}
+      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="rounded-3xl border border-yellow-500/25 bg-gradient-to-r from-[#1a1500]/80 via-[#120f00]/60 to-[#0f1020]/80 p-5 sm:p-6 backdrop-blur">
+          <div className="flex flex-wrap items-center gap-2 mb-4">
+            <Trophy className="w-5 h-5 text-yellow-400" />
+            <span className="text-sm font-black text-yellow-300 uppercase tracking-wider">Great Indian AI Internship Challenge · Gnani.ai</span>
+            <span className="text-[11px] font-semibold text-yellow-600 border border-yellow-800/50 bg-yellow-950/50 px-2 py-0.5 rounded-full">4 Award Categories Targeted</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {[
+              {
+                icon: <Globe className="w-5 h-5 text-orange-400" />,
+                award: 'Main Character Award',
+                sub: '#01 · Regional / Low-Resource Language',
+                detail: 'Hindi, Tamil, Bengali, Gujarati, Kannada, Malayalam, Marathi, Punjabi, Telugu, Odia — 10+ Indian languages, Odia as a low-resource target.',
+                color: 'border-orange-500/30 bg-orange-950/20',
+                badge: 'bg-orange-950/60 text-orange-300',
+              },
+              {
+                icon: <Zap className="w-5 h-5 text-cyan-400" />,
+                award: 'Mixed Vibes Award',
+                sub: '#02 · Code-Mixed Voice Experience',
+                detail: 'Native Hinglish, Tanglish & Benglish synthetic scam clips — each with bilingual transcript, tactics breakdown, and 3 acoustic stress variants.',
+                color: 'border-cyan-500/30 bg-cyan-950/20',
+                badge: 'bg-cyan-950/60 text-cyan-300',
+              },
+              {
+                icon: <Star className="w-5 h-5 text-violet-400" />,
+                award: 'Solo Ninja Award',
+                sub: '#07 · Best Solo Project',
+                detail: 'Conceived, designed, coded, and deployed solo: React/Vite frontend, FastAPI backend, Gnani STT+TTS, Cohere analysis, Sarvam translation, Vercel CI.',
+                color: 'border-violet-500/30 bg-violet-950/20',
+                badge: 'bg-violet-950/60 text-violet-300',
+              },
+              {
+                icon: <BrainCircuit className="w-5 h-5 text-emerald-400" />,
+                award: 'Jugaad Genius Award',
+                sub: '#06 · Most Creative Use of Gnani AI',
+                detail: 'Repurposed speech recognition (designed for transcription) as a real-time behavioural coercion detector — an unexpected safety-first pivot.',
+                color: 'border-emerald-500/30 bg-emerald-950/20',
+                badge: 'bg-emerald-950/60 text-emerald-300',
+              },
+            ].map((a) => (
+              <div key={a.award} className={`rounded-2xl border p-4 space-y-2 ${a.color}`}>
+                <div className="flex items-center gap-2">
+                  {a.icon}
+                  <span className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded-full ${a.badge}`}>{a.sub}</span>
+                </div>
+                <div className="text-sm font-extrabold text-white">{a.award}</div>
+                <p className="text-[11px] text-slate-400 leading-relaxed">{a.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* HERO SECTION */}
       <section className="relative px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Glow ambient background */}

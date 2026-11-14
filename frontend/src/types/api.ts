@@ -119,12 +119,13 @@ export interface SpeechProfileOption {
   description: string;
 }
 
-/** Prisma v3.0 documents ten supported languages plus Indic auto-detection. */
+/** Prisma v3.0 documents ten supported languages plus Indic auto-detection.
+ * Odia (or-IN) added for low-resource Indian language support — Main Character Award. */
 export const SPEECH_PROFILES: SpeechProfileOption[] = [
   { code: 'indic-auto', label: 'Auto-detect Indian languages', description: 'Prisma detects the language from the audio' },
-  { code: 'hi-en', label: 'Hinglish · Hindi + English', description: 'For Hindi and English mixed in the same call' },
-  { code: 'ta-en', label: 'Tanglish · Tamil + English', description: 'For Tamil and English mixed in the same call' },
-  { code: 'bn-en', label: 'Benglish · Bengali + English', description: 'For Bengali and English mixed in the same call' },
+  { code: 'hi-en', label: '🔀 Hinglish · Hindi + English', description: 'Code-mixed: Hindi and English in the same call (Mixed Vibes Award)' },
+  { code: 'ta-en', label: '🔀 Tanglish · Tamil + English', description: 'Code-mixed: Tamil and English in the same call (Mixed Vibes Award)' },
+  { code: 'bn-en', label: '🔀 Benglish · Bengali + English', description: 'Code-mixed: Bengali and English in the same call (Mixed Vibes Award)' },
   { code: 'bn-IN', label: 'Bengali · বাংলা', description: 'Bengali speech' },
   { code: 'en-IN', label: 'English · India', description: 'Indian English speech' },
   { code: 'gu-IN', label: 'Gujarati · ગુજરાતી', description: 'Gujarati speech' },
@@ -132,6 +133,7 @@ export const SPEECH_PROFILES: SpeechProfileOption[] = [
   { code: 'kn-IN', label: 'Kannada · ಕನ್ನಡ', description: 'Kannada speech' },
   { code: 'ml-IN', label: 'Malayalam · മലയാളം', description: 'Malayalam speech' },
   { code: 'mr-IN', label: 'Marathi · मराठी', description: 'Marathi speech' },
+  { code: 'or-IN', label: 'Odia · ଓଡ଼ିଆ ★ Low-Resource', description: 'Odia speech — low-resource regional Indian language (Main Character Award)' },
   { code: 'pa-IN', label: 'Punjabi · ਪੰਜਾਬੀ', description: 'Punjabi speech' },
   { code: 'ta-IN', label: 'Tamil · தமிழ்', description: 'Tamil speech' },
   { code: 'te-IN', label: 'Telugu · తెలుగు', description: 'Telugu speech' },
@@ -147,5 +149,6 @@ export const SUPPORTED_LANGUAGES: LanguageOption[] = [
   { code: 'kn-IN', name: 'Kannada', nativeName: 'ಕನ್ನಡ', speechCode: 'kn-IN', targetCode: 'kn-IN' },
   { code: 'ml-IN', name: 'Malayalam', nativeName: 'മലയാളം', speechCode: 'ml-IN', targetCode: 'ml-IN' },
   { code: 'gu-IN', name: 'Gujarati', nativeName: 'ગુજરાતી', speechCode: 'gu-IN', targetCode: 'gu-IN' },
+  { code: 'or-IN', name: 'Odia ★', nativeName: 'ଓଡ଼ିଆ', speechCode: 'or-IN', targetCode: 'or-IN' },
   { code: 'pa-IN', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ', speechCode: 'pa-IN', targetCode: 'pa-IN' },
 ];
