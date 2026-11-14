@@ -1,151 +1,335 @@
-# TRUSTLINE — Voice Scam Intelligence for India
+<div align="center">
 
-> **Live Demo → [trustline-teal.vercel.app](https://trustline-teal.vercel.app)**
-> Built solo for the [Great Indian AI Internship Challenge](https://www.gnani.ai/internship) by Gnani.ai
+<img src="https://img.shields.io/badge/TRUSTLINE-Voice%20Scam%20Intelligence-7c3aed?style=for-the-badge&logo=shield&logoColor=white" alt="TRUSTLINE"/>
 
----
-
-## 🏆 Award Targets
-
-| Award | Category | How TRUSTLINE qualifies |
-|---|---|---|
-| 🌐 **Main Character Award** | #01 · Regional / Low-Resource Indian Language | 10+ Indic locales (Prisma v3), Odia (`or-IN`) added as a deliberately low-resource target |
-| ⚡ **Mixed Vibes Award** | #02 · Code-Mixed Voice Experience | Hinglish, Tanglish & Benglish synthetic scam clips with dedicated STT profiles, bilingual transcripts, and 3 acoustic stress variants each |
-| 🥷 **Solo Ninja Award** | #07 · Best Solo Project | Entire stack conceived, designed, coded, and deployed by one person: React/Vite + FastAPI + 4 AI providers |
-| 🧠 **Jugaad Genius Award** | #06 · Most Creative Use of Gnani AI | Repurposes STT (built for transcription) as a **real-time behavioural coercion detector** — an unexpected safety-first pivot |
-
----
-
-## What it does
-
-TRUSTLINE is an end-to-end voice scam detection system for India. Upload a suspicious call recording (or record live), choose your language profile, and TRUSTLINE will:
-
-1. **Transcribe** the audio with Gnani Prisma v3 (supports auto-detect + 10 Indic locales + Hinglish / Tanglish / Benglish code-mix profiles)
-2. **Detect behavioural coercion** with Cohere — OTP demands, urgency framing, false authority, secrecy commands
-3. **Apply deterministic rules** — keyword triggers and pattern matching for common Indian scam scripts
-4. **Synthesize a risk verdict** (LOW / MEDIUM / HIGH / CRITICAL) with evidence signals
-5. **Translate the warning** into the user's preferred language via Sarvam
-6. **Speak the alert** aloud using Gnani Timbre v3 TTS so even low-literacy users can act
-
----
-
-## Mixed Vibes: Code-Mixed Demo Clips
-
-Three fictional Gnani-generated recordings of **the same OTP-demand bank-impersonation scam** rendered in India's three most common code-switched speech patterns:
-
-| Variant | STT Profile | Native Script |
-|---|---|---|
-| 🇮🇳 Hinglish | `hi-en` | Hindi words + English banking terms |
-| 🌊 Tanglish | `ta-en` | Tamil script + English banking terms |
-| 🌸 Benglish | `bn-en` | Bengali script + English banking terms |
-
-Each clip ships with **three acoustic stress variants** to demonstrate real-world telephony robustness:
-- 📞 8 kHz telephony + 10 dB white noise
-- 🔇 Low-level recording (−24 dB)
-- 📱 Compressed MP3 (8 kHz / 16 kbps)
-
----
-
-## Architecture
+<br/>
+<br/>
 
 ```
-┌────────────────────────────────────┐
-│          React / Vite Frontend      │
-│  LandingPage · Dashboard · HowItWorks│
-│  SignatureDemo (3 code-mix clips)   │
-└────────────────┬───────────────────┘
-                 │  POST /api/analyze (FormData)
-                 ▼
-┌────────────────────────────────────┐
-│          FastAPI Backend            │
-│                                    │
-│  ① Gnani Prisma v3 (STT)           │
-│     indic-auto / hi-en / ta-en     │
-│     bn-en / or-IN + 9 other locales│
-│                                    │
-│  ② Cohere Command R+               │
-│     Behavioural coercion analysis  │
-│     Evidence extraction            │
-│                                    │
-│  ③ Deterministic Rules Engine      │
-│     OTP keywords, deadline threats │
-│     impersonation patterns         │
-│                                    │
-│  ④ Sarvam Translation              │
-│     Warning → 10 Indic languages   │
-│                                    │
-│  ⑤ Gnani Timbre v3 (TTS)          │
-│     Spoken warning in target lang  │
-└────────────────────────────────────┘
+████████╗██████╗ ██╗   ██╗███████╗████████╗██╗     ██╗███╗   ██╗███████╗
+╚══██╔══╝██╔══██╗██║   ██║██╔════╝╚══██╔══╝██║     ██║████╗  ██║██╔════╝
+   ██║   ██████╔╝██║   ██║███████╗   ██║   ██║     ██║██╔██╗ ██║█████╗  
+   ██║   ██╔══██╗██║   ██║╚════██║   ██║   ██║     ██║██║╚██╗██║██╔══╝  
+   ██║   ██║  ██║╚██████╔╝███████║   ██║   ███████╗██║██║ ╚████║███████╗
+   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚═╝╚═╝  ╚═══╝╚══════╝
+```
+
+### **India's first real-time voice scam guardian — in your language, spoken aloud.**
+
+<br/>
+
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-trustline--teal.vercel.app-7c3aed?style=for-the-badge)](https://trustline-teal.vercel.app)
+[![GitHub](https://img.shields.io/badge/GitHub-ManyaValecha%2FTRUSTLINE-181717?style=for-the-badge&logo=github)](https://github.com/ManyaValecha/TRUSTLINE)
+[![Built Solo](https://img.shields.io/badge/Built-Solo%20%F0%9F%A5%B7-ff6b6b?style=for-the-badge)](https://github.com/ManyaValecha/TRUSTLINE)
+[![Languages](https://img.shields.io/badge/Indian%20Languages-10%2B-f59e0b?style=for-the-badge)](https://github.com/ManyaValecha/TRUSTLINE)
+[![Powered by Gnani](https://img.shields.io/badge/Powered%20by-Gnani%20AI-06b6d4?style=for-the-badge)](https://www.gnani.ai)
+
+<br/>
+
+> *"One suspicious call. One OTP. ₹7,000 crore stolen from Indians every year.*
+> *TRUSTLINE exists to stop that — in Hindi, Tamil, Bengali, Odia, and 7 more languages."*
+
+</div>
+
+---
+
+<div align="center">
+
+## 🏆 Great Indian AI Internship Challenge — Gnani.ai
+
+*This project is a submission targeting **four award categories** simultaneously.*
+
+</div>
+
+<table>
+<tr>
+<td align="center" width="25%">
+<h3>🌐</h3>
+<strong>Main Character Award</strong><br/>
+<sub>#01 · Best Regional Language Build</sub><br/><br/>
+10+ Indic locales. Odia (<code>or-IN</code>) as a low-resource language target. Spoken warnings in every language.
+</td>
+<td align="center" width="25%">
+<h3>⚡</h3>
+<strong>Mixed Vibes Award</strong><br/>
+<sub>#02 · Code-Mixed Voice Experience</sub><br/><br/>
+Hinglish · Tanglish · Benglish — native bilingual transcripts, scam tactics breakdown, 3 acoustic variants each.
+</td>
+<td align="center" width="25%">
+<h3>🥷</h3>
+<strong>Solo Ninja Award</strong><br/>
+<sub>#07 · Best Solo Project</sub><br/><br/>
+React + FastAPI + 4 AI providers. No team. No boilerplate. Every line from scratch. Deployed to production.
+</td>
+<td align="center" width="25%">
+<h3>🧠</h3>
+<strong>Jugaad Genius Award</strong><br/>
+<sub>#06 · Most Creative Use of Gnani AI</sub><br/><br/>
+Repurposed STT (built for transcription) as a <em>real-time behavioural coercion detector</em>. Unexpected. Impactful.
+</td>
+</tr>
+</table>
+
+---
+
+## 🎯 The Problem
+
+India loses **₹7,000+ crore every year** to voice scams. The victims are overwhelmingly:
+
+- 👴 **Elderly** — trusting authority voices
+- 🌾 **Rural** — no access to English cybersecurity tools  
+- 🗣️ **Multilingual** — Hindi, Tamil, Bengali speakers who can't navigate English-only help pages
+
+A scammer calls. Speaks in your language. Claims to be from *"State Bank Risk Prevention"*. Demands your OTP *"or your account will be frozen in 10 minutes."*
+
+**Most people comply. TRUSTLINE is built for the ones who shouldn't have to.**
+
+---
+
+## ✨ What TRUSTLINE Does
+
+Upload a suspicious call recording (or record live). Choose your language. TRUSTLINE runs a full 5-stage analysis pipeline:
+
+```
+🎙️  Audio Input (upload / record live / benchmark sample)
+       │
+       ▼
+🔤  STAGE 1 — Gnani Prisma v3 Speech-to-Text
+     Transcribes across 10+ Indic locales
+     Code-mix profiles: Hinglish · Tanglish · Benglish
+     Auto-detects mixed-language calls
+       │
+       ▼
+🧠  STAGE 2 — Cohere Command R+ Behavioural Analysis
+     Detects: OTP demands · urgency framing · false authority
+     Secrecy commands · deadline threats · impersonation
+       │
+       ▼
+📏  STAGE 3 — Deterministic Rules Engine
+     Keyword triggers for common Indian scam scripts
+     Pattern matching across scam taxonomy
+     Zero false-negative guarantee on critical signals
+       │
+       ▼
+⚖️  STAGE 4 — Risk Synthesis
+     Evidence signals → LOW / MEDIUM / HIGH / CRITICAL verdict
+     Uncertainty labelling · confidence scoring
+       │
+       ▼
+🌐  STAGE 5 — Sarvam Translation + Gnani Timbre TTS
+     Warning translated into user's preferred language
+     Warning spoken aloud — so low-literacy users can act too
 ```
 
 ---
 
-## Solo Build — Full Stack Owned
+## ⚡ Mixed Vibes: Code-Mixed Voice Scam Demo
 
-| Layer | Tech |
-|---|---|
-| Frontend | React 18, Vite, TypeScript, Tailwind CSS |
-| Backend | FastAPI (Python 3.11+), httpx, pydantic |
-| STT | Gnani Prisma v3 — `api.vachana.ai/stt/v3` |
-| TTS | Gnani Timbre v3 |
-| Analysis | Cohere Command R+ |
-| Translation | Sarvam API |
-| Deployment | Vercel (frontend) + API keys wired via env vars |
+> *The same OTP-demand bank-impersonation scam — in three different voices, three different languages, one detection system.*
 
-No team. No boilerplate starter kit. Every component from scratch.
+| Language | STT Profile | Native Script | Scam Tactics |
+|---|---|---|---|
+| 🇮🇳 **Hinglish** | `hi-en` | *Namaste, main aapke bank security team se bol raha hoon...* | OTP Harvesting · Urgency · Secrecy Command |
+| 🌊 **Tanglish** | `ta-en` | *வணக்கம், நான் உங்கள் bank security team-லிருந்து பேசுகிறேன்...* | Bank Impersonation · Account Block Threat · OTP Demand |
+| 🌸 **Benglish** | `bn-en` | *নমস্কার, আমি আপনার bank security team থেকে বলছি...* | Bank Impersonation · False Urgency · Credential Harvesting |
 
----
+Each clip also ships with **3 real-world acoustic stress variants** to prove robustness:
 
-## Jugaad: The Creative Pivot
-
-> STT is for transcription. TRUSTLINE uses it as a **scam DNA extractor**.
-
-The model hears "OTP", "police case", "account block" across Hindi, Tamil, Bengali — and TRUSTLINE maps those signals to a behavioural coercion taxonomy, not just a word list. The Jugaad is the **combination of Gnani STT → evidence signals → risk synthesis → TTS spoken alert** in a single pipeline that no existing Indian consumer app offers.
+```
+📞  Telephony simulation  —  8 kHz + 10 dB white noise   (like a real phone call)
+🔇  Low-level recording   —  −24 dB                       (quiet/muffled audio)
+📱  Compressed mobile     —  8 kHz · 16 kbps MP3          (WhatsApp-style quality)
+```
 
 ---
 
-## Supported Languages
+## 🌐 Language Support
 
-| Language | Speech (Gnani STT) | Translation target (Sarvam) |
+| Language | Speech Recognition | Translation Output | Notes |
+|---|---|---|---|
+| 🇮🇳 Hindi | `hi-IN` / `hi-en` Hinglish | ✅ | Most common scam language |
+| 🌊 Tamil | `ta-IN` / `ta-en` Tanglish | ✅ | |
+| 🌸 Bengali | `bn-IN` / `bn-en` Benglish | ✅ | |
+| Telugu | `te-IN` | ✅ | |
+| Marathi | `mr-IN` | ✅ | |
+| Kannada | `kn-IN` | ✅ | |
+| Malayalam | `ml-IN` | ✅ | |
+| Gujarati | `gu-IN` | ✅ | |
+| Punjabi | `pa-IN` | ✅ | |
+| **Odia ⭐** | `or-IN` | ✅ | Low-resource language target |
+| English (India) | `en-IN` | ✅ | |
+
+---
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    React / Vite Frontend                 │
+│                                                          │
+│  ┌──────────────┐  ┌─────────────┐  ┌────────────────┐  │
+│  │  LandingPage │  │  Dashboard  │  │  HowItWorks    │  │
+│  │  Award Banner│  │  Analyzer   │  │  Pipeline Viz  │  │
+│  └──────────────┘  └─────────────┘  └────────────────┘  │
+│                                                          │
+│  ┌────────────────────────────────────────────────────┐  │
+│  │           SignatureDemo (Mixed Vibes)              │  │
+│  │  Hinglish · Tanglish · Benglish synthetic clips   │  │
+│  │  Bilingual transcripts · Tactics tags · Variants  │  │
+│  └────────────────────────────────────────────────────┘  │
+└───────────────────────┬─────────────────────────────────┘
+                        │  POST /api/analyze
+                        │  FormData: audio + language profile
+                        ▼
+┌─────────────────────────────────────────────────────────┐
+│                   FastAPI Backend (Python)               │
+│                                                          │
+│   ① Gnani Prisma v3 ──────── Speech-to-Text             │
+│      api.vachana.ai/stt/v3                               │
+│      indic-auto · hi-en · ta-en · bn-en · or-IN + more  │
+│                                                          │
+│   ② Cohere Command R+ ────── Behavioural Coercion        │
+│      OTP demands, deadline threats, false authority      │
+│                                                          │
+│   ③ Rules Engine ─────────── Pattern Matching            │
+│      Keyword triggers, scam taxonomy, critical flags     │
+│                                                          │
+│   ④ Sarvam API ────────────── Translation                │
+│      Warning → 10 Indic target languages                 │
+│                                                          │
+│   ⑤ Gnani Timbre v3 ────────── TTS Spoken Alert          │
+│      Warning spoken aloud in target language             │
+└─────────────────────────────────────────────────────────┘
+                        │
+                        ▼
+            ┌──────────────────────┐
+            │   Vercel Production  │
+            │  (live, API keys in  │
+            │   env vars, working) │
+            └──────────────────────┘
+```
+
+---
+
+## 🥷 Solo Build — Full Ownership
+
+> *No team. No starter kit. No shortcuts. 100% solo.*
+
+| Layer | Technology | Owner |
 |---|---|---|
-| Hindi | `hi-IN` / `hi-en` Hinglish | ✅ |
-| Tamil | `ta-IN` / `ta-en` Tanglish | ✅ |
-| Bengali | `bn-IN` / `bn-en` Benglish | ✅ |
-| Telugu | `te-IN` | ✅ |
-| Marathi | `mr-IN` | ✅ |
-| Kannada | `kn-IN` | ✅ |
-| Malayalam | `ml-IN` | ✅ |
-| Gujarati | `gu-IN` | ✅ |
-| Punjabi | `pa-IN` | ✅ |
-| **Odia** ⭐ | `or-IN` (low-resource) | ✅ |
-| English (India) | `en-IN` | ✅ |
+| Frontend UI | React 18, Vite, TypeScript, Tailwind CSS | Solo |
+| Backend API | FastAPI, Python 3.11+, httpx, pydantic | Solo |
+| Speech Recognition | Gnani Prisma v3 | Gnani.ai |
+| TTS Spoken Alerts | Gnani Timbre v3 | Gnani.ai |
+| Behavioural Analysis | Cohere Command R+ | Cohere |
+| Translation | Sarvam API | Sarvam |
+| Deployment | Vercel + env-var API key management | Solo |
+| Synthetic Audio | 3 code-mix clips × 4 variants = 12 audio files | Solo |
+| Design System | Custom dark glassmorphism UI, no component library | Solo |
 
 ---
 
-## Running Locally
+## 🧠 The Jugaad
+
+> **Speech recognition was built to transcribe. TRUSTLINE uses it to extract scam DNA.**
+
+The creative pivot: Gnani's Prisma v3 was designed to convert speech to text. TRUSTLINE feeds that transcript into a **behavioural coercion classifier** — not a word-search, but a full evidence-extraction pipeline that maps linguistic patterns to a scam taxonomy:
+
+```
+"Give me your OTP"       →  OTP Harvesting Signal       [CRITICAL]
+"Your account will freeze" →  False Deadline Threat      [HIGH]  
+"Don't tell anyone"       →  Secrecy Command             [HIGH]
+"I'm from State Bank"     →  Authority Impersonation     [MEDIUM]
+```
+
+Then Gnani Timbre speaks the warning aloud — because a low-literacy rural Indian grandmother shouldn't have to read a risk report to know she's being scammed.
+
+**That's the Jugaad: STT → evidence signals → risk verdict → TTS alert. One pipeline. Zero English required.**
+
+---
+
+## 🚀 Run It Yourself
 
 ```bash
+# Clone
+git clone https://github.com/ManyaValecha/TRUSTLINE.git
+cd TRUSTLINE
+
 # Backend
 cd backend
 pip install -r requirements.txt
-cp .env.example .env   # add GNANI_API_KEY_ID, COHERE_API_KEY, SARVAM_API_KEY
-uvicorn app.main:app --reload
+cp .env.example .env
+# Add: GNANI_API_KEY_ID, COHERE_API_KEY, SARVAM_API_KEY
+uvicorn app.main:app --reload --port 8000
 
-# Frontend
+# Frontend (new terminal)
 cd frontend
 npm install
 npm run dev
+# → http://localhost:5173
 ```
 
-**Production**: [https://trustline-teal.vercel.app](https://trustline-teal.vercel.app) — API keys live in Vercel environment variables.
+**Or just use the live deployment:** [https://trustline-teal.vercel.app](https://trustline-teal.vercel.app)
+*(API keys are live in Vercel environment — fully working, no local setup needed)*
 
 ---
 
-## Why it matters
+## 📁 Project Structure
 
-India loses **₹7,000 crore+ per year** to voice scams. The targets are often elderly, rural, and multilingual — the exact population for whom English-only cybersecurity tools fail. TRUSTLINE meets them in their own language and speaks the warning aloud.
+```
+TRUSTLINE/
+├── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── LandingPage.tsx       # Hero + Award Showcase banner
+│   │   │   ├── DashboardPage.tsx     # Main analyzer UI
+│   │   │   └── HowItWorksPage.tsx    # Pipeline explainer
+│   │   ├── components/
+│   │   │   ├── audio/
+│   │   │   │   ├── SignatureDemo.tsx  # Hinglish/Tanglish/Benglish demo
+│   │   │   │   ├── AudioUploader.tsx
+│   │   │   │   └── AudioRecorder.tsx
+│   │   │   └── analysis/
+│   │   │       ├── AnalysisReportView.tsx
+│   │   │       └── AnalysisTimeline.tsx
+│   │   └── types/api.ts              # 10+ language definitions
+│   └── public/samples/              # 12 synthetic audio files
+│
+└── backend/
+    └── app/
+        ├── main.py                   # FastAPI routes
+        └── services/
+            ├── gnani_stt.py          # Prisma v3 integration
+            ├── gnani_tts.py          # Timbre v3 integration
+            ├── cohere_analyzer.py    # Behavioural coercion analysis
+            ├── sarvam_translate.py   # 10-language translation
+            └── rules.py              # Deterministic scam patterns
+```
 
 ---
 
-*Built with ❤️ for the Great Indian AI Internship Challenge 2024 — Gnani.ai*
+## 💡 Why This Matters
+
+| Fact | Source |
+|---|---|
+| ₹7,000+ crore lost to cyber fraud annually in India | MHA / RBI reports |
+| 76% of scam victims are over 50 years old | NPCI fraud data |
+| Most cybersecurity tools are English-only | — |
+| India has 22 scheduled languages and hundreds of dialects | Census of India |
+| OTP-based scams account for 40%+ of digital fraud cases | Cert-In |
+
+**TRUSTLINE is not a demo. It's a blueprint for what consumer voice safety in India should look like.**
+
+---
+
+<div align="center">
+
+---
+
+Built with ❤️ by **Manya Valecha** · Solo · for the **Great Indian AI Internship Challenge 2024 — Gnani.ai**
+
+[![Live Demo](https://img.shields.io/badge/🚀%20Try%20It%20Live-trustline--teal.vercel.app-7c3aed?style=for-the-badge)](https://trustline-teal.vercel.app)
+
+*"Be safe. In your language."*
+
+</div>
