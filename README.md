@@ -19,10 +19,19 @@
 <br/>
 
 [![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-trustline--teal.vercel.app-7c3aed?style=for-the-badge)](https://trustline-teal.vercel.app)
+[![Demo Video](https://img.shields.io/badge/▶%20Demo%20Video-YouTube-ff0000?style=for-the-badge&logo=youtube)](https://youtu.be/sg_RULChFDY)
 [![GitHub](https://img.shields.io/badge/GitHub-ManyaValecha%2FTRUSTLINE-181717?style=for-the-badge&logo=github)](https://github.com/ManyaValecha/TRUSTLINE)
-[![Built Solo](https://img.shields.io/badge/Built-Solo%20%F0%9F%A5%B7-ff6b6b?style=for-the-badge)](https://github.com/ManyaValecha/TRUSTLINE)
+[![Built Solo](https://img.shields.io/badge/Built-Solo%20🥷-ff6b6b?style=for-the-badge)](https://github.com/ManyaValecha/TRUSTLINE)
 [![Languages](https://img.shields.io/badge/Indian%20Languages-10%2B-f59e0b?style=for-the-badge)](https://github.com/ManyaValecha/TRUSTLINE)
 [![Powered by Gnani](https://img.shields.io/badge/Powered%20by-Gnani%20AI-06b6d4?style=for-the-badge)](https://www.gnani.ai)
+
+<br/>
+
+## 🎬 Watch It Work
+
+[![TRUSTLINE Demo Video](https://img.youtube.com/vi/sg_RULChFDY/maxresdefault.jpg)](https://youtu.be/sg_RULChFDY)
+
+*Click to watch the full end-to-end demo — Hinglish scam call → AI detection → spoken Hindi warning*
 
 <br/>
 
