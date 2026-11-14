@@ -161,6 +161,56 @@ Each clip also ships with **3 real-world acoustic stress variants** to prove rob
 
 ---
 
+## ⚔️ TRUSTLINE vs. Everything Else
+
+> *"Existing tools detect spam callers. TRUSTLINE detects scam behaviour — in your language, in real time, spoken aloud."*
+
+Most people rely on Truecaller, their phone's built-in spam filter, or nothing at all. Here's why none of that is enough:
+
+| Capability | Truecaller / Spam ID | Google / Apple Call Screen | English-Only AI Tools | Keyword Detectors | ✅ **TRUSTLINE** |
+|---|:---:|:---:|:---:|:---:|:---:|
+| Works on **recorded audio** | ❌ | ❌ | ⚠️ limited | ❌ | ✅ Upload any clip |
+| Works on **live mic recording** | ❌ | ⚠️ limited | ❌ | ❌ | ✅ Record in-app |
+| Understands **Hindi / Tamil / Bengali** | ❌ | ⚠️ basic | ❌ | ❌ | ✅ 10+ Indic locales |
+| Handles **Hinglish / Tanglish / Benglish** | ❌ | ❌ | ❌ | ❌ | ✅ Dedicated code-mix STT |
+| Detects **behavioural coercion** (not just caller ID) | ❌ | ❌ | ⚠️ English only | ❌ | ✅ Cohere LLM analysis |
+| Explains **why** a call is suspicious | ❌ | ❌ | ⚠️ limited | ❌ | ✅ Evidence signals + tactics |
+| **Speaks the warning aloud** in your language | ❌ | ❌ | ❌ | ❌ | ✅ Gnani Timbre TTS |
+| Works for **low-literacy users** | ❌ | ❌ | ❌ | ❌ | ✅ Audio alert, no reading needed |
+| Supports **Odia** (low-resource language) | ❌ | ❌ | ❌ | ❌ | ✅ `or-IN` profile |
+| Open source & inspectable | ❌ | ❌ | ❌ | ⚠️ | ✅ Fully on GitHub |
+
+### The core difference in one line:
+
+```
+Truecaller asks: "Is this caller known to be bad?"
+TRUSTLINE asks:  "Is this caller BEHAVING like a scammer — right now, in your language?"
+```
+
+### Why caller-ID is not enough
+
+A scammer can:
+- 📞 **Spoof** any phone number, including your real bank's number
+- 🆕 **Use a fresh SIM** with no bad reputation yet
+- 🗣️ **Code-switch mid-call** — Hindi to English — to confuse detection
+- 🧑‍💼 **Impersonate authority** (police, RBI, court) with convincing scripts
+
+Truecaller sees none of that. It only checks the number.
+
+**TRUSTLINE listens to what the caller is actually *saying* — and flags the manipulation tactics in real time.**
+
+### The five red flags TRUSTLINE catches that others miss
+
+| Tactic | Example phrase | TRUSTLINE signal |
+|---|---|---|
+| 🔴 **OTP Harvesting** | *"OTP batao warna account block ho jayega"* | `CRITICAL` |
+| 🔴 **False Deadline** | *"Dus minute mein action lena padega"* | `HIGH` |
+| 🔴 **Authority Impersonation** | *"Main RBI ka officer bol raha hoon"* | `HIGH` |
+| 🟠 **Secrecy Command** | *"Kisi ko mat batana, yeh police case hai"* | `HIGH` |
+| 🟠 **Fear / Urgency** | *"Aapka account abhi freeze ho raha hai"* | `MEDIUM` |
+
+---
+
 ## 🏗️ Architecture
 
 ```
