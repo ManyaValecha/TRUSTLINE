@@ -20,6 +20,7 @@
 
 [![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-trustline--teal.vercel.app-7c3aed?style=for-the-badge)](https://trustline-teal.vercel.app)
 [![Demo Video](https://img.shields.io/badge/▶%20Demo%20Video-YouTube-ff0000?style=for-the-badge&logo=youtube)](https://youtu.be/sg_RULChFDY)
+[![Featured on X](https://img.shields.io/badge/Featured%20on-X%20%2F%20Twitter-000000?style=for-the-badge&logo=x)](https://x.com/Legend730452/status/2120788447359381717?s=20)
 [![GitHub](https://img.shields.io/badge/GitHub-ManyaValecha%2FTRUSTLINE-181717?style=for-the-badge&logo=github)](https://github.com/ManyaValecha/TRUSTLINE)
 [![Built Solo](https://img.shields.io/badge/Built-Solo%20🥷-ff6b6b?style=for-the-badge)](https://github.com/ManyaValecha/TRUSTLINE)
 [![Languages](https://img.shields.io/badge/Indian%20Languages-10%2B-f59e0b?style=for-the-badge)](https://github.com/ManyaValecha/TRUSTLINE)
@@ -381,6 +382,19 @@ TRUSTLINE/
 
 ---
 
+## 🌐 Out in the Wild
+
+> TRUSTLINE has been shared publicly — people are talking about it.
+
+| Platform | Link |
+|---|---|
+| 🐦 **X / Twitter post** | [View post →](https://x.com/Legend730452/status/2120788447359381717?s=20) |
+| ▶️ **YouTube demo** | [Watch full walkthrough →](https://youtu.be/sg_RULChFDY) |
+| 🚀 **Live app** | [trustline-teal.vercel.app →](https://trustline-teal.vercel.app) |
+| 💻 **Source code** | [github.com/ManyaValecha/TRUSTLINE →](https://github.com/ManyaValecha/TRUSTLINE) |
+
+---
+
 <div align="center">
 
 ---
@@ -388,7 +402,10 @@ TRUSTLINE/
 Built with ❤️ by **Manya Valecha** · Solo · for the **Great Indian AI Internship Challenge 2024 — Gnani.ai**
 
 [![Live Demo](https://img.shields.io/badge/🚀%20Try%20It%20Live-trustline--teal.vercel.app-7c3aed?style=for-the-badge)](https://trustline-teal.vercel.app)
+[![Watch Demo](https://img.shields.io/badge/▶%20Watch%20Demo-YouTube-ff0000?style=for-the-badge&logo=youtube)](https://youtu.be/sg_RULChFDY)
+[![Follow on X](https://img.shields.io/badge/Follow%20on-X%20%2F%20Twitter-000000?style=for-the-badge&logo=x)](https://x.com/Legend730452/status/2120788447359381717?s=20)
 
 *"Be safe. In your language."*
 
 </div>
+
